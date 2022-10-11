@@ -2,7 +2,7 @@ import pyvista as pv
 import streamlit as st
 from stpyvista import stpyvista, HTML_stpyvista
 
-st.title("Textures in with pyvista")
+st.title("✨ Textures with PyVista")
 
 st.warning("""
 Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html
