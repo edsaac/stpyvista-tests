@@ -1,6 +1,6 @@
 streamlit
 pyvista
-stpyvista==0.0.3
+stpyvista==0.0.4
 pythreejs==2.3.0
 ipywidgets==7.7.1
 ipython==8.4.0
