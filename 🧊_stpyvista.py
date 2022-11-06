@@ -1,11 +1,13 @@
 import streamlit as st
 import pyvista as pv
+from pyvista import examples
 from stpyvista import stpyvista
 
 st.set_page_config(page_icon="🧊", layout="wide")
 
 if "carburator" not in st.session_state:
-    st.session_state.carburator = pv.examples.download_carburator()
+    carburetor = examples.download_carburetor()
+    st.session_state.carburator = carburetor
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
