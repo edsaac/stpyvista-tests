@@ -33,3 +33,4 @@ if "model" not in st.session_state:
     st.session_state.model = HTML_stpyvista(plotter)
 
 stpyvista(st.session_state.model)
+st.button("Restart?")
