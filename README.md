@@ -42,8 +42,6 @@ pv.global_theme.show_scalar_bar = False
 st.title("A cube")
 st.info("""Code adapted from https://docs.pyvista.org/user-guide/jupyter/pythreejs.html#scalars-support""")
 
-# Giving a key to stpyvista avoids re-rendering at each time something changes in the page
-
 ## Initialize a plotter object
 plotter = pv.Plotter(window_size=[400,400])
 

@@ -5,9 +5,13 @@ from stpyvista import stpyvista
 
 st.set_page_config(page_icon="🧊", layout="wide")
 
-if "carburator" not in st.session_state:
+@st.experimental_singleton
+def get_carburator():
     carburetor = examples.download_carburetor()
-    st.session_state.carburator = carburetor
+    return carburetor
+
+if "carburator" not in st.session_state:
+    st.session_state.carburator = get_carburator()
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
