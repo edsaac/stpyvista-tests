@@ -25,7 +25,7 @@ with st.expander("See code:", expanded=False):
         
         ## Send to streamlit
         with placeholder_render:
-            stpyvista(plotter, key="pvSpheres")
+            stpyvista(plotter, key="pvSpheres", opacity_background=0.2)
 
 st.warning("""
 Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html

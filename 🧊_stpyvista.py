@@ -46,11 +46,9 @@ with cols[0]:
     """, unsafe_allow_html=True)
 
 with cols[1]:
-
     pl_carburator = pv.Plotter(window_size=[400,300])
-    pl_carburator.set_background('white')
-    st.session_state.carburator.decimate(0.5, inplace=True)
-    pl_carburator.add_mesh(st.session_state.carburator, color='lightgrey', pbr=True, metallic=0.5)
+    carburator = st.session_state.carburator.decimate(0.2, inplace=False)
+    pl_carburator.add_mesh(carburator, color='lightgrey', pbr=True, metallic=0.5)
     pl_carburator.camera.zoom(1.5)
     stpyvista(pl_carburator, horizontal_align="right", key="pv_carburator")
 
@@ -85,7 +83,6 @@ with st.expander("✨ Use example", expanded=True):
 
         ## Final touches
         plotter.view_isometric()
-        plotter.background_color = 'white'
 
         ## Pass a key to avoid re-rendering at each time something changes in the page
         stpyvista(plotter, key="pv_cube")

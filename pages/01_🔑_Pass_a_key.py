@@ -26,7 +26,6 @@ plotter.add_mesh(mesh, scalars='myscalar', cmap='bwr', line_width=1)
 
 ## Final touches
 plotter.view_isometric()
-plotter.background_color = 'white'
 
 ## Show in streamlit
 cols = st.columns(2)
