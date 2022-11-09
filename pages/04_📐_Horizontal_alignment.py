@@ -2,6 +2,11 @@ import pyvista as pv
 import streamlit as st
 from stpyvista import stpyvista
 
+# Add badges to sidebar
+with st.sidebar:
+    with open("assets/badges.md") as f:
+        st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
 if "sphere" not in st.session_state:
     pl = pv.Plotter(window_size=[300,200])
     pl.set_background('#D3EEFF')

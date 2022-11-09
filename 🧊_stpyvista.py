@@ -5,13 +5,9 @@ from stpyvista import stpyvista
 
 st.set_page_config(page_icon="🧊", layout="wide")
 
-@st.experimental_singleton
-def get_carburator():
-    carburetor = examples.download_carburetor()
-    return carburetor
-
-if "carburator" not in st.session_state:
-    st.session_state.carburator = get_carburator()
+if "cow" not in st.session_state:
+    cow = pv.examples.download_cow()
+    st.session_state.cow = cow
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
@@ -46,13 +42,18 @@ with cols[0]:
     """, unsafe_allow_html=True)
 
 with cols[1]:
-
-    pl_carburator = pv.Plotter(window_size=[400,300])
-    pl_carburator.set_background('white')
-    st.session_state.carburator.decimate(0.5, inplace=True)
-    pl_carburator.add_mesh(st.session_state.carburator, color='lightgrey', pbr=True, metallic=0.5)
-    pl_carburator.camera.zoom(1.5)
-    stpyvista(pl_carburator, horizontal_align="right", key="pv_carburator")
+    plotter = pv.Plotter(window_size=[400,300])
+    
+    cow = st.session_state.cow
+    plotter.add_mesh(cow, color='white', pbr=True, metallic=0.05)
+    
+    plane = pv.Plane(center = [0,-3.65,0],direction=[0,1,0], i_size=12, j_size=12)
+    plane.point_data.clear()
+    plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
+    
+    plotter.view_xy()
+    plotter.camera.zoom(1.5)
+    stpyvista(plotter, rotation={'axis':'y', 'revolution_time':10.0}, horizontal_align="right")
 
 with st.expander("🛠️ Installation"):
     """
@@ -85,7 +86,6 @@ with st.expander("✨ Use example", expanded=True):
 
         ## Final touches
         plotter.view_isometric()
-        plotter.background_color = 'white'
 
         ## Pass a key to avoid re-rendering at each time something changes in the page
         stpyvista(plotter, key="pv_cube")

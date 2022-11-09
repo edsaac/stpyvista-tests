@@ -7,7 +7,6 @@ with st.sidebar:
     with open("assets/badges.md") as f:
         st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
 
-
 pv.global_theme.show_scalar_bar = False
 
 st.title("🔑   Pass a key")
@@ -26,7 +25,6 @@ plotter.add_mesh(mesh, scalars='myscalar', cmap='bwr', line_width=1)
 
 ## Final touches
 plotter.view_isometric()
-plotter.background_color = 'white'
 
 ## Show in streamlit
 cols = st.columns(2)
