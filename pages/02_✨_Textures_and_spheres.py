@@ -2,6 +2,11 @@ import pyvista as pv
 import streamlit as st
 from stpyvista import stpyvista
 
+# Add badges to sidebar
+with st.sidebar:
+    with open("assets/badges.md") as f:
+        st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
 st.title("✨   Textures and spheres")
 
 placeholder_render = st.empty()
@@ -12,7 +17,7 @@ with st.expander("See code:", expanded=False):
         
         ## Initialize pyvista reader and plotter
         plotter = pv.Plotter(border=False, window_size=[600,400]) 
-        plotter.background_color = "white"
+        plotter.background_color = "green"
         
         ## Add a bunch of spheres with different properties
         for i in range(5):

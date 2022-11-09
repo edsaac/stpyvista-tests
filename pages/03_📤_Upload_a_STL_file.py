@@ -3,6 +3,11 @@ import streamlit as st
 import tempfile
 from stpyvista import stpyvista
 
+# Add badges to sidebar
+with st.sidebar:
+    with open("assets/badges.md") as f:
+        st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
 def delmodel(): 
     del st.session_state.fileuploader
 

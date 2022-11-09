@@ -1,10 +1,14 @@
 import pyvista as pv
 import streamlit as st
 from stpyvista import stpyvista
-
 pv.global_theme.show_scalar_bar = False
 
-@st.experimental_singleton
+# Add badges to sidebar
+with st.sidebar:
+    with open("assets/badges.md") as f:
+        st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
+
 def get_cow():
     return pv.examples.download_cow()
 
