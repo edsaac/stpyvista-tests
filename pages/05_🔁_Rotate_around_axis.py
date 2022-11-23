@@ -3,6 +3,8 @@ import streamlit as st
 from stpyvista import stpyvista
 pv.global_theme.show_scalar_bar = False
 
+st.set_page_config(page_icon="🧊", layout="wide")
+
 # Add badges to sidebar
 with st.sidebar:
     with open("assets/badges.md") as f:

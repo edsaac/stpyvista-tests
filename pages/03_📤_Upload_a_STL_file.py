@@ -3,6 +3,8 @@ import streamlit as st
 import tempfile
 from stpyvista import stpyvista
 
+st.set_page_config(page_icon="🧊", layout="wide")
+
 # Add badges to sidebar
 with st.sidebar:
     with open("assets/badges.md") as f:
