@@ -14,6 +14,12 @@ def get_cow():
 
 st.title("🔁 Rotate around axis")
 
+## Some controls
+with st.form("Controls"):
+    axis = st.radio("Axis of rotation", [*"xyz"], horizontal=True)
+    speed = st.slider("Rotation speed", 0.1, 2.0, 0.2, 0.1, "%.1f")
+    st.form_submit_button("Submit")
+
 ## Initialize a plotter object
 plotter = pv.Plotter(window_size=[600,500])
 
@@ -22,6 +28,6 @@ plotter.add_mesh(cow)
 plotter.view_xy()
 
 ## Create animation
-rotation = {"axis":'y', "revolution_time":3.0}
-stpyvista(plotter, rotation=rotation ,key="pv_cow")
+rotation = {"axis":axis, "revolution_time":1/speed}
+stpyvista(plotter, rotation=rotation)
 
