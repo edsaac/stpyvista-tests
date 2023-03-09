@@ -19,7 +19,7 @@ with st.expander("See code:", expanded=False):
         
         ## Initialize pyvista reader and plotter
         plotter = pv.Plotter(border=False, window_size=[600,400]) 
-        plotter.background_color = "green"
+        plotter.background_color = "white"
         
         ## Add a bunch of spheres with different properties
         for i in range(5):
@@ -32,7 +32,7 @@ with st.expander("See code:", expanded=False):
         
         ## Send to streamlit
         with placeholder_render:
-            stpyvista(plotter, key="pvSpheres", opacity_background=0.2)
+            stpyvista(plotter, key="pvSpheres")
 
 st.warning("""
 Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html

@@ -13,6 +13,7 @@ if "sphere" not in st.session_state:
     pl = pv.Plotter(window_size=[300,200])
     pl.set_background('#D3EEFF')
     pl.add_mesh(pv.Sphere(center=(1, 0, 1)))
+    pl.view_isometric()
     st.session_state.sphere = pl
 
 sphere = st.session_state.sphere

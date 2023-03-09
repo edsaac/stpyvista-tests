@@ -28,7 +28,7 @@ if uploadedFile:
     
     ## Initialize pyvista reader and plotter
     plotter = pv.Plotter(border=False, window_size=[500,400]) 
-    plotter.background_color = "white"
+    plotter.background_color = "#f0f8ff"
 
     ## Create a tempfile to keep the uploaded file as pyvista's API 
     ## only supports file paths but not buffers
