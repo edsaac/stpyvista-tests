@@ -4,6 +4,7 @@ from pyvista import examples
 from stpyvista import stpyvista
 
 st.set_page_config(page_icon="🧊", layout="wide")
+pv.start_xvfb()
 
 if "cow" not in st.session_state:
     cow = pv.examples.download_cow()
