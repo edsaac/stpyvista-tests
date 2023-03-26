@@ -11,6 +11,8 @@ with st.sidebar:
 
 st.title("✨   Textures and spheres")
 
+st.error("Textures in Panel are not rendered?")
+
 placeholder_render = st.empty()
 
 with st.expander("See code:", expanded=False):
