@@ -1,7 +1,7 @@
 streamlit
-vtk==9.2.4
-pyvista==0.35.2
-stpyvista==0.0.5
-pythreejs==2.3.0
-ipywidgets==7.7.1
-ipython==8.4.0
+pyvista
+stpyvista
+panel
+bokeh
+ipywidgets
+ipython
