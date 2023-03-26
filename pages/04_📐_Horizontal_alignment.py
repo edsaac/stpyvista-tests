@@ -1,4 +1,6 @@
 import pyvista as pv
+pv.start_xvfb()
+
 import streamlit as st
 from stpyvista import stpyvista
 
