@@ -99,3 +99,10 @@ with st.expander("🔡 Also check:"):
     * [Post](https://discuss.streamlit.io/t/stpyvista-show-pyvista-3d-visualizations-in-streamlit/31802) on streamlit discuss forum.
 
     """
+
+r"""
+Current version **0.0.7**
+To do:
+- Document changes over versions here
+
+"""
