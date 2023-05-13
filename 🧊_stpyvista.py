@@ -6,9 +6,13 @@ from stpyvista import stpyvista
 st.set_page_config(page_icon="🧊", layout="wide")
 pv.start_xvfb()
 
-if "cow" not in st.session_state:
-    cow = pv.examples.download_cow()
-    st.session_state.cow = cow
+
+@st.cache_data
+def get_cow():
+    if "cow" not in st.session_state:
+        cow = pv.examples.download_cow()
+        st.session_state.cow = cow
+
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
@@ -22,10 +26,11 @@ with st.sidebar:
 st.title("🧊 `stpyvista`")
 st.header("Show PyVista 3D visualizations in Streamlit")
 
-cols = st.columns([1,1])
+cols = st.columns([1, 1])
 
 with cols[0]:
-    st.markdown("""
+    st.markdown(
+        """
     `stpyvista` is a simple component that takes a PyVista plotter object and shows 
     it on Streamlit as an interactive element (as in it can be zoomed in/out, moved 
     and rotated, but the visualization state is not returned).
@@ -40,21 +45,25 @@ with cols[0]:
     - 📤   Display your own STL file
 
     ****
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 with cols[1]:
-    plotter = pv.Plotter(window_size=[400,300])
-    
+    get_cow()
     cow = st.session_state.cow
-    plotter.add_mesh(cow, color='#babab2', pbr=True, metallic=0.05)
-    
-    plane = pv.Plane(center = [0,-3.65,0],direction=[0,1,0], i_size=12, j_size=12)
+
+    plotter = pv.Plotter(window_size=[400, 300])
+
+    plotter.add_mesh(cow, color="#babab2", pbr=True, metallic=0.05)
+
+    plane = pv.Plane(center=[0, -3.65, 0], direction=[0, 1, 0], i_size=12, j_size=12)
     plane.point_data.clear()
     plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
     plotter.background_color = "white"
     plotter.view_xy()
     plotter.camera.zoom(3.0)
-    stpyvista(plotter, horizontal_align="right")
+    stpyvista(plotter, horizontal_align="left")
 
 with st.expander("🛠️ Installation"):
     """
@@ -64,26 +73,25 @@ with st.expander("🛠️ Installation"):
     """
 
 with st.expander("✨ Use example", expanded=True):
-
     with st.echo():
         import streamlit as st
         import pyvista as pv
         from stpyvista import stpyvista
-        
+
         # ipythreejs does not support scalar bars :(
-        pv.global_theme.show_scalar_bar = False 
+        pv.global_theme.show_scalar_bar = False
 
         ## Initialize a plotter object
-        plotter = pv.Plotter(window_size=[400,400])
+        plotter = pv.Plotter(window_size=[400, 400])
 
-        ## Create a mesh with a cube 
-        mesh = pv.Cube(center=(0,0,0))
+        ## Create a mesh with a cube
+        mesh = pv.Cube(center=(0, 0, 0))
 
         ## Add some scalar field associated to the mesh
-        mesh['myscalar'] = mesh.points[:, 2]*mesh.points[:, 0]
+        mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
 
         ## Add mesh to the plotter
-        plotter.add_mesh(mesh, scalars='myscalar', cmap='bwr', line_width=1)
+        plotter.add_mesh(mesh, scalars="myscalar", cmap="bwr", line_width=1)
 
         ## Final touches
         plotter.background_color = "white"
@@ -101,8 +109,6 @@ with st.expander("🔡 Also check:"):
     """
 
 r"""
-Current version **0.0.7**
-To do:
-- Document changes over versions here
-
+*****
+Current version **0.0.8**
 """
