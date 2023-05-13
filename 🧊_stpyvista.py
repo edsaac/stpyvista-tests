@@ -9,9 +9,8 @@ pv.start_xvfb()
 
 @st.cache_data
 def get_cow():
-    if "cow" not in st.session_state:
-        cow = pv.examples.download_cow()
-        st.session_state.cow = cow
+    cow = pv.examples.download_cow()
+    return cow
 
 
 # Add some styling with CSS selectors
@@ -50,8 +49,7 @@ with cols[0]:
     )
 
 with cols[1]:
-    get_cow()
-    cow = st.session_state.cow
+    cow = get_cow()
 
     plotter = pv.Plotter(window_size=[400, 300])
 
