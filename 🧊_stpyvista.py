@@ -1,6 +1,5 @@
 import streamlit as st
 import pyvista as pv
-from pyvista import examples
 from stpyvista import stpyvista
 
 st.set_page_config(page_icon="🧊", layout="wide")
@@ -75,9 +74,6 @@ with st.expander("✨ Use example", expanded=True):
         import streamlit as st
         import pyvista as pv
         from stpyvista import stpyvista
-
-        # ipythreejs does not support scalar bars :(
-        pv.global_theme.show_scalar_bar = False
 
         ## Initialize a plotter object
         plotter = pv.Plotter(window_size=[400, 400])
