@@ -1,6 +1,7 @@
 import streamlit as st
 import pyvista as pv
 from stpyvista import stpyvista
+import pickle
 
 st.set_page_config(page_icon="🧊", layout="wide")
 pv.start_xvfb()
@@ -8,7 +9,8 @@ pv.start_xvfb()
 
 @st.cache_data
 def get_cow():
-    cow = pv.examples.download_cow()
+    with open("assets/cow.pkl", "rb") as f:
+        cow = pickle.load(f)
     return cow
 
 
