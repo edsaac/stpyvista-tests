@@ -2,7 +2,7 @@ import streamlit as st
 from stpyvista import stpyvista
 import pyvista as pv
 
-st.set_page_config(page_icon="🧱", layout="wide")
+st.set_page_config(page_icon="🧊", layout="wide")
 
 # Add badges to sidebar
 with st.sidebar:
