@@ -4,7 +4,7 @@ from stpyvista import stpyvista
 import pickle
 
 st.set_page_config(page_icon="🧊", layout="wide")
-# pv.start_xvfb()
+pv.start_xvfb()
 
 
 @st.cache_data
