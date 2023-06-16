@@ -2,7 +2,7 @@ from stpyvista import stpyvista
 import streamlit as st
 import pyvista as pv
 
-pv.start_xvfb()
+# pv.start_xvfb()
 
 
 st.set_page_config(page_icon="🧊", layout="wide")

@@ -4,13 +4,14 @@ from stpyvista import stpyvista
 import pickle
 
 st.set_page_config(page_icon="🧊", layout="wide")
-pv.start_xvfb()
+# pv.start_xvfb()
 
 
 @st.cache_data
 def get_cow(cow="cow"):
     with open("assets/cow.pkl", "rb") as f:
         cow = pickle.load(f)
+        print(type(cow))
     return cow
 
 
@@ -50,7 +51,7 @@ with cols[0]:
     )
 
 with cols[1]:
-    cow = get_cow()
+    cow = pv.Cylinder(height=8, radius=3)
 
     plotter = pv.Plotter(window_size=[400, 300])
 
