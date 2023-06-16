@@ -5,3 +5,5 @@ panel
 bokeh
 ipywidgets
 ipython
+matplotlib
+numpy

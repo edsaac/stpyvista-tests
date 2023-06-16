@@ -2,18 +2,27 @@ import streamlit as st
 import pyvista as pv
 from stpyvista import stpyvista
 import pickle
+import subprocess
 
 st.set_page_config(page_icon="🧊", layout="wide")
-pv.start_xvfb()
 
+## Check if xvfb is already running on the machine
+is_xvfb_running = subprocess.run(["pgrep", "Xvfb"], capture_output=True)
 
-@st.cache_data
-def get_cow(cow="cow"):
-    with open("assets/cow.pkl", "rb") as f:
-        cow = pickle.load(f)
-        print(type(cow))
-    return cow
+if is_xvfb_running.returncode == 1:
+    with st.sidebar:
+        st.warning("Xvfb was not running...")
+    pv.start_xvfb()
+else:
+    with st.sidebar:
+        st.info(f"Xvfb is running! \n\n`PID: {is_xvfb_running.stdout.decode('utf-8')}`")
 
+# @st.cache_data
+# def get_cow(does_nothing="cow"):
+#     with open("assets/cow.pkl", "rb") as f:
+#         cow = pickle.load(f)
+#         print(type(cow))
+#     return cow
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
@@ -51,18 +60,23 @@ with cols[0]:
     )
 
 with cols[1]:
-    cow = pv.Cylinder(height=8, radius=3)
+    cow = pv.Cylinder(radius=3.5, height=8)
 
-    plotter = pv.Plotter(window_size=[400, 300])
+    plotter = pv.Plotter()
 
-    plotter.add_mesh(cow, color="#babab2", pbr=True, metallic=0.05)
+    plotter.add_mesh(cow, color="pink", pbr=True, metallic=0.05)
 
     plane = pv.Plane(center=[0, -3.65, 0], direction=[0, 1, 0], i_size=12, j_size=12)
     plane.point_data.clear()
     plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
-    plotter.background_color = "white"
+    
+    ## Send to streamlit
+    plotter.background_color = 'white'
+    plotter.camera.zoom('tight')
     plotter.view_xy()
-    plotter.camera.zoom(3.0)
+    plotter.camera.azimuth = 45
+    plotter.camera.elevation = 25
+    plotter.window_size = [400, 300]
     stpyvista(plotter, horizontal_align="left")
 
 with st.expander("🛠️ Installation"):

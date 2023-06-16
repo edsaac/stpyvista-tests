@@ -19,5 +19,5 @@ h3 {
 }
 
 [data-testid='stSidebarNav'] > ul {
-    min-height: 50vh;
+    min-height: 60vh;
 }
