@@ -8,7 +8,7 @@ pv.start_xvfb()
 
 
 @st.cache_data
-def get_cow():
+def get_cow(cow="cow"):
     with open("assets/cow.pkl", "rb") as f:
         cow = pickle.load(f)
     return cow
