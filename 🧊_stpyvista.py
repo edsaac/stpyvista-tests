@@ -69,10 +69,10 @@ with cols[1]:
     plane = pv.Plane(center=[0, -3.65, 0], direction=[0, 1, 0], i_size=12, j_size=12)
     plane.point_data.clear()
     plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
-    
+
     ## Send to streamlit
-    plotter.background_color = 'white'
-    plotter.camera.zoom('tight')
+    plotter.background_color = "white"
+    plotter.camera.zoom("tight")
     plotter.view_xy()
     plotter.camera.azimuth = 45
     plotter.camera.elevation = 25

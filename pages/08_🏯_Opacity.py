@@ -17,7 +17,7 @@ with open("assets/style.css") as f:
 
 "## 🏯 Opacity"
 cmap = mpl.cm.tab20c_r
-cols = st.columns([2,1])
+cols = st.columns([2, 1])
 
 with cols[0]:
     "### 🔅 Single opacity value per mesh"
@@ -30,23 +30,24 @@ with cols[1]:
 
 with code_placeholder:
     with st.echo():
-    
         ## Sample a matplotlib colormap
         colors = cmap(np.linspace(0, 1, N_BOXES))
-        
+
         ## Add boxes to pyvista plotter
         plotter = pv.Plotter()
-        for i,c in enumerate(colors, start=1):
+        for i, c in enumerate(colors, start=1):
             cube = pv.Cube(center=(0, 0, i), x_length=2.5, y_length=1.5, z_length=0.75)
-            cube = cube.rotate_z(i*90/15, point=(0,0,0), inplace=True)
-            plotter.add_mesh(cube, edge_color='black', color=c, opacity=i/10, show_edges=True)
-        
+            cube = cube.rotate_z(i * 90 / 15, point=(0, 0, 0), inplace=True)
+            plotter.add_mesh(
+                cube, edge_color="black", color=c, opacity=i / 10, show_edges=True
+            )
+
         ## Plotter configuration
-        plotter.background_color = '#ffffff'
-        plotter.camera.zoom('tight')
+        plotter.background_color = "#ffffff"
+        plotter.camera.zoom("tight")
         plotter.view_isometric()
-        plotter.window_size = [200,400]
-        
+        plotter.window_size = [200, 400]
+
         with render_placeholder:
             stpyvista(plotter, panel_kwargs=dict(orientation_widget=True))
 
@@ -54,7 +55,7 @@ with code_placeholder:
 "**********"
 "## 🛕 Opacity as a field"
 
-cols = st.columns([1,2])
+cols = st.columns([1, 2])
 
 with cols[1]:
     "### 🔅 Opacity from a field"
@@ -86,11 +87,10 @@ with code_placeholder:
         plotter.add_mesh(surface, color=COLOR_PICK, opacity=surface["opacity"])
 
         ## Send to streamlit
-        plotter.background_color = 'white'
-        plotter.camera.zoom('tight')
+        plotter.background_color = "white"
+        plotter.camera.zoom("tight")
         plotter.view_isometric()
-        plotter.window_size = [400,400]
+        plotter.window_size = [400, 400]
 
         with render_placeholder:
             stpyvista(plotter, panel_kwargs=dict(orientation_widget=True))
-
