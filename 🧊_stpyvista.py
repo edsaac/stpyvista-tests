@@ -114,6 +114,7 @@ with st.expander("✨ Use example", expanded=True):
 with st.expander("🔡 Also check:"):
     """
     * The PyVista project at [https://www.pyvista.org/](https://www.pyvista.org/)
+    * Holoviz Panel VTK at [https://panel.holoviz.org/](https://panel.holoviz.org/reference/panes/VTK.html)
     * @blackary['s blog post](https://blog.streamlit.io/how-to-build-your-own-streamlit-component/) on how to build a custom component
     * [Post](https://discuss.streamlit.io/t/stpyvista-show-pyvista-3d-visualizations-in-streamlit/31802) on streamlit discuss forum.
 
