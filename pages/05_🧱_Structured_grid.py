@@ -31,8 +31,7 @@ with st.echo(code_location="below"):
 
     # Final touches
     plotter.background_color = "white"
-    plotter.camera.zoom("tight")
-    plotter.camera.elevation = -45
+    plotter.view_isometric()
     plotter.window_size = [600, 400]
 
     # Pass the plotter (not the mesh) to stpyvista
