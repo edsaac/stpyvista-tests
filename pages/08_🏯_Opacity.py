@@ -55,7 +55,7 @@ with code_placeholder:
 "**********"
 "## 🛕 Opacity as a field"
 
-cols = st.columns([1, 2])
+cols = st.columns([1.5, 1])
 
 with cols[1]:
     "### 🔅 Opacity from a field"

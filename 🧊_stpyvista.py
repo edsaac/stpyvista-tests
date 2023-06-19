@@ -48,12 +48,7 @@ with cols[0]:
     for taking the plotter, [exports it to HTML](https://panel.holoviz.org/reference/panes/VTK.html) 
     and displays that within an iframe.
 
-    **👈 List of demos:**
-
-    - 🔑   Pass a key to avoid model re-rendering
-    - 🍞   Textures and physically based rendering (PBR) [Not working]
-    - 📤   Display your own STL file
-
+    **👈 Check the list of demos**
     ****
     """,
         unsafe_allow_html=True,
@@ -67,8 +62,9 @@ with cols[1]:
     plotter.add_mesh(cow, color="pink", pbr=True, metallic=0.05)
 
     plane = pv.Plane(center=[0, -3.65, 0], direction=[0, 1, 0], i_size=12, j_size=12)
-    plane.point_data.clear()
+    # plane.point_data.clear()
     plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
+    # plotter.add_floor('-y', show_edges=True, color="#09ab3b", opacity=0.8)
 
     ## Send to streamlit
     plotter.background_color = "white"
@@ -76,8 +72,10 @@ with cols[1]:
     plotter.view_xy()
     plotter.camera.azimuth = 45
     plotter.camera.elevation = 25
-    plotter.window_size = [400, 300]
-    stpyvista(plotter, horizontal_align="left")
+    plotter.window_size = [350, 300]
+    stpyvista(plotter, horizontal_align="left",
+        panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True)
+    )
 
 with st.expander("🛠️ Installation"):
     """
