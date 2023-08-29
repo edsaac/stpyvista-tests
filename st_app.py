@@ -11,23 +11,23 @@ def is_embed():
     query_params = parse.parse_qs(ctx.query_string)
     return True if query_params.get("embed") else False
 
-APP_EMBED = is_embed()
+IS_APP_EMBED = is_embed()
 
 st.set_page_config(
     page_title="stpyvista",
     page_icon="🧊", 
-    layout="wide" if APP_EMBED else "centered", 
-    initial_sidebar_state="collapsed" if APP_EMBED else "expanded")
+    layout="wide" if IS_APP_EMBED else "centered", 
+    initial_sidebar_state="collapsed" if IS_APP_EMBED else "expanded")
 
 ## Check if xvfb is already running on the machine
 is_xvfb_running = subprocess.run(["pgrep", "Xvfb"], capture_output=True)
 
 if is_xvfb_running.returncode == 1:
-    if not APP_EMBED:
+    if not IS_APP_EMBED:
         st.toast("Xvfb was not running...", icon="⚠️")
     pv.start_xvfb()
 else:
-    if not APP_EMBED:
+    if not IS_APP_EMBED:
         st.toast(f"Xvfb is running! \n\n`PID: {is_xvfb_running.stdout.decode('utf-8')}`", icon="📺")
 
 # @st.cache_data
@@ -42,7 +42,7 @@ with open("assets/style.css") as f:
     st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
 # Add badges to sidebar
-if not APP_EMBED:
+if not IS_APP_EMBED:
     with st.sidebar:
         with open("assets/badges.md") as f:
             st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
