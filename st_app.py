@@ -1,7 +1,6 @@
 import streamlit as st
 import pyvista as pv
 from stpyvista import stpyvista
-import pickle
 import subprocess
 import urllib.parse as parse
 
@@ -10,7 +9,7 @@ def is_embed():
 
     ctx = get_script_run_ctx()
     query_params = parse.parse_qs(ctx.query_string)
-    return query_params.get("embed", False)[0]
+    return True if query_params.get("embed") else False
 
 APP_EMBED = is_embed()
 
