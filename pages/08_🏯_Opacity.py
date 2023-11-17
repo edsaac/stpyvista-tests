@@ -39,7 +39,7 @@ with code_placeholder:
             cube = pv.Cube(center=(0, 0, i), x_length=2.5, y_length=1.5, z_length=0.75)
             cube = cube.rotate_z(i * 90 / 15, point=(0, 0, 0), inplace=True)
             plotter.add_mesh(
-                cube, edge_color="black", color=c, opacity=i / 10, show_edges=True
+                cube, edge_color="black", color=c, opacity=i / N_BOXES, show_edges=True
             )
 
         ## Plotter configuration
