@@ -1,8 +1,8 @@
+numpy
+matplotlib
 streamlit
-pyvista
-stpyvista
 panel==0.14.4
 bokeh==2.4.3
-panel==1.12.0
-matplotlib
-numpy
+param==1.12.0
+pyvista
+stpyvista
