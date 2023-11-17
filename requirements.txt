@@ -6,3 +6,4 @@ bokeh==2.4.3
 param==1.12.0
 pyvista
 stpyvista
+ipython
