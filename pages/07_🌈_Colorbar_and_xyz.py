@@ -15,6 +15,8 @@ with open("assets/style.css") as f:
 
 "## 🌈 Colorbar and orientation widget"
 
+st.warning("""Colorbars only work when deploying locally :/""")
+
 plotter = pv.Plotter(window_size=[400, 400])
 mesh = pv.Cube(center=(0, 0, 0))
 mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]

@@ -26,15 +26,5 @@ if "sphere" not in st.session_state:
 sphere = st.session_state.sphere
 
 "## 📐   Horizontal alignment"
-
-with st.echo():
-    # The default is centered
-    stpyvista(sphere, key="sphere_center")
-
-with st.echo():
-    # But it can go on the left
-    stpyvista(sphere, horizontal_align="left", key="sphere_left")
-
-with st.echo():
-    # Or on the right
-    stpyvista(sphere, horizontal_align="right", key="sphere_right")
+alignment = st.select_slider("Align", ["left", "center", "right"], label_visibility="collapsed")
+stpyvista(sphere, horizontal_align=alignment, use_container_width=False)

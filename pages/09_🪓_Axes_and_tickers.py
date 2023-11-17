@@ -81,13 +81,15 @@ with st.echo("below"):
         ## tickers are required, one for each axis
         xticker=dict(
             ticks=[0, 1, 2, 3, 4],  ## ticks are required
-            labels=[*" αβγδ"],  ## labels are optional
-        ),
-        yticker=dict(
-            ticks=np.arange(0, 5, 1),
             labels=["", "😎", "DOS", "🌺", "IV"],
         ),
-        zticker=dict(ticks=np.arange(0, 5, 1)),
+        yticker=dict(
+            ticks=[0, 1, 2, 3, 4],  ## <- This needs to be a python list, not a np.array
+            labels=[*" αβγδ"],  ## labels are optional
+        ),
+        zticker=dict(
+            ticks=np.arange(0, 5, 1).tolist()
+        ),
         ## Optional parameters
         origin=[0, 0, 0],
         fontsize=22,
