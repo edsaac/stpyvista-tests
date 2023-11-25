@@ -15,11 +15,10 @@ with open("assets/style.css") as f:
 
 "## 🌈 Colorbar and orientation widget"
 
-st.warning("""
-    Colorbars only work with old versions of holoviz stuff:
-    - panel==0.14.4
-    - bokeh==2.4.3
-    - param==1.12.0
+st.info("""
+    Colorbars bug has been fixed in panel 1.3.2.
+    - More info: https://github.com/holoviz/panel/releases/tag/v1.3.2
+    - To upgrade: `pip install panel -U`
 """)
 
 plotter = pv.Plotter(window_size=[400, 400])
