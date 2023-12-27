@@ -21,3 +21,7 @@ h3 {
 [data-testid='stSidebarNav'] > ul {
     min-height: 60vh;
 }
+
+iframe[title='stpyvista.stpyvista']{
+    border-radius: 10px;
+}
