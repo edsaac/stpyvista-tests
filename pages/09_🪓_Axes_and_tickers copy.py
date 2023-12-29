@@ -39,7 +39,7 @@ if not IS_APP_EMBED:
 with st.sidebar:
     st.info(
         """
-        Check panel documentation for more options
+        Check `panel` documentation for more options
         https://panel.holoviz.org/api/panel.pane.vtk.html
         """
     )
