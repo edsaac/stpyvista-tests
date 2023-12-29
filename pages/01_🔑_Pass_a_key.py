@@ -1,39 +1,49 @@
 import pyvista as pv
-
-# pv.start_xvfb()
-
 import streamlit as st
 from stpyvista import stpyvista
+from stpyvista_utils import is_embed, is_xvfb
 
-st.set_page_config(page_icon="🧊", layout="wide")
+# Initial configuration
+if "IS_APP_EMBED" not in st.session_state:
+    st.session_state.IS_APP_EMBED = is_embed()
+IS_APP_EMBED = st.session_state.IS_APP_EMBED
 
-# Add badges to sidebar
-with st.sidebar:
-    with open("assets/badges.md") as f:
-        st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+if "IS_XVFB_RUNNING" not in st.session_state:
+    st.session_state.IS_XVFB_RUNNING = is_xvfb()
+IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
+
+st.set_page_config(
+    page_title="stpyvista",
+    page_icon="🧊", 
+    layout="wide" if IS_APP_EMBED else "centered", 
+    initial_sidebar_state="collapsed" if IS_APP_EMBED else "expanded")
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
     st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
-pv.global_theme.show_scalar_bar = False
+# Add badges to sidebar
+if not IS_APP_EMBED:
+    with st.sidebar:
+        with open("assets/badges.md") as f:
+            st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
+#--------------------------------------------------------------------------
 
 "## 🔑   Pass a key"
+# pv.global_theme.show_scalar_bar = False
 
 ## Initialize a plotter object
-plotter = pv.Plotter(window_size=[250, 250])
+@st.cache_resource
+def stpv_key(dummy:str = "key"):
+    plotter = pv.Plotter(window_size=[250, 250])
+    mesh = pv.Cube(center=(0, 0, 0))
+    mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
+    plotter.add_mesh(mesh, scalars="myscalar", cmap="bwr", line_width=1)
+    plotter.view_isometric()
+    return plotter
 
-## Create a mesh with a cube
-mesh = pv.Cube(center=(0, 0, 0))
-
-## Add some scalar field associated to the mesh
-mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
-
-## Add mesh to the plotter
-plotter.add_mesh(mesh, scalars="myscalar", cmap="bwr", line_width=1)
-
-## Final touches
-plotter.view_isometric()
+plotter = stpv_key()
 
 ## Show in streamlit
 cols = st.columns(2)

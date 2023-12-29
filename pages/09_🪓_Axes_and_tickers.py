@@ -1,21 +1,38 @@
+import pyvista as pv
 import streamlit as st
 from stpyvista import stpyvista
-import pyvista as pv
+from stpyvista_utils import is_embed, is_xvfb
 import matplotlib as mpl
 import numpy as np
 from itertools import product
 from random import random
 
-st.set_page_config(page_icon="🧊", layout="wide")
+# Initial configuration
+if "IS_APP_EMBED" not in st.session_state:
+    st.session_state.IS_APP_EMBED = is_embed()
+IS_APP_EMBED = st.session_state.IS_APP_EMBED
 
-# Add badges to sidebar
-with st.sidebar:
-    with open("assets/badges.md") as f:
-        st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+if "IS_XVFB_RUNNING" not in st.session_state:
+    st.session_state.IS_XVFB_RUNNING = is_xvfb()
+IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
+
+st.set_page_config(
+    page_title="stpyvista",
+    page_icon="🧊", 
+    layout="wide" if IS_APP_EMBED else "centered", 
+    initial_sidebar_state="collapsed" if IS_APP_EMBED else "expanded")
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
     st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
+
+# Add badges to sidebar
+if not IS_APP_EMBED:
+    with st.sidebar:
+        with open("assets/badges.md") as f:
+            st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
+#--------------------------------------------------------------------------
 
 "## 🪓 Axes"
 
@@ -61,19 +78,22 @@ with st.expander("🪓 **Documentation**"):
     """
 
 ## Add boxes to pyvista plotter
-cmap = mpl.cm.hsv
-plotter = pv.Plotter()
+@st.cache_resource
+def stpv_axis(dummy:str = "axis"):
+    cmap = mpl.cm.hsv
+    plotter = pv.Plotter()
 
-for i, j, k in product([1, 2, 3], repeat=3):
-    sphere = pv.Sphere(radius=0.25, center=(i, j, k))
-    plotter.add_mesh(sphere, color=cmap(random()), opacity=0.5)
+    for i, j, k in product([1, 2, 3], repeat=3):
+        sphere = pv.Sphere(radius=0.25, center=(i, j, k))
+        plotter.add_mesh(sphere, color=cmap(random()), opacity=0.5)
 
-## Plotter configuration
-plotter.background_color = "#ffffff"
-plotter.view_isometric()
-plotter.camera.elevation = -10
-plotter.camera.azimuth = 20
-plotter.window_size = [550, 500]
+    ## Plotter configuration
+    plotter.background_color = "#ffffee"
+    plotter.view_isometric()
+    plotter.camera.elevation = -10
+    plotter.camera.azimuth = 20
+    plotter.window_size = [550, 500]
+    return plotter
 
 with st.echo("below"):
     # Define axes to put in the rendered view
@@ -100,4 +120,5 @@ with st.echo("below"):
     )
 
     # Pass those axes to panel_kwargs of stpyvista
+    plotter = stpv_axis()
     stpyvista(plotter, panel_kwargs=dict(axes=axes, orientation_widget=True))

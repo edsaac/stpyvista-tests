@@ -1,17 +1,16 @@
 import streamlit as st
 import pyvista as pv
 from stpyvista import stpyvista
-import subprocess
-import urllib.parse as parse
+from stpyvista_utils import is_embed, is_xvfb
 
-def is_embed():
-    from streamlit.runtime.scriptrunner import get_script_run_ctx
+# Initial configuration
+if "IS_APP_EMBED" not in st.session_state:
+    st.session_state.IS_APP_EMBED = is_embed()
+IS_APP_EMBED = st.session_state.IS_APP_EMBED
 
-    ctx = get_script_run_ctx()
-    query_params = parse.parse_qs(ctx.query_string)
-    return True if query_params.get("embed") else False
-
-IS_APP_EMBED = is_embed()
+if "IS_XVFB_RUNNING" not in st.session_state:
+    st.session_state.IS_XVFB_RUNNING = is_xvfb()
+IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
 
 st.set_page_config(
     page_title="stpyvista",
@@ -19,23 +18,9 @@ st.set_page_config(
     layout="wide" if IS_APP_EMBED else "centered", 
     initial_sidebar_state="collapsed" if IS_APP_EMBED else "expanded")
 
-## Check if xvfb is already running on the machine
-is_xvfb_running = subprocess.run(["pgrep", "Xvfb"], capture_output=True)
-
-if is_xvfb_running.returncode == 1:
-    if not IS_APP_EMBED:
-        st.toast("Xvfb was not running...", icon="⚠️")
-    pv.start_xvfb()
-else:
-    if not IS_APP_EMBED:
-        st.toast(f"Xvfb is running! \n\n`PID: {is_xvfb_running.stdout.decode('utf-8')}`", icon="📺")
-
-# @st.cache_data
-# def get_cow(does_nothing="cow"):
-#     with open("assets/cow.pkl", "rb") as f:
-#         cow = pickle.load(f)
-#         print(type(cow))
-#     return cow
+# Inform xvfb status with a toast
+if not IS_APP_EMBED:
+    st.toast(IS_XVFB_RUNNING.message, icon=IS_XVFB_RUNNING.icon)
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
@@ -47,42 +32,47 @@ if not IS_APP_EMBED:
         with open("assets/badges.md") as f:
             st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
 
+# Start app
 st.title("🧊 `stpyvista`")
 st.subheader("Show PyVista 3D visualizations in Streamlit")
 
 ## Pyvista code
-cow = pv.Cylinder(radius=3.5, height=8)
-nose = pv.Cylinder(radius=0.5, height=8, direction=(0, 0, 1), center=(0, 0, 1.7))
-eye_left = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(-2.0, 1, 2))
-eye_left_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(-2.0, 1, 2))
-eye_right = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(2.0, 1, 2))
-eye_right_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(2.0, 1, 2))
+@st.cache_resource
+def stpv_intro(dummyvalue:str):
+    cow = pv.Cylinder(radius=3.5, height=8)
+    nose = pv.Cylinder(radius=0.5, height=8, direction=(0, 0, 1), center=(0, 0, 1.7))
+    eye_left = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(-2.0, 1, 2))
+    eye_left_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(-2.0, 1, 2))
+    eye_right = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(2.0, 1, 2))
+    eye_right_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(2.0, 1, 2))
 
+    plotter = pv.Plotter()
 
-plotter = pv.Plotter()
+    plotter.add_mesh(cow, color="grey", pbr=True, metallic=0.05)
+    plotter.add_mesh(nose, color="red", pbr=True, metallic=0.05)
+    plotter.add_mesh(eye_left, color="white", pbr=True, metallic=0.05)
+    plotter.add_mesh(eye_right, color="white", pbr=True, metallic=0.05)
+    plotter.add_mesh(eye_left_p, color="green")
+    plotter.add_mesh(eye_right_p, color="green")
 
-plotter.add_mesh(cow, color="grey", pbr=True, metallic=0.05)
-plotter.add_mesh(nose, color="red", pbr=True, metallic=0.05)
-plotter.add_mesh(eye_left, color="white", pbr=True, metallic=0.05)
-plotter.add_mesh(eye_right, color="white", pbr=True, metallic=0.05)
-plotter.add_mesh(eye_left_p, color="green")
-plotter.add_mesh(eye_right_p, color="green")
+    plane = pv.Plane(center=[0, -3.65, 0], direction=[0, 1, 0], i_size=12, j_size=12)
+    plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
 
+    plotter.background_color = "white"  
+    plotter.view_xy()
+    plotter.camera.azimuth = 25
+    plotter.camera.elevation = 15
 
-plane = pv.Plane(center=[0, -3.65, 0], direction=[0, 1, 0], i_size=12, j_size=12)
-plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
+    plotter.window_size = [450, 300]
+    return plotter
 
-# plotter.add_floor('-y', show_edges=True, color="#09ab3b", opacity=0.8)
-
-## Send to streamlit
-plotter.background_color = "white"  
-plotter.view_xy()
-plotter.camera.azimuth = 25
-plotter.camera.elevation = 15
-
-plotter.window_size = [450, 300]
+## Send plotter to streamlit
+plotter = stpv_intro("robot")
 stpyvista(plotter, horizontal_align="center",
-    panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True)
+    panel_kwargs=dict(
+        orientation_widget=True, 
+        interactive_orientation_widget=True
+    )
 )
 
 """
@@ -117,17 +107,23 @@ with st.expander("✨ Use example", expanded=True):
         mesh = pv.Cube(center=(0, 0, 0))
 
         ## Add some scalar field associated to the mesh
-        mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
+        mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 1] * mesh.points[:, 0]
 
         ## Add mesh to the plotter
-        plotter.add_mesh(mesh, scalars="myscalar", cmap="bwr", line_width=1)
+        plotter.add_mesh(
+            mesh,
+            scalars="myscalar", 
+            cmap="bwr", 
+            show_edges=True, 
+            edge_color="#001100"
+        )
 
         ## Final touches
         plotter.background_color = "white"
         plotter.view_isometric()
 
         ## Pass a key to avoid re-rendering at each time something changes in the page
-        stpyvista(plotter, key="pv_cube")
+        stpyvista(plotter) #, key="pv_cube")
 
 with st.expander("🔡 Also check:"):
     """

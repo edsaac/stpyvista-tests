@@ -1,30 +1,52 @@
 import pyvista as pv
-
-# pv.start_xvfb()
-
 import streamlit as st
 from stpyvista import stpyvista
+from stpyvista_utils import is_embed, is_xvfb
 
-st.set_page_config(page_icon="🧊", layout="wide")
+# Initial configuration
+if "IS_APP_EMBED" not in st.session_state:
+    st.session_state.IS_APP_EMBED = is_embed()
+IS_APP_EMBED = st.session_state.IS_APP_EMBED
 
-# Add badges to sidebar
-with st.sidebar:
-    with open("assets/badges.md") as f:
-        st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+if "IS_XVFB_RUNNING" not in st.session_state:
+    st.session_state.IS_XVFB_RUNNING = is_xvfb()
+IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
+
+st.set_page_config(
+    page_title="stpyvista",
+    page_icon="🧊", 
+    layout="wide" if IS_APP_EMBED else "centered", 
+    initial_sidebar_state="collapsed" if IS_APP_EMBED else "expanded")
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
     st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
-if "sphere" not in st.session_state:
+# Add badges to sidebar
+if not IS_APP_EMBED:
+    with st.sidebar:
+        with open("assets/badges.md") as f:
+            st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
+#--------------------------------------------------------------------------
+"## 📐   Horizontal alignment"
+
+@st.cache_resource
+def stpv_sphere(dummy:str = "sphere"):
     pl = pv.Plotter(window_size=[300, 200])
     pl.set_background("#D3EEFF")
     pl.add_mesh(pv.Sphere(center=(1, 0, 1)))
     pl.view_isometric()
-    st.session_state.sphere = pl
+    return pl
 
-sphere = st.session_state.sphere
+alignment = st.select_slider(
+    "Align", 
+    ["left", "center", "right"], 
+    label_visibility="collapsed"
+)
 
-"## 📐   Horizontal alignment"
-alignment = st.select_slider("Align", ["left", "center", "right"], label_visibility="collapsed")
-stpyvista(sphere, horizontal_align=alignment, use_container_width=False)
+stpyvista(
+    stpv_sphere(), 
+    horizontal_align=alignment, 
+    use_container_width=False
+)
