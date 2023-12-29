@@ -8,19 +8,20 @@ if "IS_APP_EMBED" not in st.session_state:
     st.session_state.IS_APP_EMBED = is_embed()
 IS_APP_EMBED = st.session_state.IS_APP_EMBED
 
-if "IS_XVFB_RUNNING" not in st.session_state:
-    st.session_state.IS_XVFB_RUNNING = is_xvfb()
-IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
-
 st.set_page_config(
     page_title="stpyvista",
     page_icon="🧊", 
     layout="wide" if IS_APP_EMBED else "centered", 
     initial_sidebar_state="collapsed" if IS_APP_EMBED else "expanded")
 
-# Inform xvfb status with a toast
-if not IS_APP_EMBED:
-    st.toast(IS_XVFB_RUNNING.message, icon=IS_XVFB_RUNNING.icon)
+if "IS_XVFB_RUNNING" not in st.session_state:
+    IS_XVFB_RUNNING = is_xvfb()
+    st.session_state.IS_XVFB_RUNNING = IS_XVFB_RUNNING
+    
+    # Inform xvfb status with a toast
+    if not IS_APP_EMBED: st.toast(IS_XVFB_RUNNING.message, icon=IS_XVFB_RUNNING.icon)
+
+IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
