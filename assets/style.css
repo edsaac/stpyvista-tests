@@ -19,9 +19,13 @@ h3 {
 }
 
 [data-testid='stSidebarNav'] > ul {
-    min-height: 60vh;
+    min-height: 66vh;
 }
 
 iframe[title='stpyvista.stpyvista']{
+    border-radius: 10px;
+}
+
+iframe[title='stpyvista.rendered']{
     border-radius: 10px;
 }

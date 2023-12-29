@@ -1,7 +1,7 @@
 <div id="fixedbadges" style="position:fixed; bottom: 1%; left:1%;">
-📌 Useful links:
+&#x1F4CC;
 <br>
-<a href="https://github.com/edsaac/stpyvista"><img alt="stpyvista source code" src="https://img.shields.io/static/v1?label=:&message=Source%20code&color=informational&logo=github"></a>
+<a href="https://github.com/edsaac/stpyvista"><img alt="stpyvista source code" src="https://img.shields.io/static/v1?label=:&message=stpyvista&color=informational&logo=github"></a>
 <br>
 <a href="https://pypi.org/project/stpyvista/"><img alt="stpyvista pypi version" src="https://badgen.net/pypi/v/stpyvista"></a>
 <br>

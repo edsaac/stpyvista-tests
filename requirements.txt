@@ -6,3 +6,5 @@ bokeh
 param
 pyvista
 stpyvista
+geovista
+colorcet
