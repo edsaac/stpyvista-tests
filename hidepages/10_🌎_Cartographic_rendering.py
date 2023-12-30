@@ -38,8 +38,8 @@ def stpv_planet(dummy:str = "planet"):
     from collections import namedtuple
     Point = namedtuple("Point", ["lat", "lon"])
 
-    x = np.arange(-180, 182, 2) #Lon
-    y = np.arange(90, -92, -2)  #Lat
+    x = np.arange(-180, 182, 4) #Lon
+    y = np.arange(90, -92, 4)  #Lat
     xx,yy = np.meshgrid(
         np.deg2rad(x), 
         np.deg2rad(y)

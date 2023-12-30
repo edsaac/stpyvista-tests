@@ -29,3 +29,19 @@ iframe[title='stpyvista.stpyvista']{
 iframe[title='stpyvista.rendered']{
     border-radius: 10px;
 }
+
+section[data-testid="stSidebar"] h1{
+    font-size: 6rem;
+}
+
+section[data-testid="stSidebar"] h2{
+    font-size: 2rem;
+}
+
+div[data-testid="stCaptionContainer"]{
+    text-align: center;
+}
+
+div[data-testid="stSidebarUserContent"]{
+    padding-top: 2rem;
+}
