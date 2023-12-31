@@ -254,14 +254,14 @@ def stpv_planet(dummy:str = "planet"):
 if __name__ == "__main__":
     pass
 
-else:
-    stpv_intro()
-    stpv_key()
-    stpv_cube()
-    stpv_sphere()
-    stpv_spheres()
-    stpv_tower(8)
-    stpv_structuredgrid()
-    stpv_axis()
-    stpv_ripple()
-    stpv_planet()
+# else:
+#     stpv_intro()
+#     stpv_key()
+#     stpv_cube()
+#     stpv_sphere()
+#     stpv_spheres()
+#     stpv_tower(8)
+#     stpv_structuredgrid()
+#     stpv_axis()
+#     stpv_ripple()
+#     stpv_planet()

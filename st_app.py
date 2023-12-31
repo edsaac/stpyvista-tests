@@ -42,15 +42,15 @@ if not IS_APP_EMBED:
 
 GALLERY = {
     "KEY":    "🔑 Pass a key",
-    "SPHERE": "✨ Textures and spheres",
-    "STL":    "📤 Upload a STL file",
-    "ALIGN":  "📐 Horizontal alignment",
+    # "SPHERE": "✨ Textures and spheres",
+    # "STL":    "📤 Upload a STL file",
+    # "ALIGN":  "📐 Horizontal alignment",
     "GRID":   "🧱 Structured grid",
-    "SLIDER": "🔮 Sphere slider", 
+    # "SLIDER": "🔮 Sphere slider", 
     "XYZ":    "🌈 Colorbar and xyz",
-    "OPACITY": "🗼 Opacity",
+    # "OPACITY": "🗼 Opacity",
     "AXES":   "🪓 Axes and tickers",
-    "GEOVISTA": "🌎 Cartographic rendering"
+    "GEOVISTA": "🌎 Cartographic rendering",
 }
 
 # Start app
