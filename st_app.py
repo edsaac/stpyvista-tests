@@ -45,12 +45,12 @@ GALLERY = {
     # "SPHERE": "✨ Textures and spheres",
     # "STL":    "📤 Upload a STL file",
     # "ALIGN":  "📐 Horizontal alignment",
-    "GRID":   "🧱 Structured grid",
+    # "GRID":   "🧱 Structured grid",
     # "SLIDER": "🔮 Sphere slider", 
-    "XYZ":    "🌈 Colorbar and xyz",
+    # "XYZ":    "🌈 Colorbar and xyz",
     # "OPACITY": "🗼 Opacity",
-    "AXES":   "🪓 Axes and tickers",
-    "GEOVISTA": "🌎 Cartographic rendering",
+    # "AXES":   "🪓 Axes and tickers",
+    # "GEOVISTA": "🌎 Cartographic rendering",
 }
 
 # Start app
