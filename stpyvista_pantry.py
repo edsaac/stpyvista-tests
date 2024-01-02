@@ -224,7 +224,8 @@ def stpv_planet(dummy:str = "planet"):
     )
     plotter.add_coastlines(
         color="white", 
-        line_width=12
+        line_width=12,
+        resolution="110m",
     )
     plotter.view_xz(negative=False)
     plotter.add_text(
@@ -246,7 +247,7 @@ def stpv_planet(dummy:str = "planet"):
     plotter.add_mesh(
         blob, show_edges=False, 
         style='surface', cmap="CET_R1_r",
-        clim=[0, np.pi * radius]
+        clim=[0, 0.95 * np.pi * radius]
     )
 
     return plotter
