@@ -4,9 +4,7 @@ from stpyvista import stpyvista
 from stpyvista_utils import is_embed, is_xvfb
 
 import tempfile
-import matplotlib as mpl
-from itertools import product
-from random import random
+from datetime import datetime
 import numpy as np 
 import inspect
 
@@ -19,14 +17,16 @@ st.set_page_config(
     page_title="stpyvista",
     page_icon="🧊", 
     layout="wide" if IS_APP_EMBED else "centered", 
-    initial_sidebar_state="collapsed" if IS_APP_EMBED else "expanded")
+    initial_sidebar_state="collapsed")
 
 if "IS_XVFB_RUNNING" not in st.session_state:
     IS_XVFB_RUNNING = is_xvfb()
     st.session_state.IS_XVFB_RUNNING = IS_XVFB_RUNNING
     
     # Inform xvfb status with a toast
-    if not IS_APP_EMBED: st.toast(IS_XVFB_RUNNING.message, icon=IS_XVFB_RUNNING.icon)
+    if not IS_APP_EMBED: 
+        st.toast(IS_XVFB_RUNNING.message, icon=IS_XVFB_RUNNING.icon)
+        print(datetime.utcnow(), IS_XVFB_RUNNING.message)
 
 IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
 
@@ -92,6 +92,8 @@ if not selection:
             `stpyvista` displays PyVista plotter objects in streamlit web apps,
             using [`panel`](https://panel.holoviz.org/reference/panes/VTK.html).
             """
+
+        st.info("Check the gallery in the sidebar!", icon="👈")
 
         with st.expander("🛠️ Installation", expanded=True):
             """
