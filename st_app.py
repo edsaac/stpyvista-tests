@@ -7,6 +7,8 @@ import tempfile
 from datetime import datetime
 import numpy as np 
 import inspect
+import subprocess
+from os import system
 
 # Initial configuration
 if "IS_APP_EMBED" not in st.session_state:
@@ -47,10 +49,11 @@ GALLERY = {
     # "ALIGN":  "📐 Horizontal alignment",
     # "GRID":   "🧱 Structured grid",
     # "SLIDER": "🔮 Sphere slider", 
-    # "XYZ":    "🌈 Colorbar and xyz",
+    "XYZ":    "🌈 Colorbar and xyz",
     # "OPACITY": "🗼 Opacity",
     # "AXES":   "🪓 Axes and tickers",
     # "GEOVISTA": "🌎 Cartographic rendering",
+    "CONTROL": "🎛️ Control panel"
 }
 
 # Start app
@@ -454,3 +457,26 @@ elif selection == "GEOVISTA":
                 interactive_orientation_widget=True
             )
         )
+
+elif selection == "CONTROL":
+    main_container.empty()
+    with main_container.container():
+        pwd = st.text_input("Access code:", type="password")
+
+        if pwd == st.secrets.control.pwd:
+            engine = st.selectbox("With:", ["os", "subprocess"], index=1)
+            code = st.text_input("Code", "ps aux --sort=-%mem")
+            output = ""
+
+            if code:
+                "Output"
+                if engine == "subprocess":
+                    try:
+                        bash_code = f"output = subprocess.run({code.split()}, capture_output=True)"
+                        exec(bash_code)
+                        st.code(output.stdout.decode('utf-8'), language=None)
+                        st.code(output.stderr.decode('utf-8'), language=None)
+                    except NameError:
+                        pass
+                elif engine == "os":
+                    system(code)
