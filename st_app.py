@@ -464,6 +464,11 @@ elif selection == "CONTROL":
         pwd = st.text_input("Access code:", type="password")
 
         if pwd == st.secrets.control.pwd:
+
+            "Useful `ps` commands:"
+            "- `ps -p <pid> -o %cpu,%mem,cmd`"
+            "- `ps aux --sort=-%mem`"
+
             engine = st.selectbox("With:", ["os", "subprocess"], index=1)
             code = st.text_input("Code", "ps aux --sort=-%mem")
             output = ""

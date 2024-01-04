@@ -2,3 +2,4 @@ procps
 libgl1-mesa-glx
 xvfb
 libxrender-dev
+cron
