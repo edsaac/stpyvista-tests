@@ -10,4 +10,4 @@ while True:
     system(f"ps aux --sort=-%mem >> {LOGFILE}")
     system(f"""echo "----------------" >> {LOGFILE}""")
 
-    sleep(120)
+    sleep(5*60)
