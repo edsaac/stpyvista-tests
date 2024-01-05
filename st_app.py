@@ -1,13 +1,10 @@
 import streamlit as st
-import pyvista as pv
 from stpyvista import stpyvista
 from stpyvista_utils import is_embed, is_xvfb
 
 import tempfile
 from datetime import datetime
-import numpy as np 
 import inspect
-import subprocess
 from os import system
 
 # Initial configuration
@@ -82,7 +79,7 @@ if not selection:
 
         ## Send plotter to streamlit
         plotter = stpv_intro()
-        stpyvista(plotter, horizontal_align="center",
+        stpyvista(plotter,
             panel_kwargs=dict(
                 orientation_widget=True, 
                 interactive_orientation_widget=True
@@ -106,35 +103,17 @@ if not selection:
             """
 
         with st.expander("✨ Use example", expanded=False):
-            with st.echo():
-                import streamlit as st
-                import pyvista as pv
-                from stpyvista import stpyvista
+            code, line_no = inspect.getsourcelines(stpv_usage_example)
 
-                ## Initialize a plotter object
-                plotter = pv.Plotter(window_size=[400, 400])
+            st.code(
+                basic_import_text +
+                "".join(code) +
+                "\n## Pass a plotter to stpyvista" 
+                """\nstpyvista(stpv_usage_example())""", 
+                language="python", line_numbers=True
+            )
 
-                ## Create a mesh with a cube
-                mesh = pv.Cube(center=(0, 0, 0))
-
-                ## Add some scalar field associated to the mesh
-                mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 1] * mesh.points[:, 0]
-
-                ## Add mesh to the plotter
-                plotter.add_mesh(
-                    mesh,
-                    scalars="myscalar", 
-                    cmap="bwr", 
-                    show_edges=True, 
-                    edge_color="#001100"
-                )
-
-                ## Final touches
-                plotter.background_color = "white"
-                plotter.view_isometric()
-
-                ## Pass a key to avoid re-rendering at each time something changes in the page
-                stpyvista(plotter) #, key="pv_cube")
+            stpyvista(stpv_usage_example()) 
 
         with st.expander("🔡 Also check:"):
             """
@@ -179,7 +158,7 @@ elif selection == "SPHERE":
             "***"
             st.error("Textures in `panel` are not rendered?")
 
-        stpyvista(stpv_spheres(), key="pvSpheres")
+        stpyvista(stpv_spheres())
         st.caption("Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html")
 
 elif selection == "STL":
@@ -241,13 +220,13 @@ elif selection == "GRID":
     with main_container.container():
         "## 🧱 Structured grid"
         code, line_no = inspect.getsourcelines(stpv_structuredgrid)
-        stpyvista(stpv_structuredgrid(), key="stpv_grid")
+        stpyvista(stpv_structuredgrid())
         
         st.code(
             "import numpy as np\n" +
             basic_import_text +
             "".join(code) + 
-            """\nstpyvista(stpv_structuredgrid(), key="stpv_grid")""", 
+            """\nstpyvista(stpv_structuredgrid())""", 
             language="python", line_numbers=True
         )
 

@@ -8,6 +8,7 @@ import geovista as gv
 from collections import namedtuple
 
 basic_import_text = (
+    "import streamlit as st\n"
     "import pyvista as pv\n"
     "from stpyvista import stpyvista\n\n"
 )
@@ -15,19 +16,20 @@ basic_import_text = (
 ## Pyvista code
 @st.cache_resource
 def stpv_intro(dummy:str = "robot"):
-    cow = pv.Cylinder(radius=3.5, height=8)
+    plotter = pv.Plotter()
+    
+    head = pv.Cylinder(radius=3.5, height=8)
     nose = pv.Cylinder(radius=0.5, height=8, direction=(0, 0, 1), center=(0, 0, 1.7))
     eye_left = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(-2.0, 1, 2))
     eye_left_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(-2.0, 1, 2))
     eye_right = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(2.0, 1, 2))
     eye_right_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(2.0, 1, 2))
 
-    plotter = pv.Plotter()
 
-    plotter.add_mesh(cow, color="grey", pbr=True, metallic=0.05)
-    plotter.add_mesh(nose, color="red", pbr=True, metallic=0.05)
-    plotter.add_mesh(eye_left, color="white", pbr=True, metallic=0.05)
-    plotter.add_mesh(eye_right, color="white", pbr=True, metallic=0.05)
+    plotter.add_mesh(head, color="grey")
+    plotter.add_mesh(nose, color="red")
+    plotter.add_mesh(eye_left, color="white")
+    plotter.add_mesh(eye_right, color="white")
     plotter.add_mesh(eye_left_p, color="green")
     plotter.add_mesh(eye_right_p, color="green")
 
@@ -40,6 +42,34 @@ def stpv_intro(dummy:str = "robot"):
     plotter.camera.elevation = 15
 
     plotter.window_size = [450, 300]
+    return plotter
+
+## Usage example
+@st.cache_resource
+def stpv_usage_example(dummy:str = "cube"):
+    
+    ## Initialize a plotter object
+    plotter = pv.Plotter(window_size=[400, 400])
+
+    ## Create a mesh with a cube
+    mesh = pv.Cube(center=(0, 0, 0))
+
+    ## Add some scalar field associated to the mesh
+    mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 1] * mesh.points[:, 0]
+
+    ## Add mesh to the plotter
+    plotter.add_mesh(
+        mesh,
+        scalars="myscalar", 
+        cmap="bwr", 
+        show_edges=True, 
+        edge_color="#001100"
+    )
+
+    ## Final touches
+    plotter.background_color = "white"
+    plotter.view_isometric()
+
     return plotter
 
 ## Initialize a plotter object
