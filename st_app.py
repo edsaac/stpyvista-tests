@@ -464,7 +464,12 @@ elif selection == "CONTROL":
         pwd = st.text_input("Access code:", type="password")
 
         if pwd == st.secrets.control.pwd:
+            
+            if st.button("Clear cache"): 
+                st.cache_resource.clear()
 
+            "********"
+            
             "Useful `ps` commands:"
             "- `ps -p <pid> -o %cpu,%mem,cmd`"
             "- `ps aux --sort=-%mem`"
