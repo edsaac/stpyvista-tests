@@ -471,8 +471,10 @@ elif selection == "CONTROL":
             "********"
             
             "Useful `ps` commands:"
-            "- `ps -p <pid> -o %cpu,%mem,cmd`"
-            "- `ps aux --sort=-%mem`"
+            """
+            - `ps -p <pid> -o %cpu,%mem,cmd`
+            - `ps aux --sort=-%mem`
+            """
             """echo "* * * * * echo HELLO >> /mount/src/stpyvista-tests/my_log" >> my_cron; crontab my_cron"""
             
             engine = st.selectbox("With:", ["os", "subprocess"], index=1)
