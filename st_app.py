@@ -5,7 +5,10 @@ from stpyvista_utils import is_embed, is_xvfb
 import tempfile
 from datetime import datetime
 import inspect
+
+## Debugging
 from os import system
+import subprocess
 
 # Initial configuration
 if "IS_APP_EMBED" not in st.session_state:
