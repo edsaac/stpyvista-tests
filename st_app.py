@@ -51,7 +51,7 @@ GALLERY = {
     # "SLIDER": "🔮 Sphere slider", 
     "XYZ":    "🌈 Colorbar and xyz",
     # "OPACITY": "🗼 Opacity",
-    # "AXES":   "🪓 Axes and tickers",
+    "AXES":   "🪓 Axes and tickers",
     # "GEOVISTA": "🌎 Cartographic rendering",
     "CONTROL": "🎛️ Control panel"
 }
