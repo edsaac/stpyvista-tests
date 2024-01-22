@@ -1,6 +1,6 @@
 import streamlit as st
 from stpyvista import stpyvista
-from stpyvista_utils import is_embed, is_xvfb
+from stpyvista_utils import is_embed, is_xvfb, get_ip
 
 import tempfile
 from datetime import datetime
@@ -8,7 +8,6 @@ import inspect
 
 ## Debugging
 from os import system
-import subprocess
 
 # Initial configuration
 if "IS_APP_EMBED" not in st.session_state:
@@ -17,18 +16,20 @@ IS_APP_EMBED = st.session_state.IS_APP_EMBED
 
 st.set_page_config(
     page_title="stpyvista",
-    page_icon="🧊", 
-    layout="wide" if IS_APP_EMBED else "centered", 
-    initial_sidebar_state="collapsed")
+    page_icon="🧊",
+    layout="wide" if IS_APP_EMBED else "centered",
+    initial_sidebar_state="collapsed",
+)
 
 if "IS_XVFB_RUNNING" not in st.session_state:
     IS_XVFB_RUNNING = is_xvfb()
     st.session_state.IS_XVFB_RUNNING = IS_XVFB_RUNNING
-    
+
     # Inform xvfb status with a toast
-    if not IS_APP_EMBED: 
+    if not IS_APP_EMBED:
         st.toast(IS_XVFB_RUNNING.message, icon=IS_XVFB_RUNNING.icon)
-        print(datetime.utcnow(), IS_XVFB_RUNNING.message)
+        print(datetime.utcnow(), '\n', IS_XVFB_RUNNING.message)
+        print(f" Connected from <-- {get_ip()}")
 
 IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
 
@@ -43,17 +44,17 @@ if not IS_APP_EMBED:
             st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
 
 GALLERY = {
-    "KEY":    "🔑 Pass a key",
+    "KEY": "🔑 Pass a key",
     # "SPHERE": "✨ Textures and spheres",
     # "STL":    "📤 Upload a STL file",
-    "ALIGN":  "📐 Horizontal alignment",
-    "GRID":   "🧱 Structured grid",
-    # "SLIDER": "🔮 Sphere slider", 
-    "XYZ":    "🌈 Colorbar and xyz",
+    "ALIGN": "📐 Horizontal alignment",
+    "GRID": "🧱 Structured grid",
+    # "SLIDER": "🔮 Sphere slider",
+    "XYZ": "🌈 Colorbar and xyz",
     # "OPACITY": "🗼 Opacity",
-    "AXES":   "🪓 Axes and tickers",
+    "AXES": "🪓 Axes and tickers",
     # "GEOVISTA": "🌎 Cartographic rendering",
-    "CONTROL": "🎛️ Control panel"
+    "CONTROL": "🎛️ Control panel",
 }
 
 # Start app
@@ -71,7 +72,7 @@ with st.sidebar:
         GALLERY.keys(),
         index=None,
         label_visibility="collapsed",
-        format_func=lambda x: GALLERY.get(x, "Select an option...")
+        format_func=lambda x: GALLERY.get(x, "Select an option..."),
     )
 
 
@@ -82,11 +83,11 @@ if not selection:
 
         ## Send plotter to streamlit
         plotter = stpv_intro()
-        stpyvista(plotter,
+        stpyvista(
+            plotter,
             panel_kwargs=dict(
-                orientation_widget=True, 
-                interactive_orientation_widget=True
-            )
+                orientation_widget=True, interactive_orientation_widget=True
+            ),
         )
 
         with st.sidebar:
@@ -109,14 +110,13 @@ if not selection:
             code, line_no = inspect.getsourcelines(stpv_usage_example)
 
             st.code(
-                basic_import_text +
-                "".join(code) +
-                "\n## Pass a plotter to stpyvista" 
-                """\nstpyvista(stpv_usage_example())""", 
-                language="python", line_numbers=True
+                basic_import_text + "".join(code) + "\n## Pass a plotter to stpyvista"
+                """\nstpyvista(stpv_usage_example())""",
+                language="python",
+                line_numbers=True,
             )
 
-            stpyvista(stpv_usage_example()) 
+            stpyvista(stpv_usage_example())
 
         with st.expander("🔡 Also check:"):
             """
@@ -150,7 +150,10 @@ elif selection == "KEY":
             with st.echo(code_location="below"):
                 stpyvista(plotter)
 
-        st.button("🤔 Will this button make `stpyvista` to lose its state?", use_container_width=True)
+        st.button(
+            "🤔 Will this button make `stpyvista` to lose its state?",
+            use_container_width=True,
+        )
 
 elif selection == "SPHERE":
     main_container.empty()
@@ -162,7 +165,9 @@ elif selection == "SPHERE":
             st.error("Textures in `panel` are not rendered?")
 
         stpyvista(stpv_spheres())
-        st.caption("Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html")
+        st.caption(
+            "Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html"
+        )
 
 elif selection == "STL":
     main_container.empty()
@@ -177,7 +182,10 @@ elif selection == "STL":
 
         with placeholder:
             uploadedFile = st.file_uploader(
-                "Upload a STL file:", ["stl"], accept_multiple_files=False, key="fileuploader"
+                "Upload a STL file:",
+                ["stl"],
+                accept_multiple_files=False,
+                key="fileuploader",
             )
 
         if uploadedFile:
@@ -207,16 +215,10 @@ elif selection == "ALIGN":
         "## 📐   Horizontal alignment"
 
         alignment = st.select_slider(
-            "Align", 
-            ["left", "center", "right"], 
-            label_visibility="collapsed"
+            "Align", ["left", "center", "right"], label_visibility="collapsed"
         )
 
-        stpyvista(
-            stpv_sphere(), 
-            horizontal_align=alignment, 
-            use_container_width=False
-        )
+        stpyvista(stpv_sphere(), horizontal_align=alignment, use_container_width=False)
 
 elif selection == "GRID":
     main_container.empty()
@@ -224,13 +226,14 @@ elif selection == "GRID":
         "## 🧱 Structured grid"
         code, line_no = inspect.getsourcelines(stpv_structuredgrid)
         stpyvista(stpv_structuredgrid())
-        
+
         st.code(
-            "import numpy as np\n" +
-            basic_import_text +
-            "".join(code) + 
-            """\nstpyvista(stpv_structuredgrid())""", 
-            language="python", line_numbers=True
+            "import numpy as np\n"
+            + basic_import_text
+            + "".join(code)
+            + """\nstpyvista(stpv_structuredgrid())""",
+            language="python",
+            line_numbers=True,
         )
 
 elif selection == "SLIDER":
@@ -239,12 +242,12 @@ elif selection == "SLIDER":
         "## 🔮 Sphere"
 
         code = (
-            "res = st.slider(\"Resolution\", 5, 100, 20, 5)\n\n"
+            'res = st.slider("Resolution", 5, 100, 20, 5)\n\n'
             "# Set up plotter\n"
             "plotter = pv.Plotter(window_size=[300, 300])\n\n"
             "# Create element\n"
             "sphere = pv.Sphere(phi_resolution=res, theta_resolution=res)\n"
-            "plotter.add_mesh(sphere, name=\"sphere\", show_edges=True)\n"
+            'plotter.add_mesh(sphere, name="sphere", show_edges=True)\n'
             "plotter.view_isometric()\n\n"
             "# Pass the plotter (not the mesh) to stpyvista\n"
             "stpyvista(plotter)"
@@ -260,10 +263,10 @@ elif selection == "XYZ":
 
         st.toast(
             "Colorbar bug was fixed in [panel 1.3.2](https://github.com/holoviz/panel/releases/tag/v1.3.2).",
-            icon="🎇"
+            icon="🎇",
         )
 
-        cube = stpv_cube()    
+        cube = stpv_cube()
 
         "### 🌈 The three dots expand the colorbar legend"
         with st.echo():
@@ -280,8 +283,7 @@ elif selection == "XYZ":
             stpyvista(
                 cube,
                 panel_kwargs=dict(
-                    orientation_widget=True, 
-                    interactive_orientation_widget=True
+                    orientation_widget=True, interactive_orientation_widget=True
                 ),
             )
 
@@ -297,7 +299,6 @@ elif selection == "XYZ":
 elif selection == "OPACITY":
     main_container.empty()
     with main_container.container():
-        
         "## 🏯 Opacity"
         "### 🔅 Single opacity value per mesh"
         cols = st.columns([2, 1])
@@ -314,13 +315,11 @@ elif selection == "OPACITY":
             code, line_no = inspect.getsourcelines(stpv_tower)
             st.code(
                 "import numpy as np\n"
-                "import matplotlib as mpl\n" +
-                basic_import_text +
-                "".join(code) + "\n"
-                "N_BOXES = st.number_input(\"`N_BOXES`\", 0, 12, 8, 1)"
-                "tower = stpv_tower(N_BOXES)\n" +
-                "stpyvista(tower, panel_kwargs=dict(orientation_widget=True))",
-                line_numbers=True
+                "import matplotlib as mpl\n" + basic_import_text + "".join(code) + "\n"
+                'N_BOXES = st.number_input("`N_BOXES`", 0, 12, 8, 1)'
+                "tower = stpv_tower(N_BOXES)\n"
+                + "stpyvista(tower, panel_kwargs=dict(orientation_widget=True))",
+                line_numbers=True,
             )
 
         with render_placeholder:
@@ -330,7 +329,9 @@ elif selection == "OPACITY":
         ###########
         "**********"
         "### 🔅 Opacity from a field"
-        COLOR_PICK = st.color_picker("`COLOR_PICK`", value="#800080", help="Pick a color for the plane")
+        COLOR_PICK = st.color_picker(
+            "`COLOR_PICK`", value="#800080", help="Pick a color for the plane"
+        )
         render_placeholder = st.empty()
         code_placeholder = st.empty()
         "&nbsp;"
@@ -338,36 +339,35 @@ elif selection == "OPACITY":
         with code_placeholder:
             code, line_no = inspect.getsourcelines(stpv_ripple)
             st.code(
-                "import numpy as np\n" + 
-                basic_import_text +
-                "".join(code) + "\n"
-                "COLOR_PICK = st.color_picker(\"`COLOR_PICK`\", value=\"#800080\", help=\"Pick a color for the plane\")\n"
+                "import numpy as np\n" + basic_import_text + "".join(code) + "\n"
+                'COLOR_PICK = st.color_picker("`COLOR_PICK`", value="#800080", help="Pick a color for the plane")\n'
                 "ripple = stpv_ripple()\n"
                 "ripple.actors['plane'].prop.color = COLOR_PICK\n"
                 "stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))",
-                line_numbers=True
+                line_numbers=True,
             )
 
         with render_placeholder:
             ripple = stpv_ripple()
-            ripple.actors['plane'].prop.color = COLOR_PICK 
+            ripple.actors["plane"].prop.color = COLOR_PICK
             stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))
 
 elif selection == "AXES":
     main_container.empty()
     with main_container.container():
-
         "## 🪓 Axes"
 
         with st.sidebar:
             "***"
-            st.info("Check [`panel.pane.vtk`](https://panel.holoviz.org/api/panel.pane.vtk.html) for more options.")
+            st.info(
+                "Check [`panel.pane.vtk`](https://panel.holoviz.org/api/panel.pane.vtk.html) for more options."
+            )
 
         "### Axes configuration using `panel.pane.vtk`"
 
         with st.expander("🪓 **Documentation**"):
             st.write(
-                f"""
+                """
                 `axes` is a dictionary containing the parameters of the axes to
                 construct in the 3d view. It **must contain** at least `xticker`,
                 `yticker` and `zticker`.
@@ -395,7 +395,9 @@ elif selection == "AXES":
 
                 """
             )
-            st.caption("Source: [panel.holoviz.org](https://panel.holoviz.org/api/panel.pane.vtk.html#panel.pane.vtk.vtk.AbstractVTK)")
+            st.caption(
+                "Source: [panel.holoviz.org](https://panel.holoviz.org/api/panel.pane.vtk.html#panel.pane.vtk.vtk.AbstractVTK)"
+            )
 
         plotter = stpv_axis()
         with st.echo("below"):
@@ -407,12 +409,16 @@ elif selection == "AXES":
                     labels=["", "😎", "DOS", "🌺", "IV"],
                 ),
                 yticker=dict(
-                    ticks=[0, 1, 2, 3, 4],  ## <- This needs to be a python list, not a np.array
+                    ticks=[
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                    ],  ## <- This needs to be a python list, not a np.array
                     labels=[*" αβγδ"],  ## labels are optional
                 ),
-                zticker=dict(
-                    ticks=np.arange(0, 5, 1).tolist()
-                ),
+                zticker=dict(ticks=np.arange(0, 5, 1).tolist()),
                 ## Optional parameters
                 origin=[0, 0, 0],
                 fontsize=22,
@@ -435,9 +441,8 @@ elif selection == "GEOVISTA":
         stpyvista(
             planet,
             panel_kwargs=dict(
-                orientation_widget=True, 
-                interactive_orientation_widget=True
-            )
+                orientation_widget=True, interactive_orientation_widget=True
+            ),
         )
 
 elif selection == "CONTROL":
@@ -446,19 +451,18 @@ elif selection == "CONTROL":
         pwd = st.text_input("Access code:", type="password")
 
         if pwd == st.secrets.control.pwd:
-            
-            if st.button("Clear cache"): 
+            if st.button("Clear cache"):
                 st.cache_resource.clear()
 
             "********"
-            
+
             "Useful `ps` commands:"
             """
             - `ps -p <pid> -o %cpu,%mem,cmd`
             - `ps aux --sort=-%mem`
             """
             """echo "* * * * * echo HELLO >> /mount/src/stpyvista-tests/my_log" >> my_cron; crontab my_cron"""
-            
+
             engine = st.selectbox("With:", ["os", "subprocess"], index=1)
             code = st.text_input("Code", "ps aux --sort=-%mem")
             output = ""
@@ -469,8 +473,8 @@ elif selection == "CONTROL":
                     try:
                         bash_code = f"output = subprocess.run({code.split()}, capture_output=True)"
                         exec(bash_code)
-                        st.code(output.stdout.decode('utf-8'), language=None)
-                        st.code(output.stderr.decode('utf-8'), language=None)
+                        st.code(output.stdout.decode("utf-8"), language=None)
+                        st.code(output.stderr.decode("utf-8"), language=None)
                     except NameError:
                         pass
                 elif engine == "os":
