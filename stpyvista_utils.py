@@ -3,8 +3,9 @@ import urllib.parse as parse
 from pyvista import start_xvfb
 from collections import namedtuple
 from streamlit import runtime
-from streamlit.runtime.scriptrunner import get_script_run_ctx
 
+from streamlit.runtime.scriptrunner import get_script_run_ctx
+from streamlit.web.server.websocket_headers import _get_websocket_headers
 
 def is_embed():
     """Check if the app is embed"""
@@ -37,19 +38,14 @@ def is_xvfb():
 
 
 def get_ip():
-    try:
-        ctx = get_script_run_ctx()
-        if ctx is None:
-            return None
+    
+    # https://github.com/streamlit/streamlit/issues/602#issuecomment-1872464455
 
-        session_info = runtime.get_instance().get_client(ctx.session_id)
-        if session_info is None:
-            return None
+    headers = _get_websocket_headers()
+    x_forwarded_for = headers.get('X-Forwarded-For', None)
+    origin = headers.get('Origin', None)
 
-    except Exception:
-        return None
-
-    return session_info.request.remote_ip
+    return x_forwarded_for or origin or "__not_found__"
 
 
 def main():
