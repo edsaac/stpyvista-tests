@@ -42,10 +42,14 @@ def get_ip():
     # https://github.com/streamlit/streamlit/issues/602#issuecomment-1872464455
 
     headers = _get_websocket_headers()
-    x_forwarded_for = headers.get('X-Forwarded-For', None)
-    origin = headers.get('Origin', None)
 
-    return x_forwarded_for or origin or "__not_found__"
+    if headers is not None:
+        x_forwarded_for = headers.get('X-Forwarded-For', None)
+        origin = headers.get('Origin', None)
+
+        return x_forwarded_for or origin or "__not_found__"
+    
+    return "__not_found__"
 
 
 def main():
