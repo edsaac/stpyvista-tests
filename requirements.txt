@@ -8,3 +8,4 @@ pyvista
 stpyvista
 geovista
 colorcet
+requests

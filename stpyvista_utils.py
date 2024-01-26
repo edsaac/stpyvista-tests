@@ -7,6 +7,8 @@ from streamlit import runtime
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.web.server.websocket_headers import _get_websocket_headers
 
+import requests
+
 def is_embed():
     """Check if the app is embed"""
     from streamlit.runtime.scriptrunner import get_script_run_ctx
@@ -39,17 +41,22 @@ def is_xvfb():
 
 def get_ip():
     
-    # https://github.com/streamlit/streamlit/issues/602#issuecomment-1872464455
+    r = requests.get('https://api.ipify.org?format=json')
 
-    headers = _get_websocket_headers()
-
-    if headers is not None:
-        x_forwarded_for = headers.get('X-Forwarded-For', None)
-        origin = headers.get('Origin', None)
-
-        return x_forwarded_for or origin or "__not_found__"
+    return r.json().get('ip', "__not_found__") if r.status_code == 200 else "__failed"
     
-    return "__not_found__"
+    ########
+
+    # https://github.com/streamlit/streamlit/issues/602#issuecomment-1872464455
+    # headers = _get_websocket_headers()
+
+    # if headers is not None:
+    #     x_forwarded_for = headers.get('X-Forwarded-For', None)
+    #     origin = headers.get('Origin', None)
+
+    #     return x_forwarded_for or origin or "__not_found__"
+    
+    # return "__not_found__"
 
 
 def main():
