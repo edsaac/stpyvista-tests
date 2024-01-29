@@ -1,6 +1,7 @@
 import streamlit as st
 from stpyvista import stpyvista
-from stpyvista_utils import is_embed, is_xvfb, get_ip
+from stpyvista.utils import is_the_app_embedded, start_xvfb
+from stpyvista.network import get_ipyfi
 
 import tempfile
 from datetime import datetime
@@ -11,7 +12,7 @@ from os import system
 
 # Initial configuration
 if "IS_APP_EMBED" not in st.session_state:
-    st.session_state.IS_APP_EMBED = is_embed()
+    st.session_state.IS_APP_EMBED = is_the_app_embedded()
 IS_APP_EMBED = st.session_state.IS_APP_EMBED
 
 st.set_page_config(
@@ -21,17 +22,14 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+if "FIRST_ACCESS" not in st.session_state:
+    print(datetime.utcnow(), f" Connected from <-- {get_ipyfi()}")
+    st.session_state.FIRST_ACCESS = True
+
+
 if "IS_XVFB_RUNNING" not in st.session_state:
-    IS_XVFB_RUNNING = is_xvfb()
-    st.session_state.IS_XVFB_RUNNING = IS_XVFB_RUNNING
-
-    # Inform xvfb status with a toast
-    if not IS_APP_EMBED:
-        st.toast(IS_XVFB_RUNNING.message, icon=IS_XVFB_RUNNING.icon)
-        print(datetime.utcnow(), '\n', IS_XVFB_RUNNING.message)
-        print(f" Connected from <-- {get_ip()}")
-
-IS_XVFB_RUNNING = st.session_state.IS_XVFB_RUNNING
+    start_xvfb()
+    st.session_state.IS_XVFB_RUNNING = True
 
 # Add some styling with CSS selectors
 with open("assets/style.css") as f:
