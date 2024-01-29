@@ -55,7 +55,7 @@ def stpv_intro(dummy: str = "robot"):
 
 ## Usage example
 @st.cache_resource
-def stpv_usage_example(dummy: str = "cube"):
+def stpv_usage_example(dummy: str = "cube") -> pv.Plotter:
     ## Initialize a plotter object
     plotter = pv.Plotter(window_size=[400, 400])
 

@@ -104,7 +104,19 @@ if not selection:
             ```
             """
 
-        with st.expander("✨ Use example", expanded=False):
+        with st.expander("🎮 Controls", expanded=True):
+            controls_table = {
+                "Control": [
+                    "LMB + Drag",
+                    "Ctrl + LMB + Drag",
+                    "Shift + Drag",
+                    "Scroll",
+                ],
+                "Description": ["Free rotate", "Rotate around center", "Pan", "Zoom"],
+            }
+            st.dataframe(controls_table, use_container_width=True)
+
+        with st.expander("✨ Code example"):
             code, line_no = inspect.getsourcelines(stpv_usage_example)
 
             st.code(
