@@ -13,18 +13,26 @@ basic_import_text = (
     "from stpyvista import stpyvista\n\n"
 )
 
+
 ## Pyvista code
 @st.cache_resource
-def stpv_intro(dummy:str = "robot"):
+def stpv_intro(dummy: str = "robot"):
     plotter = pv.Plotter()
-    
+
     head = pv.Cylinder(radius=3.5, height=8)
     nose = pv.Cylinder(radius=0.5, height=8, direction=(0, 0, 1), center=(0, 0, 1.7))
-    eye_left = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(-2.0, 1, 2))
-    eye_left_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(-2.0, 1, 2))
-    eye_right = pv.Cylinder(radius=1.0, height=4, direction=(0, 0, 1), center=(2.0, 1, 2))
-    eye_right_p = pv.Cylinder(radius=0.3, height=4.1, direction=(0, 0, 1), center=(2.0, 1, 2))
-
+    eye_left = pv.Cylinder(
+        radius=1.0, height=4, direction=(0, 0, 1), center=(-2.0, 1, 2)
+    )
+    eye_left_p = pv.Cylinder(
+        radius=0.3, height=4.1, direction=(0, 0, 1), center=(-2.0, 1, 2)
+    )
+    eye_right = pv.Cylinder(
+        radius=1.0, height=4, direction=(0, 0, 1), center=(2.0, 1, 2)
+    )
+    eye_right_p = pv.Cylinder(
+        radius=0.3, height=4.1, direction=(0, 0, 1), center=(2.0, 1, 2)
+    )
 
     plotter.add_mesh(head, color="grey")
     plotter.add_mesh(nose, color="red")
@@ -36,7 +44,7 @@ def stpv_intro(dummy:str = "robot"):
     plane = pv.Plane(center=[0, -3.65, 0], direction=[0, 1, 0], i_size=12, j_size=12)
     plotter.add_mesh(plane, color="#09ab3b", show_edges=True)
 
-    plotter.background_color = "white"  
+    plotter.background_color = "white"
     plotter.view_xy()
     plotter.camera.azimuth = 25
     plotter.camera.elevation = 15
@@ -44,10 +52,10 @@ def stpv_intro(dummy:str = "robot"):
     plotter.window_size = [450, 300]
     return plotter
 
+
 ## Usage example
 @st.cache_resource
-def stpv_usage_example(dummy:str = "cube"):
-    
+def stpv_usage_example(dummy: str = "cube"):
     ## Initialize a plotter object
     plotter = pv.Plotter(window_size=[400, 400])
 
@@ -59,11 +67,7 @@ def stpv_usage_example(dummy:str = "cube"):
 
     ## Add mesh to the plotter
     plotter.add_mesh(
-        mesh,
-        scalars="myscalar", 
-        cmap="bwr", 
-        show_edges=True, 
-        edge_color="#001100"
+        mesh, scalars="myscalar", cmap="bwr", show_edges=True, edge_color="#001100"
     )
 
     ## Final touches
@@ -72,9 +76,10 @@ def stpv_usage_example(dummy:str = "cube"):
 
     return plotter
 
+
 ## Initialize a plotter object
 @st.cache_resource
-def stpv_key(dummy:str = "key"):
+def stpv_key(dummy: str = "key"):
     plotter = pv.Plotter(window_size=[250, 250])
     mesh = pv.Cube(center=(0, 0, 0))
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
@@ -82,9 +87,10 @@ def stpv_key(dummy:str = "key"):
     plotter.view_isometric()
     return plotter
 
+
 ## Cube
 @st.cache_resource
-def stpv_cube(dummy:str = "cube"):
+def stpv_cube(dummy: str = "cube"):
     plotter = pv.Plotter(window_size=[400, 400])
     mesh = pv.Cube(center=(0, 0, 0))
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
@@ -94,9 +100,10 @@ def stpv_cube(dummy:str = "cube"):
     plotter.add_title("◱ Check the corners ◲", color="purple", font_size=20)
     return plotter
 
+
 ## Many spheres
 @st.cache_resource
-def stpv_spheres(dummy:str = "spheres"):
+def stpv_spheres(dummy: str = "spheres"):
     colors = ["red", "teal", "black", "orange", "silver"]
     plotter = pv.Plotter(border=False, window_size=[600, 400])
     plotter.background_color = "white"
@@ -113,10 +120,10 @@ def stpv_spheres(dummy:str = "spheres"):
     plotter.camera.zoom(1.5)
     return plotter
 
+
 ## Add boxes to pyvista plotter
 @st.cache_resource
-def stpv_tower(n_boxes:int):
-
+def stpv_tower(n_boxes: int):
     ## Sample a matplotlib colormap
     cmap = mpl.cm.tab20c_r
     colors = cmap(np.linspace(0, 1, n_boxes))
@@ -136,19 +143,21 @@ def stpv_tower(n_boxes:int):
     plotter.view_isometric()
     plotter.window_size = [200, 500]
     return plotter
-                
+
+
 # Single sphere
 @st.cache_resource
-def stpv_sphere(dummy:str = "sphere"):
+def stpv_sphere(dummy: str = "sphere"):
     pl = pv.Plotter(window_size=[300, 200])
     pl.set_background("#D3EEFF")
     pl.add_mesh(pv.Sphere(center=(1, 0, 1)))
     pl.view_isometric()
     return pl
 
+
 ## Add boxes to pyvista plotter
 @st.cache_resource
-def stpv_axis(dummy:str = "axis"):
+def stpv_axis(dummy: str = "axis"):
     cmap = mpl.cm.hsv
     plotter = pv.Plotter()
 
@@ -164,9 +173,10 @@ def stpv_axis(dummy:str = "axis"):
     plotter.window_size = [550, 500]
     return plotter
 
+
 # Set up plotter
 @st.cache_resource
-def stpv_structuredgrid(dummy:str = "grid"):
+def stpv_structuredgrid(dummy: str = "grid"):
     # Create coordinate data
     x = np.arange(-10, 10, 0.5)
     y = np.arange(-10, 10, 0.5)
@@ -181,10 +191,10 @@ def stpv_structuredgrid(dummy:str = "grid"):
     plotter.window_size = [600, 400]
     return plotter
 
+
 ## Ripple
 @st.cache_resource
-def stpv_ripple(dummy:str = "ripple"):
-    
+def stpv_ripple(dummy: str = "ripple"):
     # Create coordinate data
     x, y = np.arange(-10, 10, 0.25), np.arange(-10, 10, 0.25)
     x, y = np.meshgrid(x, y)
@@ -194,7 +204,9 @@ def stpv_ripple(dummy:str = "ripple"):
     plotter = pv.Plotter()
     plane = pv.Plane(center=[0, 0, -5.2], direction=[0, 0, 1], i_size=25, j_size=25)
     plane.point_data.clear()
-    plotter.add_mesh(plane, color="#00FF7F", show_edges=True, edge_color="purple", name="plane")
+    plotter.add_mesh(
+        plane, color="#00FF7F", show_edges=True, edge_color="purple", name="plane"
+    )
 
     # Add the surface
     surface = pv.StructuredGrid(x, y, z)
@@ -205,7 +217,7 @@ def stpv_ripple(dummy:str = "ripple"):
         color="#ff0000",
         opacity=surface["opacity"],
         show_scalar_bar=False,
-        name="ripple"
+        name="ripple",
     )
 
     ## Final touches
@@ -214,32 +226,31 @@ def stpv_ripple(dummy:str = "ripple"):
     plotter.window_size = [400, 400]
     return plotter
 
+
 ## Geovista
 @st.cache_resource
-def stpv_planet(dummy:str = "planet"):
-    
+def stpv_planet(dummy: str = "planet"):
     Point = namedtuple("Point", ["lat", "lon"])
 
-    x = np.arange(-180, 184, 4) #Lon
-    y = np.arange(90, -94, -4)   #Lat
-    xx,yy = np.meshgrid(
-        np.deg2rad(x), 
-        np.deg2rad(y)
-    )
+    x = np.arange(-180, 184, 4)  # Lon
+    y = np.arange(90, -94, -4)  # Lat
+    xx, yy = np.meshgrid(np.deg2rad(x), np.deg2rad(y))
 
-    p = Point(np.deg2rad(4.60971), np.deg2rad(-74.08175)) # Bogotá
-    radius = 6_371 # Radius Earth
+    p = Point(np.deg2rad(4.60971), np.deg2rad(-74.08175))  # Bogotá
+    radius = 6_371  # Radius Earth
 
     # "d = 2R × sin⁻¹(√[sin²((θ₂ - θ₁)/2) + cosθ₁ × cosθ₂ × sin²((φ₂ - φ₁)/2)])"
     # data = np.abs(yy)
-    data = 2 * radius * np.arcsin(
-        np.sin((yy - p.lat)/2)**2 +
-        np.cos(p.lat) * np.cos(yy) * np.sin((xx - p.lon)/2)**2
+    data = (
+        2
+        * radius
+        * np.arcsin(
+            np.sin((yy - p.lat) / 2) ** 2
+            + np.cos(p.lat) * np.cos(yy) * np.sin((xx - p.lon) / 2) ** 2
+        )
     )
 
-    blob = gv.Transform.from_1d(
-        x,y, data=data, name="Distance to Bogota [km]"
-    )
+    blob = gv.Transform.from_1d(x, y, data=data, name="Distance to Bogota [km]")
 
     plotter = gv.GeoPlotter()
     plotter.window_size = [450, 450]
@@ -250,10 +261,10 @@ def stpv_planet(dummy:str = "planet"):
         mesh_args=dict(
             color="pink",
             opacity=0.2,
-        )
+        ),
     )
     plotter.add_coastlines(
-        color="white", 
+        color="white",
         line_width=12,
         resolution="110m",
     )
@@ -275,12 +286,15 @@ def stpv_planet(dummy:str = "planet"):
     )
 
     plotter.add_mesh(
-        blob, show_edges=False, 
-        style='surface', cmap="CET_R1_r",
-        clim=[0, 0.95 * np.pi * radius]
+        blob,
+        show_edges=False,
+        style="surface",
+        cmap="CET_R1_r",
+        clim=[0, 0.95 * np.pi * radius],
     )
 
     return plotter
+
 
 if __name__ == "__main__":
     pass
