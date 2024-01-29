@@ -401,19 +401,13 @@ elif selection == "AXES":
         with st.echo("below"):
             # Define axes to put in the rendered view
             axes = dict(
-                ## tickers are required, one for each axis
+                ## tickers are required, it needs one for each axis
                 xticker=dict(
                     ticks=[0, 1, 2, 3, 4],  ## ticks are required
                     labels=["", "😎", "DOS", "🌺", "IV"],
                 ),
                 yticker=dict(
-                    ticks=[
-                        0,
-                        1,
-                        2,
-                        3,
-                        4,
-                    ],  ## <- This needs to be a python list, not a np.array
+                    ticks=[0, 1, 2, 3, 4],  ## np.array fails
                     labels=[*" αβγδ"],  ## labels are optional
                 ),
                 zticker=dict(ticks=np.arange(0, 5, 1).tolist()),
