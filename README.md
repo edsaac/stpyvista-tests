@@ -1,30 +1,21 @@
-# 🧊 `stpyvista`: Show PyVista 3D visualizations in Streamlit
+<h1 align="center">
+  <strong>🧊 <code>stpyvista</code></strong>: Examples and documentation
+</h1>
 
-<p align=center>🎈 <strong>Examples and tests repository</strong> 🎈</p>
+<h3 align="center">
+  <a href="https://stpyvista.streamlit.app/"><img alt="stpyvista examples and documentation" src="https://img.shields.io/static/v1?label=%20&message=Open%20in%20Community%20Cloud&color=pink&logo=streamlit" width=260></a>
+</h3>
 
 <p align=center>
-<a href="https://github.com/edsaac/stpyvista"><img alt="stpyvista source code" src="https://img.shields.io/static/v1?label=:&message=Source%20code&color=informational&logo=github"></a>
-<a href="https://pypi.org/project/stpyvista/"><img alt="stpyvista pypi version" src="https://badgen.net/pypi/v/stpyvista"></a>
-<a href="https://github.com/edsaac/stpyvista-tests"><img alt="stpyvista examples repository" src="https://img.shields.io/static/v1?label=:&message=Examples&color=ff4b4b&logo=github"></a>
-<a href="https://stpyvista.streamlit.app"><img alt="Launch stpyvista in Streamlit" src="https://img.shields.io/static/v1?label=:&message=Open%20in%20Streamlit&color=pink&logo=streamlit"></a>
+<a href="https://github.com/edsaac/stpyvista"><img alt="stpyvista source code" src="https://img.shields.io/static/v1?label=&message=Source%20code&color=informational&logo=github"></a>
+<a href="https://pypi.org/project/stpyvista/"><img alt="stpyvista PyPI version" src="https://badgen.net/pypi/v/stpyvista"></a>
 </p>
 
-This is a simple component that takes a PyVista plotter object and shows it on Streamlit as an interactive element (as in it can be zoomed in/out, moved and rotated, but the visualization state is not returned). It uses PyVista's [panel backend](https://docs.pyvista.org/user-guide/jupyter/panel.html) and it basically takes the plotter, [exports it to HTML](https://docs.pyvista.org/api/plotting/_autosummary/pyvista.Plotter.export_html.html) and displays that within an iframe.
+******
 
-## Installation 
+Check `stpyvista` examples and documentation at [https://stpyvista.streamlit.app/](https://stpyvista.streamlit.app/).
 
-```sh
-pip install stpyvista
-```
-
-## Check the demos
-
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://stpyvista.streamlit.app/)
-
-
-****
-
+*****
 #### Also check:
-* The PyVista project at [https://www.pyvista.org/](https://www.pyvista.org/)
-* @blackary['s blog post](https://blog.streamlit.io/how-to-build-your-own-streamlit-component/) on how to build a custom component
+* Other stuff from me on [https://edsaac.github.io](https://edsaac.github.io)
 
