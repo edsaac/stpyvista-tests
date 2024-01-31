@@ -1,7 +1,6 @@
 import streamlit as st
 from stpyvista import stpyvista
 from stpyvista.utils import is_the_app_embedded, start_xvfb
-from stpyvista.network import get_ipyfi
 
 import tempfile
 from datetime import datetime
@@ -23,7 +22,7 @@ st.set_page_config(
 )
 
 if "FIRST_ACCESS" not in st.session_state:
-    print(datetime.utcnow(), f" Connected from <-- {get_ipyfi()}")
+    print(datetime.utcnow(), " Connected from <-- ??")
     st.session_state.FIRST_ACCESS = True
 
 
