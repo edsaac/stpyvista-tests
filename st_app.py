@@ -43,7 +43,7 @@ if not IS_APP_EMBED:
 GALLERY = {
     "KEY": "🔑 Pass a key",
     # "SPHERE": "✨ Textures and spheres",
-    # "STL":    "📤 Upload a STL file",
+    "STL":    "📤 Upload a STL file",
     "ALIGN": "📐 Horizontal alignment",
     "GRID": "🧱 Structured grid",
     # "SLIDER": "🔮 Sphere slider",
