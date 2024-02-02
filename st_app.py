@@ -182,6 +182,28 @@ elif selection == "STL":
     main_container.empty()
     with main_container.container():
 
+        with st.sidebar:
+
+            with st.expander("I don't have an STL file"):
+
+                small_columns = st.columns(2)
+
+                with small_columns[1]:
+                    st.download_button(
+                        "🐇 [5.4M]",
+                        stl_get("bunny"),
+                        "bunny.stl",
+                        use_container_width=True
+                    )
+
+                with small_columns[0]:
+                    st.download_button(
+                        "🗼 [34M]",
+                        stl_get("tower"),
+                        "tower.stl",
+                        use_container_width=True
+                    )            
+
         def delmodel():
             del st.session_state.fileuploader
 
@@ -210,13 +232,13 @@ elif selection == "STL":
 
                 ## Read data and send to plotter
                 mesh = reader.read()
-                plotter.add_mesh(mesh, color="salmon")
-                plotter.view_isometric()
+                plotter.add_mesh(mesh, color="orange", specular=0.5)
+                plotter.view_xz()
 
             ## Show in webpage
             with placeholder.container():
-                st.button("Restart", "btn_rerender", on_click=delmodel)
-                stpyvista(plotter, key="my_stl")
+                st.button("🔙 Restart", "btn_rerender", on_click=delmodel)
+                stpyvista(plotter)
 
 elif selection == "ALIGN":
     main_container.empty()
@@ -226,8 +248,10 @@ elif selection == "ALIGN":
         alignment = st.select_slider(
             "Align", ["left", "center", "right"], label_visibility="collapsed"
         )
-
-        stpyvista(stpv_sphere(), horizontal_align=alignment, use_container_width=False)
+        sphere = stpv_sphere()
+        
+        with st.echo(code_location='below'):
+            stpyvista(sphere, horizontal_align=alignment, use_container_width=False)
 
 elif selection == "GRID":
     main_container.empty()

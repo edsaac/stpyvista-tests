@@ -2,7 +2,7 @@
 gatherUsageStats = true
 
 [server]
-maxUploadSize = 5
+maxUploadSize = 50
 
 [theme]
 base="light"

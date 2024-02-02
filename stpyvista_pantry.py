@@ -6,6 +6,9 @@ import streamlit as st
 import matplotlib as mpl
 import geovista as gv
 from collections import namedtuple
+from io import BytesIO
+from typing import Literal
+from pathlib import Path
 
 basic_import_text = (
     "import streamlit as st\n"
@@ -295,6 +298,17 @@ def stpv_planet(dummy: str = "planet"):
 
     return plotter
 
+@st.cache_resource
+def stl_get(which: Literal['bunny', 'tower'] = 'bunny'):
+    stl_path = Path(f"assets/stl/{which}.stl")
+
+    if stl_path.exists():
+        with BytesIO() as buffer, open(stl_path, 'rb') as f:
+            buffer.write(f.read())
+            data = buffer.getvalue()
+        
+        return data
+    
 
 if __name__ == "__main__":
     pass
