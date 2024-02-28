@@ -43,10 +43,11 @@ if not IS_APP_EMBED:
 GALLERY = {
     "KEY": "🔑 Pass a key",
     # "SPHERE": "✨ Textures and spheres",
-    "STL":    "📤 Upload a STL file",
+    "STL": "📤 Upload a STL file",
     "ALIGN": "📐 Horizontal alignment",
     "GRID": "🧱 Structured grid",
     "SLIDER": "🔮 Sphere slider",
+    "TEXTURE": "🐕 Image as texture",
     "XYZ": "🌈 Colorbar and xyz",
     "OPACITY": "🗼 Opacity",
     "AXES": "🪓 Axes and tickers",
@@ -181,11 +182,8 @@ elif selection == "SPHERE":
 elif selection == "STL":
     main_container.empty()
     with main_container.container():
-
         with st.sidebar:
-
             with st.expander("I don't have an STL file"):
-
                 small_columns = st.columns(2)
 
                 with small_columns[1]:
@@ -193,7 +191,7 @@ elif selection == "STL":
                         "🐇 [5.4M]",
                         stl_get("bunny"),
                         "bunny.stl",
-                        use_container_width=True
+                        use_container_width=True,
                     )
 
                 with small_columns[0]:
@@ -201,8 +199,8 @@ elif selection == "STL":
                         "🗼 [34M]",
                         stl_get("tower"),
                         "tower.stl",
-                        use_container_width=True
-                    )            
+                        use_container_width=True,
+                    )
 
         def delmodel():
             del st.session_state.fileuploader
@@ -249,8 +247,8 @@ elif selection == "ALIGN":
             "Align", ["left", "center", "right"], label_visibility="collapsed"
         )
         sphere = stpv_sphere()
-        
-        with st.echo(code_location='below'):
+
+        with st.echo(code_location="below"):
             stpyvista(sphere, horizontal_align=alignment, use_container_width=False)
 
 elif selection == "GRID":
@@ -272,7 +270,7 @@ elif selection == "GRID":
 elif selection == "SLIDER":
     main_container.empty()
     with main_container.container():
-        "## 🔮 Sphere"
+        "## 🔮   Sphere"
 
         code = (
             'res = st.slider("Resolution", 5, 100, 20, 5)\n\n'
@@ -292,7 +290,7 @@ elif selection == "SLIDER":
 elif selection == "XYZ":
     main_container.empty()
     with main_container.container():
-        "## 🌈 Colorbar and orientation widget"
+        "## 🌈   Colorbar and orientation widget"
 
         st.toast(
             "Colorbar bug was fixed in [panel 1.3.2](https://github.com/holoviz/panel/releases/tag/v1.3.2).",
@@ -332,7 +330,7 @@ elif selection == "XYZ":
 elif selection == "OPACITY":
     main_container.empty()
     with main_container.container():
-        "## 🏯 Opacity"
+        "## 🏯   Opacity"
         "### 🔅 Single opacity value per mesh"
         cols = st.columns([2, 1])
 
@@ -388,7 +386,7 @@ elif selection == "OPACITY":
 elif selection == "AXES":
     main_container.empty()
     with main_container.container():
-        "## 🪓 Axes"
+        "## 🪓   Axes"
 
         with st.sidebar:
             "***"
@@ -470,6 +468,25 @@ elif selection == "GEOVISTA":
             panel_kwargs=dict(
                 orientation_widget=True, interactive_orientation_widget=True
             ),
+        )
+
+elif selection == "TEXTURE":
+    main_container.empty()
+    with main_container.container():
+        "## 🐕   Dog Canyon"
+
+        dog = stpv_dog_texture()
+
+        stpyvista(
+            dog,
+            panel_kwargs=dict(
+                orientation_widget=True, interactive_orientation_widget=True
+            ),
+            use_container_width=False,
+        )
+
+        st.caption(
+            "Gloria from [The Coding Train](https://thecodingtrain.com/challenges/181-image-stippling)"
         )
 
 elif selection == "CONTROL":

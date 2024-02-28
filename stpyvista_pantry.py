@@ -9,6 +9,7 @@ from collections import namedtuple
 from io import BytesIO
 from typing import Literal
 from pathlib import Path
+from PIL import Image
 
 basic_import_text = (
     "import streamlit as st\n"
@@ -298,17 +299,78 @@ def stpv_planet(dummy: str = "planet"):
 
     return plotter
 
+
 @st.cache_resource
-def stl_get(which: Literal['bunny', 'tower'] = 'bunny'):
+def stl_get(which: Literal["bunny", "tower"] = "bunny"):
     stl_path = Path(f"assets/stl/{which}.stl")
 
     if stl_path.exists():
-        with BytesIO() as buffer, open(stl_path, 'rb') as f:
+        with BytesIO() as buffer, open(stl_path, "rb") as f:
             buffer.write(f.read())
             data = buffer.getvalue()
-        
+
         return data
-    
+
+
+@st.cache_resource
+def stpv_dog_texture(dummy: str = "dog"):
+    PATH_TO_JPG = "assets/img/gloria_pickle.jpg"
+    tex = pv.read_texture(PATH_TO_JPG)
+
+    with Image.open(PATH_TO_JPG) as im:
+        gray_scale = im.convert(mode="L")
+        width, height = gray_scale.size
+
+    # Create mesh grid
+    x = np.arange(width)
+    y = np.arange(height, 0, -1)
+    xx, yy = np.meshgrid(x, y)
+    z = -0.25 * (np.array(gray_scale))
+
+    # Generate surface
+    surface = (
+        pv.StructuredGrid(xx, yy, z)
+        .triangulate()
+        .extract_surface()
+        .smooth()
+        .texture_map_to_plane(use_bounds=True, inplace=True)
+    )
+
+    # Lower elevations -> transparent
+    zp = surface.points[:, 2]
+    opacity = np.interp(zp, [zp.min(), 0.90 * zp.max()], [0, 1])
+
+    # Assemble plotter
+    plotter = pv.Plotter()
+    plotter.window_size = [400, 350]
+    plotter.background_color = "#efe4cf"
+
+    plotter.add_mesh(
+        surface,
+        texture=tex,
+        show_scalar_bar=False,
+        opacity=opacity,
+        name="dog",
+    )
+
+    # Zooming and camera configs
+    plotter.camera_position = "xy"
+    plotter.camera.elevation = -10
+    pos = plotter.camera.position
+    fcp = plotter.camera.focal_point
+    plotter.camera.position = [0.65 * p + 0.35 * f for p, f in zip(pos, fcp)]
+
+    # Last touches
+    plotter.add_text(
+        "🐾",
+        position="upper_left",
+        color="black",
+        font_size=18,
+        shadow=True,
+    )
+
+    return plotter
+
 
 if __name__ == "__main__":
     pass
