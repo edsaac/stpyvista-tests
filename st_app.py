@@ -51,8 +51,8 @@ GALLERY = {
     "XYZ": "🌈 Colorbar and xyz",
     "OPACITY": "🗼 Opacity",
     "AXES": "🪓 Axes and tickers",
-    "GEOVISTA": "🌎 Cartographic rendering",
-    "CONTROL": "🎛️ Control panel",
+    # "GEOVISTA": "🌎 Cartographic rendering",
+    # "CONTROL": "🎛️ Control panel",
 }
 
 # Start app

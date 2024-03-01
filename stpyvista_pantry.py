@@ -98,7 +98,7 @@ def stpv_cube(dummy: str = "cube"):
     plotter = pv.Plotter(window_size=[400, 400])
     mesh = pv.Cube(center=(0, 0, 0))
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
-    plotter.add_mesh(mesh, scalars="myscalar", cmap="bwr", line_width=1)
+    plotter.add_mesh(mesh, scalars="myscalar", cmap="bwr", line_width=2, show_edges=True)
     plotter.background_color = "white"
     plotter.view_isometric()
     plotter.add_title("◱ Check the corners ◲", color="purple", font_size=20)
