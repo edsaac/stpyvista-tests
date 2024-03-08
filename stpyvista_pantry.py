@@ -20,7 +20,7 @@ basic_import_text = (
 
 ## Pyvista code
 @st.cache_resource
-def stpv_intro(dummy: str = "robot"):
+def intro(dummy: str = "robot"):
     plotter = pv.Plotter()
 
     head = pv.Cylinder(radius=3.5, height=8)
@@ -59,7 +59,7 @@ def stpv_intro(dummy: str = "robot"):
 
 ## Usage example
 @st.cache_resource
-def stpv_usage_example(dummy: str = "cube") -> pv.Plotter:
+def usage_example(dummy: str = "cube") -> pv.Plotter:
     ## Initialize a plotter object
     plotter = pv.Plotter(window_size=[400, 400])
 
@@ -83,7 +83,7 @@ def stpv_usage_example(dummy: str = "cube") -> pv.Plotter:
 
 ## Initialize a plotter object
 @st.cache_resource
-def stpv_key(dummy: str = "key"):
+def key(dummy: str = "key"):
     plotter = pv.Plotter(window_size=[250, 250])
     mesh = pv.Cube(center=(0, 0, 0))
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
@@ -94,7 +94,7 @@ def stpv_key(dummy: str = "key"):
 
 ## Cube
 @st.cache_resource
-def stpv_cube(dummy: str = "cube"):
+def cube(dummy: str = "cube"):
     plotter = pv.Plotter(window_size=[400, 400])
     mesh = pv.Cube(center=(0, 0, 0))
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
@@ -107,7 +107,7 @@ def stpv_cube(dummy: str = "cube"):
 
 ## Many spheres
 @st.cache_resource
-def stpv_spheres(dummy: str = "spheres"):
+def spheres(dummy: str = "spheres"):
     colors = ["red", "teal", "black", "orange", "silver"]
     plotter = pv.Plotter(border=False, window_size=[600, 400])
     plotter.background_color = "white"
@@ -125,9 +125,8 @@ def stpv_spheres(dummy: str = "spheres"):
     return plotter
 
 
-## Add boxes to pyvista plotter
 @st.cache_resource
-def stpv_tower(n_boxes: int):
+def tower(n_boxes: int):
     ## Sample a matplotlib colormap
     cmap = mpl.cm.tab20c_r
     colors = cmap(np.linspace(0, 1, n_boxes))
@@ -149,9 +148,9 @@ def stpv_tower(n_boxes: int):
     return plotter
 
 
-# Single sphere
 @st.cache_resource
-def stpv_sphere(dummy: str = "sphere"):
+def sphere(dummy: str = "sphere"):
+    # Single sphere
     pl = pv.Plotter(window_size=[300, 200])
     pl.set_background("#D3EEFF")
     pl.add_mesh(pv.Sphere(center=(1, 0, 1)))
@@ -161,7 +160,7 @@ def stpv_sphere(dummy: str = "sphere"):
 
 ## Add boxes to pyvista plotter
 @st.cache_resource
-def stpv_axis(dummy: str = "axis"):
+def axis(dummy: str = "axis"):
     cmap = mpl.cm.hsv
     plotter = pv.Plotter()
 
@@ -180,7 +179,7 @@ def stpv_axis(dummy: str = "axis"):
 
 # Set up plotter
 @st.cache_resource
-def stpv_structuredgrid(dummy: str = "grid"):
+def structuredgrid(dummy: str = "grid"):
     # Create coordinate data
     x = np.arange(-10, 10, 0.5)
     y = np.arange(-10, 10, 0.5)
@@ -198,7 +197,7 @@ def stpv_structuredgrid(dummy: str = "grid"):
 
 ## Ripple
 @st.cache_resource
-def stpv_ripple(dummy: str = "ripple"):
+def ripple(dummy: str = "ripple"):
     # Create coordinate data
     x, y = np.arange(-10, 10, 0.25), np.arange(-10, 10, 0.25)
     x, y = np.meshgrid(x, y)
@@ -233,7 +232,7 @@ def stpv_ripple(dummy: str = "ripple"):
 
 ## Geovista
 @st.cache_resource
-def stpv_planet(dummy: str = "planet"):
+def planet(dummy: str = "planet"):
     Point = namedtuple("Point", ["lat", "lon"])
 
     x = np.arange(-180, 184, 4)  # Lon
@@ -313,7 +312,7 @@ def stl_get(which: Literal["bunny", "tower"] = "bunny"):
 
 
 @st.cache_resource
-def stpv_dog_texture(dummy: str = "dog"):
+def dog_texture(dummy: str = "dog"):
     PATH_TO_JPG = "assets/img/gloria_pickle.jpg"
     tex = pv.read_texture(PATH_TO_JPG)
 
