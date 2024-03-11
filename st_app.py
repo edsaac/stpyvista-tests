@@ -61,7 +61,7 @@ GALLERY = {
     "XYZ": "🌈 Colorbar and xyz",
     "OPACITY": "🗼 Opacity",
     "AXES": "🪓 Axes and tickers",
-    "SOLIDS": "🩴 Geometric objects",
+    "SOLIDS": "🩴 Platonic solids",
     # "GEOVISTA": "🌎 Cartographic rendering",
     # "CONTROL": "🎛️ Control panel",
 }
@@ -543,12 +543,15 @@ def main():
     elif selection == "SOLIDS":
         main_container.empty()
         with main_container.container():
-            "## 🩴   Geometric objects"
-            cols = cycle(st.columns(5))
+            "## 🩴   Platonic solids"
+            "&nbsp;"
+            labels = ["▲", "■", "◭", "⬟", "◑"]
+            cols = st.columns(5)
             
-            for col, name, solid in zip(cols, stpv.SOLIDS, stpv.solids()):
+            for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
                 with col:
-                    with st.popover(f"**{name.title()}**", use_container_width=True):
+                    with st.popover(label, use_container_width=True):
+                        f"### **{name.title()}**"
                         stpyvista(solid)
 
             st.caption(

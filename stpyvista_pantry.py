@@ -389,7 +389,7 @@ def solids(dummy:"str" = "platonic") -> list[pv.Plotter]:
         plotter = pv.Plotter()
         plotter.window_size = [300, 300]
         plotter.background_color = "#e1743b"
-        plotter.add_mesh(solid, show_scalar_bar=False, show_edges=True)
+        plotter.add_mesh(solid, show_scalar_bar=False, edge_color='w', color='#9d0f0e', show_edges=True)
         plotter.view_isometric()
         plotters.append(plotter)
     
