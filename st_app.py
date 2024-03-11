@@ -81,8 +81,10 @@ def main():
 
     if not selection:
         with main_container.container():
-            st.title("🧊 `stpyvista`")
-            st.subheader("Show PyVista 3D visualizations in Streamlit")
+            
+            if not IS_APP_EMBED:
+                st.title("🧊 `stpyvista`")
+                st.subheader("Show PyVista 3D visualizations in Streamlit")
 
             ## Send plotter to streamlit
             plotter = stpv.intro()
@@ -93,6 +95,10 @@ def main():
                 ),
             )
 
+            if IS_APP_EMBED:
+                st.header("🧊 `stpyvista`")
+                st.subheader("Show PyVista 3D visualizations in Streamlit")
+            
             with st.sidebar:
                 "****"
                 """
