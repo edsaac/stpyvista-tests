@@ -544,7 +544,7 @@ def main():
         main_container.empty()
         with main_container.container():
             "## 🩴   Geometric objects"
-            cols = cycle(st.columns(3))
+            cols = cycle(st.columns(5))
             
             for col, name, solid in zip(cols, stpv.SOLIDS, stpv.solids()):
                 with col:

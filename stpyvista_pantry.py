@@ -378,14 +378,7 @@ PLATONIC_SOLIDS = [
     'icosahedron',
 ]
 
-NON_PLATONIC_SOLIDS = {
-    'sphere': pv.Sphere,
-    'cylinder': pv.Cylinder,
-    'cone': pv.Cone,
-    'toroid': pv.ParametricSuperToroid,
-}
-
-SOLIDS = PLATONIC_SOLIDS + list(NON_PLATONIC_SOLIDS.keys())
+SOLIDS = PLATONIC_SOLIDS
 
 @st.cache_resource
 def solids(dummy:"str" = "platonic") -> list[pv.Plotter]:
@@ -394,21 +387,13 @@ def solids(dummy:"str" = "platonic") -> list[pv.Plotter]:
     for kind in PLATONIC_SOLIDS:
         solid = pv.PlatonicSolid(kind, radius=0.5)
         plotter = pv.Plotter()
-        plotter.window_size = [300, 350]
+        plotter.window_size = [300, 300]
         plotter.background_color = "#e1743b"
         plotter.add_mesh(solid, show_scalar_bar=False, show_edges=True)
         plotter.view_isometric()
         plotters.append(plotter)
     
-    for kind, fn in NON_PLATONIC_SOLIDS.items():
-        solid = fn()
-        plotter = pv.Plotter()
-        plotter.window_size = [300, 350]
-        plotter.background_color = "#e1743b"
-        plotter.add_mesh(solid, show_scalar_bar=False, show_edges=True)
-        plotter.view_isometric()
-        plotters.append(plotter)
-    
+
     return plotters
 
 if __name__ == "__main__":
