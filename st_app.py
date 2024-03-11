@@ -39,6 +39,11 @@ if "IS_XVFB_RUNNING" not in st.session_state:
 with open("assets/style.css") as f:
     st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
+if IS_APP_EMBED:
+    with open("assets/style_embed.css") as f:
+        st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
+
+
 # Add badges to sidebar
 if not IS_APP_EMBED:
     with st.sidebar:
