@@ -45,3 +45,11 @@ div[data-testid="stCaptionContainer"]{
 div[data-testid="stSidebarUserContent"]{
     padding-top: 2rem;
 }
+
+div[data-testid="stPopover"] div button{
+    font-size: 2rem;
+}
+
+div[data-testid="stPopover"] div button:hover{
+    background-color: rgb(220, 20, 60, 0.2);
+}

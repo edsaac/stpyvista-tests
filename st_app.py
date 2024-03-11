@@ -3,6 +3,7 @@ import pyvista as pv
 import numpy as np
 from stpyvista import stpyvista
 from stpyvista.utils import is_the_app_embedded, start_xvfb
+from itertools import cycle
 
 import tempfile
 from datetime import datetime
@@ -55,6 +56,7 @@ GALLERY = {
     "XYZ": "🌈 Colorbar and xyz",
     "OPACITY": "🗼 Opacity",
     "AXES": "🪓 Axes and tickers",
+    "SOLIDS": "🩴 Geometric objects",
     # "GEOVISTA": "🌎 Cartographic rendering",
     # "CONTROL": "🎛️ Control panel",
 }
@@ -526,6 +528,23 @@ def main():
                             pass
                     elif engine == "os":
                         system(code)
+    
+    elif selection == "SOLIDS":
+        main_container.empty()
+        with main_container.container():
+            "## 🩴   Geometric objects"
+            cols = cycle(st.columns(3))
+            
+            for col, name, solid in zip(cols, stpv.SOLIDS, stpv.solids()):
+                with col:
+                    with st.popover(f"**{name.title()}**", use_container_width=True):
+                        stpyvista(solid)
+
+            st.caption(
+                "Solids from [PyVista](https://docs.pyvista.org/version/stable/api/utilities/geometric.html)"
+            )
+
+
 
 if __name__ == "__main__":
     main()
