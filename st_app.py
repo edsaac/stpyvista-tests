@@ -3,7 +3,6 @@ import pyvista as pv
 import numpy as np
 from stpyvista import stpyvista
 from stpyvista.utils import is_the_app_embedded, start_xvfb
-from itertools import cycle
 
 import tempfile
 from datetime import datetime
