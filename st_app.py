@@ -7,6 +7,7 @@ from stpyvista.utils import is_the_app_embedded, start_xvfb
 import tempfile
 from datetime import datetime
 import inspect
+# from collections import OrderedDict
 
 ## Debugging
 from os import system
@@ -72,7 +73,13 @@ GALLERY = {
 def main():
 
     main_container = st.empty()
-    st.query_params.clear()
+    
+    if not st.query_params.get("gallery", False):
+        st.query_params.clear()
+        gallery_index = None
+    
+    else:
+        gallery_index = list(GALLERY.keys()).index(st.query_params.get("gallery"))
 
     with st.sidebar:
         st.title("🧊")
@@ -82,9 +89,12 @@ def main():
         selection = st.selectbox(
             "Gallery selection",
             GALLERY.keys(),
-            index=None,
+            index=gallery_index,
             label_visibility="collapsed",
-            format_func=lambda x: GALLERY.get(x, "Select an option..."),
+            format_func=lambda x: GALLERY.get(x),
+            placeholder="Select an option...",
+            on_change=st.query_params.clear,
+            key="gallery_select"
         )
 
     selection = selection or st.query_params.get("gallery")
