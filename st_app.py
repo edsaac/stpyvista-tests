@@ -73,13 +73,10 @@ GALLERY = {
 def main():
 
     main_container = st.empty()
-    
-    if not st.query_params.get("gallery", False):
-        st.query_params.clear()
-        gallery_index = None
-    
-    else:
-        gallery_index = list(GALLERY.keys()).index(st.query_params.get("gallery"))
+
+    from_query = st.query_params.get("gallery", None)
+    if from_query in GALLERY.keys():
+        st.session_state["gallery_select"] = from_query
 
     with st.sidebar:
         st.title("🧊")
@@ -89,7 +86,7 @@ def main():
         selection = st.selectbox(
             "Gallery selection",
             GALLERY.keys(),
-            index=gallery_index,
+            index=None,
             label_visibility="collapsed",
             format_func=lambda x: GALLERY.get(x),
             placeholder="Select an option...",
