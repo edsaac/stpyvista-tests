@@ -10,6 +10,7 @@ import inspect
 
 ## Debugging
 from os import system
+from importlib.metadata import version
 
 # Start app
 import stpyvista_pantry as stpv
@@ -20,6 +21,9 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed",
 )
+
+# Streamlit version
+STREAMLIT_VERSION = version('streamlit')
 
 # Initial configuration
 if "IS_APP_EMBED" not in st.session_state:
@@ -50,24 +54,25 @@ if not IS_APP_EMBED:
             st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
 
 GALLERY = {
-    "KEY": "🔑 Pass a key",
+    "key": "🔑 Pass a key",
     # "SPHERE": "✨ Textures and spheres",
-    "STL": "📤 Upload a STL file",
-    "ALIGN": "📐 Horizontal alignment",
-    "GRID": "🧱 Structured grid",
-    "SLIDER": "🔮 Sphere slider",
-    "TEXTURE": "🐕 Image as texture",
-    "XYZ": "🌈 Colorbar and xyz",
-    "OPACITY": "🗼 Opacity",
-    "AXES": "🪓 Axes and tickers",
-    "SOLIDS": "🩴 Platonic solids",
-    # "GEOVISTA": "🌎 Cartographic rendering",
-    # "CONTROL": "🎛️ Control panel",
+    "stl": "📤 Upload a STL file",
+    "align": "📐 Horizontal alignment",
+    "grid": "🧱 Structured grid",
+    "slider": "🔮 Sphere slider",
+    "texture": "🐕 Image as texture",
+    "xyz": "🌈 Colorbar and xyz",
+    "opacity": "🗼 Opacity",
+    "axes": "🪓 Axes and tickers",
+    "solids": "🩴 Platonic solids",
+    # "geovista": "🌎 Cartographic rendering",
+    # "control": "🎛️ Control panel",
 }
 
 def main():
 
     main_container = st.empty()
+    st.query_params.clear()
 
     with st.sidebar:
         st.title("🧊")
@@ -82,6 +87,7 @@ def main():
             format_func=lambda x: GALLERY.get(x, "Select an option..."),
         )
 
+    selection = selection or st.query_params.get("gallery")
 
     if not selection:
         with main_container.container():
@@ -154,8 +160,10 @@ def main():
 
     # *************************************
 
-    elif selection == "KEY":
+    elif selection == "key":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🔑   Pass a key"
 
@@ -180,8 +188,10 @@ def main():
                 use_container_width=True,
             )
 
-    elif selection == "SPHERE":
+    elif selection == "sphere":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## ✨   Textures and spheres"
 
@@ -194,35 +204,39 @@ def main():
                 "Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html"
             )
 
-    elif selection == "STL":
+    elif selection == "stl":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
-            with st.sidebar:
-                with st.expander("I don't have an STL file"):
-                    small_columns = st.columns(2)
-
-                    with small_columns[1]:
-                        st.download_button(
-                            "🐇 [5.4M]",
-                            stpv.stl_get("bunny"),
-                            "bunny.stl",
-                            use_container_width=True,
-                        )
-
-                    with small_columns[0]:
-                        st.download_button(
-                            "🗼 [34M]",
-                            stpv.stl_get("tower"),
-                            "tower.stl",
-                            use_container_width=True,
-                        )
-
             def delmodel():
                 del st.session_state.fileuploader
 
             ## Streamlit layout
             "## 📤   Upload a STL file"
             placeholder = st.empty()
+            "&nbsp;"
+            
+            with st.expander("I don't have an STL file"):
+                small_columns = st.columns(2)
+
+                with small_columns[1]:
+                    st.download_button(
+                        "🐇 [5.4M]",
+                        stpv.stl_get("bunny"),
+                        "bunny.stl",
+                        help="Download an STL model of the Stanford bunny",
+                        use_container_width=True,
+                    )
+
+                with small_columns[0]:
+                    st.download_button(
+                        "🗼 [34M]",
+                        stpv.stl_get("tower"),
+                        "tower.stl",
+                        help="Download an STL model of the Eiffel Tower",
+                        use_container_width=True,
+                    )
 
             with placeholder:
                 uploadedFile = st.file_uploader(
@@ -253,8 +267,10 @@ def main():
                     st.button("🔙 Restart", "btn_rerender", on_click=delmodel)
                     stpyvista(plotter)
 
-    elif selection == "ALIGN":
+    elif selection == "align":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 📐   Horizontal alignment"
 
@@ -266,8 +282,10 @@ def main():
             with st.echo(code_location="below"):
                 stpyvista(sphere, horizontal_align=alignment, use_container_width=False)
 
-    elif selection == "GRID":
+    elif selection == "grid":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🧱 Structured grid"
             code, line_no = inspect.getsourcelines(stpv.structuredgrid)
@@ -282,8 +300,10 @@ def main():
                 line_numbers=True,
             )
 
-    elif selection == "SLIDER":
+    elif selection == "slider":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🔮   Sphere"
 
@@ -302,8 +322,10 @@ def main():
             exec(code)
             st.code(stpv.basic_import_text + code, language="python", line_numbers=True)
 
-    elif selection == "XYZ":
+    elif selection == "xyz":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🌈   Colorbar and orientation widget"
 
@@ -342,8 +364,10 @@ def main():
                     passed to `stpyvista`. """
                 )
 
-    elif selection == "OPACITY":
+    elif selection == "opacity":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🏯   Opacity"
             "### 🔅 Single opacity value per mesh"
@@ -398,8 +422,10 @@ def main():
                 ripple.actors["plane"].prop.color = COLOR_PICK
                 stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))
 
-    elif selection == "AXES":
+    elif selection == "axes":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🪓   Axes"
 
@@ -471,8 +497,10 @@ def main():
                 # Pass those axes to panel_kwargs of stpyvista
                 stpyvista(plotter, panel_kwargs=dict(axes=axes, orientation_widget=True))
 
-    elif selection == "GEOVISTA":
+    elif selection == "geovista":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🌎 Running `geovista` for cartographic rendering"
 
@@ -485,8 +513,10 @@ def main():
                 ),
             )
 
-    elif selection == "TEXTURE":
+    elif selection == "texture":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             "## 🐕   Dog Canyon"
 
@@ -504,8 +534,10 @@ def main():
                 "Gloria from [The Coding Train](https://thecodingtrain.com/challenges/181-image-stippling)"
             )
 
-    elif selection == "CONTROL":
+    elif selection == "control":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
         with main_container.container():
             pwd = st.text_input("Access code:", type="password")
 
@@ -539,24 +571,33 @@ def main():
                     elif engine == "os":
                         system(code)
     
-    elif selection == "SOLIDS":
+    elif selection == "solids":
         main_container.empty()
+        st.query_params["gallery"] = selection
+
+        with st.sidebar:
+            "*****"
+            st.info(f"Running\n\n`streamlit=={STREAMLIT_VERSION}`")
+
         with main_container.container():
             "## 🩴   Platonic solids"
             "&nbsp;"
             labels = ["▲", "■", "◭", "⬟", "◑"]
             cols = st.columns(5)
-            
-            for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
-                with col:
-                    with st.popover(label, use_container_width=True):
-                        f"### **{name.title()}**"
-                        stpyvista(solid)
 
-            st.caption(
-                "Solids from [PyVista](https://docs.pyvista.org/version/stable/api/utilities/geometric.html)"
-            )
+            if STREAMLIT_VERSION.startswith("1.32"):
+                for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
+                    with col:
+                        with st.popover(label, use_container_width=True):
+                            f"### **{name.title()}**"
+                            stpyvista(solid)
 
+                st.caption(
+                    "Solids from [PyVista](https://docs.pyvista.org/version/stable/api/utilities/geometric.html)"
+                )
+
+            else:
+                st.warning(f"Streamlit version {STREAMLIT_VERSION} is not 1.32.x")
 
 
 if __name__ == "__main__":
