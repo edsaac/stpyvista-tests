@@ -368,6 +368,13 @@ def dog_texture(dummy: str = "dog"):
         shadow=True,
     )
 
+    plotter.add_text(
+        "DEM: Dog Elevation Model",
+        position="lower_edge",
+        color="black",
+        font_size=14,
+        shadow=True,
+    )
     return plotter
 
 PLATONIC_SOLIDS = [
