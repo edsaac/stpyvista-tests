@@ -16,15 +16,8 @@ from importlib.metadata import version
 # Start app
 import stpyvista_pantry as stpv
 
-st.set_page_config(
-    page_title="stpyvista",
-    page_icon="🧊",
-    layout="centered",
-    initial_sidebar_state="collapsed",
-)
-
 # Streamlit version
-STREAMLIT_VERSION = version('streamlit')
+STREAMLIT_VERSION = version("streamlit")
 
 # Initial configuration
 if "IS_APP_EMBED" not in st.session_state:
@@ -38,21 +31,6 @@ if "FIRST_ACCESS" not in st.session_state:
 if "IS_XVFB_RUNNING" not in st.session_state:
     start_xvfb()
     st.session_state.IS_XVFB_RUNNING = True
-
-# Add some styling with CSS selectors
-with open("assets/style.css") as f:
-    st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
-
-if IS_APP_EMBED:
-    with open("assets/style_embed.css") as f:
-        st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
-
-
-# Add badges to sidebar
-if not IS_APP_EMBED:
-    with st.sidebar:
-        with open("assets/badges.md") as f:
-            st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
 
 GALLERY = {
     "key": "🔑 Pass a key",
@@ -70,38 +48,69 @@ GALLERY = {
     # "control": "🎛️ Control panel",
 }
 
+
 def main():
+    from_query = st.query_params.get("gallery", None)
+
+    st.set_page_config(
+        page_title="stpyvista",
+        page_icon="🧊",
+        layout="centered",
+        initial_sidebar_state="expanded",
+    )
+    
+    # Add some styling with CSS selectors
+    with open("assets/style.css") as f:
+        st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
+
+    if IS_APP_EMBED:
+        with open("assets/style_embed.css") as f:
+            st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
     main_container = st.empty()
 
-    from_query = st.query_params.get("gallery", None)
     if from_query in GALLERY.keys():
         st.session_state["gallery_select"] = from_query
 
-    with st.sidebar:
-        st.title("🧊")
-        st.header("`stpyvista`")
-        "****"
-        "### Gallery"
-        selection = st.selectbox(
-            "Gallery selection",
-            GALLERY.keys(),
-            index=None,
-            label_visibility="collapsed",
-            format_func=lambda x: GALLERY.get(x),
-            placeholder="Select an option...",
-            on_change=st.query_params.clear,
-            key="gallery_select"
-        )
+    if not IS_APP_EMBED:
+        with st.sidebar:
+            st.title("🧊")
+            st.header("`stpyvista`")
+            "****"
+            "### Gallery"
+            selection = st.selectbox(
+                "Gallery selection",
+                GALLERY.keys(),
+                index=None,
+                label_visibility="collapsed",
+                format_func=lambda x: GALLERY.get(x),
+                placeholder="Select an option...",
+                on_change=st.query_params.clear,
+                key="gallery_select",
+            )
 
+            """
+            ****
+            `stpyvista` displays PyVista plotter objects in streamlit web apps,
+            using [`panel`](https://panel.holoviz.org/reference/panes/VTK.html).
+            """
+
+            # Add badges to sidebar
+            with st.popover("📎"):
+                with open("assets/badges.md") as f:
+                    st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+
+    else:
+        selection = None
+    
     selection = selection or st.query_params.get("gallery")
 
     if not selection:
         with main_container.container():
-            
             if not IS_APP_EMBED:
                 st.title("🧊 `stpyvista`")
                 st.subheader("Show PyVista 3D visualizations in Streamlit")
+                st.info("Check the gallery in the sidebar!", icon="👈")
 
             ## Send plotter to streamlit
             plotter = stpv.intro()
@@ -115,15 +124,7 @@ def main():
             if IS_APP_EMBED:
                 st.header("🧊 `stpyvista`")
                 st.subheader("Show PyVista 3D visualizations in Streamlit")
-            
-            with st.sidebar:
-                "****"
-                """
-                `stpyvista` displays PyVista plotter objects in streamlit web apps,
-                using [`panel`](https://panel.holoviz.org/reference/panes/VTK.html).
-                """
-
-            st.info("Check the gallery in the sidebar!", icon="👈")
+                st.subheader("[![Explore the gallery!](https://img.shields.io/badge/Community%20Cloud-Explore%20the%20gallery%20and%20the%20documentation!-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista.streamlit.app)")
 
             with st.expander("🛠️ Installation", expanded=True):
                 """
@@ -140,21 +141,29 @@ def main():
                         "Shift + Drag",
                         "Scroll",
                     ],
-                    "Description": ["Free rotate", "Rotate around center", "Pan", "Zoom"],
+                    "Description": [
+                        "Free rotate",
+                        "Rotate around center",
+                        "Pan",
+                        "Zoom",
+                    ],
                 }
                 st.dataframe(controls_table, use_container_width=True)
 
-            with st.expander("✨ Code example"):
-                code, line_no = inspect.getsourcelines(stpv.usage_example)
+            with st.expander("✨ Code example", expanded=True):
+                
+                stpyvista(stpv.basic_example())
+
+                code, line_no = inspect.getsourcelines(stpv.basic_example)
 
                 st.code(
-                    stpv.basic_import_text + "".join(code) + "\n## Pass a plotter to stpyvista"
-                    """\nstpyvista(stpv_usage_example())""",
+                    stpv.basic_import_text
+                    + "\n".join([line.strip() for line in code[2:-1]])
+                    + "\n## Pass a plotter to stpyvista"
+                    + "\nstpyvista(plotter)",
                     language="python",
                     line_numbers=True,
                 )
-
-                stpyvista(stpv.usage_example())
 
             with st.expander("🔡 Also check:"):
                 """
@@ -216,6 +225,7 @@ def main():
         st.query_params["gallery"] = selection
 
         with main_container.container():
+
             def delmodel():
                 del st.session_state.fileuploader
 
@@ -223,7 +233,7 @@ def main():
             "## 📤   Upload a STL file"
             placeholder = st.empty()
             "&nbsp;"
-            
+
             with st.expander("I don't have an STL file"):
                 small_columns = st.columns(2)
 
@@ -392,7 +402,10 @@ def main():
                 code, line_no = inspect.getsourcelines(stpv.tower)
                 st.code(
                     "import numpy as np\n"
-                    "import matplotlib as mpl\n" + stpv.basic_import_text + "".join(code) + "\n"
+                    "import matplotlib as mpl\n"
+                    + stpv.basic_import_text
+                    + "".join(code)
+                    + "\n"
                     'N_BOXES = st.number_input("`N_BOXES`", 0, 12, 8, 1)'
                     "tower = stpv_tower(N_BOXES)\n"
                     + "stpyvista(tower, panel_kwargs=dict(orientation_widget=True))",
@@ -416,7 +429,10 @@ def main():
             with code_placeholder:
                 code, line_no = inspect.getsourcelines(stpv.ripple)
                 st.code(
-                    "import numpy as np\n" + stpv.basic_import_text + "".join(code) + "\n"
+                    "import numpy as np\n"
+                    + stpv.basic_import_text
+                    + "".join(code)
+                    + "\n"
                     'COLOR_PICK = st.color_picker("`COLOR_PICK`", value="#800080", help="Pick a color for the plane")\n'
                     "ripple = stpv_ripple()\n"
                     "ripple.actors['plane'].prop.color = COLOR_PICK\n"
@@ -502,7 +518,9 @@ def main():
                 )
 
                 # Pass those axes to panel_kwargs of stpyvista
-                stpyvista(plotter, panel_kwargs=dict(axes=axes, orientation_widget=True))
+                stpyvista(
+                    plotter, panel_kwargs=dict(axes=axes, orientation_widget=True)
+                )
 
     elif selection == "geovista":
         main_container.empty()
@@ -577,7 +595,7 @@ def main():
                             pass
                     elif engine == "os":
                         system(code)
-    
+
     elif selection == "solids":
         main_container.empty()
         st.query_params["gallery"] = selection
@@ -593,7 +611,9 @@ def main():
             cols = st.columns(5)
 
             if STREAMLIT_VERSION.startswith("1.32"):
-                for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
+                for col, name, solid, label in zip(
+                    cols, stpv.SOLIDS, stpv.solids(), labels
+                ):
                     with col:
                         with st.popover(label, use_container_width=True):
                             f"### **{name.title()}**"

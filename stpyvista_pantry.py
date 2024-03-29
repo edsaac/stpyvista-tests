@@ -59,22 +59,20 @@ def intro(dummy: str = "robot"):
 
 ## Usage example
 @st.cache_resource
-def usage_example(dummy: str = "cube") -> pv.Plotter:
+def basic_example(dummy: str = "sphere") -> pv.Plotter:
     ## Initialize a plotter object
     plotter = pv.Plotter(window_size=[400, 400])
 
-    ## Create a mesh with a cube
-    mesh = pv.Cube(center=(0, 0, 0))
+    ## Create a mesh
+    mesh = pv.Sphere(radius=1.0, center=(0, 0, 0))
 
-    ## Add some scalar field associated to the mesh
+    ## Associate a scalar field to the mesh
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 1] * mesh.points[:, 0]
 
     ## Add mesh to the plotter
-    plotter.add_mesh(
-        mesh, scalars="myscalar", cmap="bwr", show_edges=True, edge_color="#001100"
-    )
+    plotter.add_mesh(mesh, scalars="myscalar", cmap="prism", show_edges=True, edge_color="#001100")
 
-    ## Final touches
+    ## Some final touches
     plotter.background_color = "white"
     plotter.view_isometric()
 

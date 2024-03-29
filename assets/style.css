@@ -46,18 +46,18 @@ div[data-testid="stSidebarUserContent"]{
     padding-top: 2rem;
 }
 
-div[data-testid="stPopover"] div button{
+section.main div[data-testid="stPopover"] div button{
     font-size: 2rem;
 }
 
-div[data-testid="stPopover"] div button p{
+section.main div[data-testid="stPopover"] div button p{
     font-size: 2rem;
     animation: 5s infinite normal;
     animation-name: spinny;
     animation-timing-function: linear;
 }
 
-div[data-testid="stPopover"] div button:hover{
+section.main div[data-testid="stPopover"] div button:hover{
     background-color: rgb(220, 20, 60, 0.2);
 }
 
@@ -68,4 +68,14 @@ div[data-testid="stPopover"] div button:hover{
     to {
         transform: rotate(360deg);
     }
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPopover"]{
+    position: fixed; 
+    bottom: 1%; 
+    left:1%;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPopover"] div button p{
+    font-size: 1.25rem;
 }
