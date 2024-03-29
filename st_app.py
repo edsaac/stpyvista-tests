@@ -124,7 +124,7 @@ def main():
             if IS_APP_EMBED:
                 st.header("🧊 `stpyvista`")
                 st.subheader("Show PyVista 3D visualizations in Streamlit")
-                st.subheader("[![Explore the gallery!](https://img.shields.io/badge/Community%20Cloud-Explore%20the%20gallery%20and%20the%20documentation!-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista.streamlit.app)")
+                st.subheader("[![Explore the gallery!](https://img.shields.io/badge/Community%20Cloud-Explore%20the%20gallery!-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista.streamlit.app)")
 
             with st.expander("🛠️ Installation", expanded=True):
                 """
