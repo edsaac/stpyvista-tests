@@ -311,7 +311,7 @@ def stl_get(which: Literal["bunny", "tower"] = "bunny"):
 
 @st.cache_resource
 def dog_texture(dummy: str = "dog"):
-    PATH_TO_JPG = "assets/img/gloria_pickle.jpg"
+    PATH_TO_JPG = "./assets/img/gloria_pickle.jpg"
     tex = pv.read_texture(PATH_TO_JPG)
 
     with Image.open(PATH_TO_JPG) as im:
@@ -366,13 +366,6 @@ def dog_texture(dummy: str = "dog"):
         shadow=True,
     )
 
-    plotter.add_text(
-        "DEM: Dog Elevation Model",
-        position="lower_edge",
-        color="black",
-        font_size=14,
-        shadow=True,
-    )
     return plotter
 
 PLATONIC_SOLIDS = [

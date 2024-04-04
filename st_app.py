@@ -14,7 +14,7 @@ from os import system
 from importlib.metadata import version
 
 # Start app
-import stpyvista_pantry as stpv
+import pantry.stpyvista_pantry as stpv
 
 # Streamlit version
 STREAMLIT_VERSION = version("streamlit")
@@ -152,7 +152,7 @@ def main():
 
             with st.expander("✨ Code example", expanded=True):
                 
-                stpyvista(stpv.basic_example())
+                stpyvista(stpv.basic_example(), bokeh_resources="CDN")
 
                 code, line_no = inspect.getsourcelines(stpv.basic_example)
 
@@ -545,18 +545,10 @@ def main():
         with main_container.container():
             "## 🐕   Dog Canyon"
 
-            dog = stpv.dog_texture()
-
-            stpyvista(
-                dog,
-                panel_kwargs=dict(
-                    orientation_widget=True, interactive_orientation_widget=True
-                ),
-                use_container_width=False,
-            )
-
-            st.caption(
-                "Gloria from [The Coding Train](https://thecodingtrain.com/challenges/181-image-stippling)"
+            st.components.v1.iframe(
+                "https://streamlit.io",
+                scrolling=True,
+                height=500
             )
 
     elif selection == "control":
