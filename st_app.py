@@ -2,7 +2,7 @@ import streamlit as st
 import pyvista as pv
 import numpy as np
 from stpyvista import stpyvista
-from stpyvista.utils import is_the_app_embedded, start_xvfb
+from stpyvista.utils import is_the_app_embedded #, start_xvfb
 
 import tempfile
 from datetime import datetime
@@ -20,7 +20,7 @@ import pantry.stpyvista_pantry as stpv
 STREAMLIT_VERSION = version("streamlit")
 
 # Initial configuration
-start_xvfb()
+pv.start_xvfb()
 st.session_state.is_app_embedded = st.session_state.get("is_app_embedded", is_the_app_embedded())
 
 if "FIRST_ACCESS" not in st.session_state:
