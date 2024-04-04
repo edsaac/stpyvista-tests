@@ -18,6 +18,14 @@ h3 {
     margin-right: 20%;
 }
 
+h4 {
+    font-size: 1.2rem;
+    text-align: center;
+    top: 0;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
 [data-testid='stSidebarNav'] > ul {
     min-height: 66vh;
 }
@@ -77,5 +85,13 @@ section[data-testid="stSidebar"] div[data-testid="stPopover"]{
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPopover"] div button p{
-    font-size: 1.25rem;
+    font-size: 1.50rem;
+}
+
+div[data-testid="stAppViewBlockContainer"]{
+    padding-top: 1rem;
+}
+
+iframe[data-testid="stIFrame"]{
+    border-radius: 4%;
 }

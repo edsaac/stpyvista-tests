@@ -8,10 +8,12 @@ from stpyvista_pantry import dog_texture
 
 # Initial configuration
 start_xvfb()
-st.session_state.is_app_embedded = st.session_state.get("is_app_embedded", is_the_app_embedded())
+st.session_state.is_app_embedded = st.session_state.get(
+    "is_app_embedded", is_the_app_embedded()
+)
+
 
 def main():
-    
     st.set_page_config(
         page_title="stpyvista: Dog Canyon",
         page_icon="🐕",
@@ -25,14 +27,14 @@ def main():
 
     with open("./assets/style_embed.css") as f:
         st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
-    
+
     dog = dog_texture()
 
     if not st.session_state.is_app_embedded:
         st.header("🐕   Dog Elevation Model (DEM)", divider="rainbow")
         "&nbsp;"
 
-        cols = st.columns([1,3])
+        cols = st.columns([1, 3])
 
         with cols[0]:
             st.markdown(
@@ -41,7 +43,7 @@ def main():
                 Generate a digital elevation model from an image's brightness.
                 </p>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
 
             _, subcol, _ = st.columns([1, 3, 1])
@@ -66,9 +68,9 @@ def main():
             use_container_width=True,
         )
 
-
     if st.session_state.is_app_embedded:
-        st.markdown("""
+        st.markdown(
+            """
             <style>
                 body{
                     background-color: rgba(0,0,0,0);
@@ -83,8 +85,10 @@ def main():
                     border: none;
                 }
             </style>
-            """, 
-            unsafe_allow_html=True
+            """,
+            unsafe_allow_html=True,
         )
+
+
 if __name__ == "__main__":
     main()

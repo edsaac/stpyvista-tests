@@ -70,7 +70,9 @@ def basic_example(dummy: str = "sphere") -> pv.Plotter:
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 1] * mesh.points[:, 0]
 
     ## Add mesh to the plotter
-    plotter.add_mesh(mesh, scalars="myscalar", cmap="prism", show_edges=True, edge_color="#001100")
+    plotter.add_mesh(
+        mesh, scalars="myscalar", cmap="prism", show_edges=True, edge_color="#001100"
+    )
 
     ## Some final touches
     plotter.background_color = "white"
@@ -96,7 +98,9 @@ def cube(dummy: str = "cube"):
     plotter = pv.Plotter(window_size=[400, 400])
     mesh = pv.Cube(center=(0, 0, 0))
     mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 0]
-    plotter.add_mesh(mesh, scalars="myscalar", cmap="bwr", line_width=2, show_edges=True)
+    plotter.add_mesh(
+        mesh, scalars="myscalar", cmap="bwr", line_width=2, show_edges=True
+    )
     plotter.background_color = "white"
     plotter.view_isometric()
     plotter.add_title("◱ Check the corners ◲", color="purple", font_size=20)
@@ -368,18 +372,20 @@ def dog_texture(dummy: str = "dog"):
 
     return plotter
 
+
 PLATONIC_SOLIDS = [
-    'tetrahedron',
-    'cube',
-    'octahedron',
-    'dodecahedron',
-    'icosahedron',
+    "tetrahedron",
+    "cube",
+    "octahedron",
+    "dodecahedron",
+    "icosahedron",
 ]
 
 SOLIDS = PLATONIC_SOLIDS
 
+
 @st.cache_resource
-def solids(dummy:"str" = "platonic") -> list[pv.Plotter]:
+def solids(dummy: "str" = "platonic") -> list[pv.Plotter]:
     plotters = []
 
     for kind in PLATONIC_SOLIDS:
@@ -387,12 +393,18 @@ def solids(dummy:"str" = "platonic") -> list[pv.Plotter]:
         plotter = pv.Plotter()
         plotter.window_size = [300, 300]
         plotter.background_color = "#e1743b"
-        plotter.add_mesh(solid, show_scalar_bar=False, edge_color='w', color='#9d0f0e', show_edges=True)
+        plotter.add_mesh(
+            solid,
+            show_scalar_bar=False,
+            edge_color="w",
+            color="#9d0f0e",
+            show_edges=True,
+        )
         plotter.view_isometric()
         plotters.append(plotter)
-    
 
     return plotters
+
 
 if __name__ == "__main__":
     pass
