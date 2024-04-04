@@ -546,7 +546,7 @@ def main():
             "## 🐕   Dog Canyon"
 
             st.components.v1.iframe(
-                "https://streamlit.io",
+                "https://stpyvista-dog-dem.streamlit.app/?embed=True",
                 scrolling=True,
                 height=500
             )
