@@ -67,11 +67,17 @@ def basic_example(dummy: str = "sphere") -> pv.Plotter:
     mesh = pv.Sphere(radius=1.0, center=(0, 0, 0))
 
     ## Associate a scalar field to the mesh
-    mesh["myscalar"] = mesh.points[:, 2] * mesh.points[:, 1] * mesh.points[:, 0]
+    x, y, z = mesh.cell_centers().points.T
+    mesh["My scalar"] = z
 
     ## Add mesh to the plotter
     plotter.add_mesh(
-        mesh, scalars="myscalar", cmap="prism", show_edges=True, edge_color="#001100"
+        mesh,
+        scalars="My scalar",
+        cmap="prism",
+        show_edges=True,
+        edge_color="#001100",
+        ambient=0.2,
     )
 
     ## Some final touches
@@ -209,6 +215,7 @@ def ripple(dummy: str = "ripple"):
     plotter = pv.Plotter()
     plane = pv.Plane(center=[0, 0, -5.2], direction=[0, 0, 1], i_size=25, j_size=25)
     plane.point_data.clear()
+
     plotter.add_mesh(
         plane, color="#00FF7F", show_edges=True, edge_color="purple", name="plane"
     )
