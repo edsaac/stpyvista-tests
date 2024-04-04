@@ -1,6 +1,7 @@
 import streamlit as st
+from pyvista.plotting.utilities import start_xvfb
 from stpyvista import stpyvista
-from stpyvista.utils import is_the_app_embedded, start_xvfb
+from stpyvista.utils import is_the_app_embedded
 
 # Start app
 from stpyvista_pantry import dog_texture
