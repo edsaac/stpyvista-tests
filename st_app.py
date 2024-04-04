@@ -20,17 +20,12 @@ import pantry.stpyvista_pantry as stpv
 STREAMLIT_VERSION = version("streamlit")
 
 # Initial configuration
-if "IS_APP_EMBED" not in st.session_state:
-    st.session_state.IS_APP_EMBED = is_the_app_embedded()
-IS_APP_EMBED = st.session_state.IS_APP_EMBED
+start_xvfb()
+st.session_state.is_app_embedded = st.session_state.get("is_app_embedded", is_the_app_embedded())
 
 if "FIRST_ACCESS" not in st.session_state:
     print(datetime.utcnow(), " Connected from <-- ??")
     st.session_state.FIRST_ACCESS = True
-
-if "IS_XVFB_RUNNING" not in st.session_state:
-    start_xvfb()
-    st.session_state.IS_XVFB_RUNNING = True
 
 GALLERY = {
     "key": "🔑 Pass a key",
@@ -63,7 +58,7 @@ def main():
     with open("assets/style.css") as f:
         st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
-    if IS_APP_EMBED:
+    if st.session_state.is_app_embedded:
         with open("assets/style_embed.css") as f:
             st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
@@ -72,7 +67,7 @@ def main():
     if from_query in GALLERY.keys():
         st.session_state["gallery_select"] = from_query
 
-    if not IS_APP_EMBED:
+    if not st.session_state.is_app_embedded:
         with st.sidebar:
             st.title("🧊")
             st.header("`stpyvista`")
@@ -107,7 +102,7 @@ def main():
 
     if not selection:
         with main_container.container():
-            if not IS_APP_EMBED:
+            if not st.session_state.is_app_embedded:
                 st.title("🧊 `stpyvista`")
                 st.subheader("Show PyVista 3D visualizations in Streamlit")
                 st.info("Check the gallery in the sidebar!", icon="👈")
@@ -121,7 +116,7 @@ def main():
                 ),
             )
 
-            if IS_APP_EMBED:
+            if st.session_state.is_app_embedded:
                 st.header("🧊 `stpyvista`")
                 st.subheader("Show PyVista 3D visualizations in Streamlit")
                 st.subheader("[![Explore the gallery!](https://img.shields.io/badge/Community%20Cloud-Explore%20the%20gallery!-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista.streamlit.app)")
@@ -543,12 +538,12 @@ def main():
         st.query_params["gallery"] = selection
 
         with main_container.container():
-            "## 🐕   Dog Canyon"
+            st.header("🐕   Dog Elevation Model", divider="rainbow") 
 
             st.components.v1.iframe(
                 "https://stpyvista-dog-dem.streamlit.app/?embed=True",
                 scrolling=True,
-                height=500
+                height=400
             )
 
     elif selection == "control":

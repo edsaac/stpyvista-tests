@@ -53,7 +53,7 @@ def main():
         with cols[1]:
             container_3d = st.container()
 
-    if st.session_state.is_app_embedded:
+    else:
         container_3d = st.container()
 
     with container_3d:
@@ -65,5 +65,25 @@ def main():
             use_container_width=True,
         )
 
+
+    if st.session_state.is_app_embedded:
+        st.markdown("""
+            <style>
+                body{
+                    background-color: rgba(0,0,0,0);
+                }
+                div[data-testid="stAppViewBlockContainer"]{
+                    padding: 0; /* Remove default margin */
+                }
+                iframe[title="stpyvista.rendered"]{
+                    display: block;
+                    height: 400; 
+                    width: 95vw; 
+                    border: none;
+                }
+            </style>
+            """, 
+            unsafe_allow_html=True
+        )
 if __name__ == "__main__":
     main()
