@@ -74,7 +74,7 @@ def fill_up_main_window():
 
         st.code(
             stpv.basic_import_text
-            + "\n".join([line.strip() for line in code[2:-1]])
+            + "\n".join([line[4:-1] for line in code[2:-1]])
             + "\n## Pass a plotter to stpyvista"
             + "\nstpyvista(plotter)",
             language="python",
@@ -575,11 +575,18 @@ def main():
                 with main_container.container():
                     st.header("🐕   Dog Elevation Model", divider="rainbow")
                     "&nbsp;"
-
+            
                     st.components.v1.iframe(
                         "https://stpyvista-dog-dem.streamlit.app/?embed=True",
                         scrolling=True,
                         height=470,
+                    )
+                
+                with side_other_container:
+                    st.subheader(
+                        "🏞️ Explore the full version of this example at "
+                        "[![Explore the app!](https://img.shields.io/badge/%20-Community%20Cloud-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista-dog-dem.streamlit.app)",
+                        anchor=False
                     )
 
             elif selection == "control":
