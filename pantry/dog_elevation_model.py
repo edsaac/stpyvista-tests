@@ -27,7 +27,7 @@ def main():
     
     dog = dog_texture()
 
-    if not IS_APP_EMBED:
+    if not st.session_state.is_app_embedded:
         st.header("🐕   Dog Elevation Model (DEM)", divider="rainbow")
         "&nbsp;"
 
@@ -53,7 +53,7 @@ def main():
         with cols[1]:
             container_3d = st.container()
 
-    if IS_APP_EMBED:
+    if st.session_state.is_app_embedded:
         container_3d = st.container()
 
     with container_3d:
