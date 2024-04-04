@@ -2,18 +2,12 @@ import streamlit as st
 from stpyvista import stpyvista
 from stpyvista.utils import is_the_app_embedded, start_xvfb
 
-if "IS_XVFB_RUNNING" not in st.session_state:
-    start_xvfb()
-    st.session_state.IS_XVFB_RUNNING = True
-
 # Start app
 from stpyvista_pantry import dog_texture
 
 # Initial configuration
-if "IS_APP_EMBED" not in st.session_state:
-    st.session_state.IS_APP_EMBED = is_the_app_embedded()
-
-IS_APP_EMBED = st.session_state.IS_APP_EMBED
+start_xvfb()
+st.session_state.is_app_embedded = st.session_state.get("is_app_embedded", is_the_app_embedded())
 
 def main():
     
