@@ -95,3 +95,7 @@ div[data-testid="stAppViewBlockContainer"]{
 iframe[data-testid="stIFrame"]{
     border-radius: 4%;
 }
+
+header[data-testid="stHeader"]{
+    display: none;
+}
