@@ -22,36 +22,44 @@ def main():
     )
 
     # Add some styling with CSS selectors
-    with open("./assets/style.css") as f:
-        st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
-
-    with open("./assets/style_embed.css") as f:
-        st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
-
+    for style_sheet in ["./assets/style.css", "./assets/style_embed.css"]:
+        with open(style_sheet) as f:
+            st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
+    
+    # Load pyvista Plotter`
     dog = dog_texture()
 
     if not st.session_state.is_app_embedded:
+        st.markdown(
+            """
+            <style>
+                p{
+                    text-align: center; 
+                    line-height: 1em;
+                }
+                div[data-testid="stImage"] img{
+                    border: 7px ridge rgba(211, 220, 50, .6);
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: max(25%, 12vw);
+                }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+        
         st.header("🐕   Dog Elevation Model (DEM)", divider="rainbow")
         "&nbsp;"
 
         cols = st.columns([1, 3])
 
         with cols[0]:
-            st.markdown(
-                """
-                <p style="text-align: center;">
-                Generate a digital elevation model from an image's brightness.
-                </p>
-                """,
-                unsafe_allow_html=True,
+            "Generate a digital elevation model from an image's brightness."
+            st.image("./assets/img/gloria_pickle.jpg")
+            st.caption(
+                "Gloria from [The Coding Train](https://thecodingtrain.com/challenges/181-image-stippling)"
             )
-
-            _, subcol, _ = st.columns([1, 3, 1])
-            with subcol:
-                st.image("./assets/img/gloria_pickle.jpg", use_column_width=True)
-                st.caption(
-                    "Gloria from [The Coding Train](https://thecodingtrain.com/challenges/181-image-stippling)"
-                )
 
         with cols[1]:
             container_3d = st.container()
@@ -76,13 +84,17 @@ def main():
                     background-color: rgba(0,0,0,0);
                 }
                 div[data-testid="stAppViewBlockContainer"]{
-                    padding: 0; /* Remove default margin */
+                    padding: 0; 
                 }
                 iframe[title="stpyvista.rendered"]{
                     display: block;
                     height: 400; 
                     width: 95vw; 
                     border: none;
+                }
+
+                div[data-testid="stVerticalBlockBorderWrapper"]{
+                    transform: translateY(-12px);
                 }
             </style>
             """,

@@ -574,9 +574,9 @@ def main():
 
                 with main_container.container():
                     st.header("🐕   Dog Elevation Model", divider="rainbow")
-                    "&nbsp;"
             
                     st.components.v1.iframe(
+                        # "http://localhost:8501/?embed=True",
                         "https://stpyvista-dog-dem.streamlit.app/?embed=True",
                         scrolling=True,
                         height=470,
