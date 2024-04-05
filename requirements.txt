@@ -1,13 +1,13 @@
 pip
 streamlit==1.32.2
 numpy
-matplotlib==3.7.5
+matplotlib
 panel==1.3.8
 bokeh
 param
-pyvista==0.43.4
+pyvista
 stpyvista
 geovista
 colorcet
 requests
-cmocean
+cmocean==3.1.3
