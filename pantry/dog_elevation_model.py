@@ -87,8 +87,7 @@ def main():
                     padding: 0; 
                 }
                 iframe[title="stpyvista.rendered"]{
-                    display: block;
-                    height: 400; 
+                    display: block; 
                     width: 95vw; 
                     border: none;
                 }
