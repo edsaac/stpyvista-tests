@@ -1,0 +1,26 @@
+h1 {
+    text-align: center;
+    top: 0;
+}
+
+h2 {
+    text-align: center;
+    top: 0;
+}
+
+/* iframe[title='stpyvista.experimental_vtkjs']{
+    border-radius: 10px;
+} */
+
+div[data-testid="stAppViewBlockContainer"]{
+    padding-top: 1rem;
+}
+
+header[data-testid="stHeader"]{
+    display: none;
+}
+
+div.react-json-view{
+    font-size: 10px;
+    line-height: 60%;
+}
