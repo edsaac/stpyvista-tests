@@ -41,8 +41,9 @@ async def main():
         layout="wide",
     )
 
-    with open("./experimental/return_camera.css") as css:
-        st.html(f"<style>{css.read()}</style>")
+    if "css" not in st.session_state:
+        with open("./experimental/return_camera.css") as css:
+            st.session_state.css = css.read()
     
     plotter = create_plotter()
 
@@ -64,6 +65,8 @@ async def main():
             st.info("Interact with the 3D model and you will see here the current camera view")
         else:
             st.json(camera)
+
+    st.html(f"<style>{st.session_state.css}</style>")
 
 if __name__ == "__main__":
     asyncio.run(main())
