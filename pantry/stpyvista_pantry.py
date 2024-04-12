@@ -326,7 +326,7 @@ def dog_texture(dummy: str = "dog"):
     tex = pv.read_texture(PATH_TO_JPG)
 
     with Image.open(PATH_TO_JPG) as im:
-        gray_scale = im.convert(mode="L")
+        gray_scale = im.convert(mode="L").resize([x // 2 for x in im.size])
         width, height = gray_scale.size
 
     # Create mesh grid
