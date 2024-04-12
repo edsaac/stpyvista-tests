@@ -12,3 +12,8 @@ colorcet
 requests
 cmocean==3.1.3
 trame
+trame-client
+trame-components
+trame-server
+trame-vtk
+trame-vuetify
