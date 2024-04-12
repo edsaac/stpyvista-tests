@@ -1,8 +1,8 @@
 pip
-streamlit==1.32.2
+streamlit>=1.33.0
 numpy
 matplotlib
-panel==1.3.8
+panel>=1.4.1
 bokeh
 param
 pyvista
@@ -10,7 +10,7 @@ stpyvista
 geovista
 colorcet
 requests
-cmocean==3.1.3
+cmocean>=4.0.3
 trame
 trame-client
 trame-components
