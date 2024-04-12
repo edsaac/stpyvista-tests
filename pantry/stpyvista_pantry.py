@@ -116,20 +116,79 @@ def cube(dummy: str = "cube"):
 ## Many spheres
 @st.cache_resource
 def spheres(dummy: str = "spheres"):
-    colors = ["red", "teal", "black", "orange", "silver"]
+    specular_values = [0.0, 0.25, 0.50, 0.75, 1.0]
+    power_values = [64, 32, 16, 8]
+    sphere_kwargs = dict(radius=0.51, phi_resolution=50, theta_resolution=50)
     plotter = pv.Plotter(border=False, window_size=[600, 400])
     plotter.background_color = "white"
 
     # Add a bunch of spheres with different properties
-    for i in range(5):
-        for j in range(6):
-            sphere = pv.Sphere(radius=0.5, center=(0.0, 4 - i, j))
+    for j, specular in enumerate(specular_values):
+        for i, power in enumerate(power_values):
+            sphere = pv.Sphere(center=(0, i, j), **sphere_kwargs)
             plotter.add_mesh(
-                sphere, color=colors[i], pbr=True, metallic=i / 4, roughness=j / 5
+                sphere,
+                color="purple",
+                lighting=True,
+                specular=specular,
+                specular_power=power,
+                ambient=0.30,
             )
 
+    plotter.add_floor("-y", lighting=True, color="pink", pad=0.10)
     plotter.view_vector((-1, 0, 0), (0, 1, 0))
-    plotter.camera.zoom(1.5)
+
+    return plotter
+
+
+@st.cache_resource
+def pbr_test(dummy: str = "pbr"):
+    
+    plotter = pv.Plotter(
+        border=False, 
+        window_size=[600, 400], 
+        shape=[1, 2],
+    )
+    plotter.background_color = "grey"
+
+    spheres = [
+        pv.Sphere(),
+        pv.Sphere(radius=0.25, center=(0.5, 0, 0.5))
+    ]
+
+    colors = ['silver', '#003366']
+
+    light_kwargs = dict(
+        specular=0.50,
+        specular_power=16,
+        ambient=0.10,
+    )
+
+    # Add a bunch of spheres with different properties
+    plotter.subplot(0, 0)    
+    for sphere, color in zip(spheres, colors):
+        plotter.add_mesh(
+            sphere,
+            color=color,
+            **light_kwargs
+        )
+    plotter.add_text("PBR off")
+    plotter.view_isometric()
+
+    plotter.subplot(0, 1)    
+    for sphere, color in zip(spheres, colors):
+        plotter.add_mesh(
+            sphere,
+            color=color,
+            pbr=True,
+            metallic=0.75,
+            **light_kwargs
+        )
+    plotter.add_text("PBR on")
+
+    plotter.view_isometric()
+    plotter.link_views()
+
     return plotter
 
 

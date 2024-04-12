@@ -27,7 +27,7 @@ if "FIRST_ACCESS" not in st.session_state:
 
 GALLERY = {
     "key": "🔑 Pass a key",
-    # "SPHERE": "✨ Textures and spheres",
+    "sphere": "✨ Textures and spheres",
     "stl": "📤 Upload a STL file",
     "align": "📐 Horizontal alignment",
     "grid": "🧱 Structured grid",
@@ -219,16 +219,15 @@ def main():
 
                 with main_container.container():
                     "## ✨   Textures and spheres"
-
-                    with st.sidebar:
-                        "***"
-                        st.error("Textures in `panel` are not rendered?")
-
+                    "### Specular and specular power"
                     stpyvista(stpv.spheres())
-                    st.caption(
-                        "Code adapted from https://docs.pyvista.org/examples/02-plot/pbr.html"
-                    )
+                    
+                    "****"
+                    "### Physically based rendering (PBR)"
+                    stpyvista(stpv.pbr_test())
 
+                    st.sidebar.caption("Check the [PyVista docs!](https://docs.pyvista.org/examples/02-plot/pbr.html)")
+            
             elif selection == "stl":
                 main_container.empty()
                 st.query_params["gallery"] = selection
