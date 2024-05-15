@@ -96,7 +96,7 @@ def main():
         page_title="stpyvista",
         page_icon="🧊",
         layout="centered",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="collapsed",
     )
 
     # Add styling with CSS selectors
