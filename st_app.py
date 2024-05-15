@@ -2,7 +2,7 @@ import streamlit as st
 import pyvista as pv
 import numpy as np
 from stpyvista import stpyvista
-from stpyvista.utils import is_the_app_embedded  # , start_xvfb
+from stpyvista.utils import is_the_app_embedded, start_xvfb
 
 import tempfile
 from datetime import datetime
@@ -16,7 +16,7 @@ from os import system
 import pantry.stpyvista_pantry as stpv
 
 # Initial configuration
-pv.start_xvfb()
+start_xvfb()
 st.session_state.is_app_embedded = st.session_state.get(
     "is_app_embedded", is_the_app_embedded()
 )
@@ -575,10 +575,10 @@ def main():
                     st.header("🐕   Dog Elevation Model", divider="rainbow")
             
                     st.components.v1.iframe(
-                        # "http://localhost:8501/?embed=True",
+                        # "http://localhost:8502/?embed=True",
                         "https://stpyvista-dog-dem.streamlit.app/?embed=True",
                         scrolling=True,
-                        height=470,
+                        height=390,
                     )
                 
                 with side_other_container:

@@ -9,7 +9,6 @@ from collections import namedtuple
 from io import BytesIO
 from typing import Literal
 from pathlib import Path
-from PIL import Image
 
 basic_import_text = (
     "import streamlit as st\n"
@@ -143,20 +142,16 @@ def spheres(dummy: str = "spheres"):
 
 @st.cache_resource
 def pbr_test(dummy: str = "pbr"):
-    
     plotter = pv.Plotter(
-        border=False, 
-        window_size=[600, 400], 
+        border=False,
+        window_size=[600, 400],
         shape=[1, 2],
     )
     plotter.background_color = "grey"
 
-    spheres = [
-        pv.Sphere(),
-        pv.Sphere(radius=0.25, center=(0.5, 0, 0.5))
-    ]
+    spheres = [pv.Sphere(), pv.Sphere(radius=0.25, center=(0.5, 0, 0.5))]
 
-    colors = ['silver', '#003366']
+    colors = ["silver", "#003366"]
 
     light_kwargs = dict(
         specular=0.50,
@@ -165,25 +160,15 @@ def pbr_test(dummy: str = "pbr"):
     )
 
     # Add a bunch of spheres with different properties
-    plotter.subplot(0, 0)    
+    plotter.subplot(0, 0)
     for sphere, color in zip(spheres, colors):
-        plotter.add_mesh(
-            sphere,
-            color=color,
-            **light_kwargs
-        )
+        plotter.add_mesh(sphere, color=color, **light_kwargs)
     plotter.add_text("PBR off")
     plotter.view_isometric()
 
-    plotter.subplot(0, 1)    
+    plotter.subplot(0, 1)
     for sphere, color in zip(spheres, colors):
-        plotter.add_mesh(
-            sphere,
-            color=color,
-            pbr=True,
-            metallic=0.75,
-            **light_kwargs
-        )
+        plotter.add_mesh(sphere, color=color, pbr=True, metallic=0.75, **light_kwargs)
     plotter.add_text("PBR on")
 
     plotter.view_isometric()
@@ -377,66 +362,6 @@ def stl_get(which: Literal["bunny", "tower"] = "bunny"):
             data = buffer.getvalue()
 
         return data
-
-
-@st.cache_resource
-def dog_texture(dummy: str = "dog"):
-    PATH_TO_JPG = "./assets/img/gloria_pickle.jpg"
-    tex = pv.read_texture(PATH_TO_JPG)
-
-    with Image.open(PATH_TO_JPG) as im:
-        gray_scale = im.convert(mode="L").resize([x // 2 for x in im.size])
-        width, height = gray_scale.size
-
-    # Create mesh grid
-    x = np.arange(width)
-    y = np.arange(height, 0, -1)
-    xx, yy = np.meshgrid(x, y)
-    z = -0.25 * (np.array(gray_scale))
-
-    # Generate surface
-    surface = (
-        pv.StructuredGrid(xx, yy, z)
-        .triangulate()
-        .extract_surface()
-        .smooth()
-        .texture_map_to_plane(use_bounds=True, inplace=True)
-    )
-
-    # Lower elevations -> transparent
-    zp = surface.points[:, 2]
-    opacity = np.interp(zp, [zp.min(), 0.90 * zp.max()], [0, 1])
-
-    # Assemble plotter
-    plotter = pv.Plotter()
-    plotter.window_size = [400, 350]
-    plotter.background_color = "#efe4cf"
-
-    plotter.add_mesh(
-        surface,
-        texture=tex,
-        show_scalar_bar=False,
-        opacity=opacity,
-        name="dog",
-    )
-
-    # Zooming and camera configs
-    plotter.camera_position = "xy"
-    plotter.camera.elevation = -10
-    pos = plotter.camera.position
-    fcp = plotter.camera.focal_point
-    plotter.camera.position = [0.65 * p + 0.35 * f for p, f in zip(pos, fcp)]
-
-    # Last touches
-    plotter.add_text(
-        "🐾",
-        position="upper_left",
-        color="black",
-        font_size=18,
-        shadow=True,
-    )
-
-    return plotter
 
 
 PLATONIC_SOLIDS = [
