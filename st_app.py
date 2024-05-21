@@ -7,7 +7,6 @@ from stpyvista.utils import is_the_app_embedded, start_xvfb
 import tempfile
 from datetime import datetime
 import inspect
-# from collections import OrderedDict
 
 ## Debugging
 from os import system

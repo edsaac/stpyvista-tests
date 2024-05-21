@@ -1,3 +1,9 @@
+@import url(https://fonts.bunny.net/css?family=ubuntu:300);
+
+body, h1, h2, h3, h4, p   {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 h1 {
     font-size: 5rem;
     text-align: center;
@@ -52,6 +58,10 @@ div[data-testid="stCaptionContainer"]{
 
 div[data-testid="stSidebarUserContent"]{
     padding-top: 2rem;
+}
+
+div[data-testid="stPopoverBody"]{
+    min-width: 40%;
 }
 
 section.main div[data-testid="stPopover"] div button{
