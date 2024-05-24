@@ -255,7 +255,6 @@ def option_texture():
     )
 
 
-
 @st.experimental_fragment
 def option_xyz():
     """🌈 Colorbar and xyz"""
@@ -364,13 +363,6 @@ def option_axes():
     """🪓 Axes and tickers"""
 
     st.header("🪓   Axes", divider="rainbow", anchor=False)
-
-    with st.sidebar:
-        "***"
-        st.info(
-            "Check [`panel.pane.vtk`](https://panel.holoviz.org/api/panel.pane.vtk.html) for more options."
-        )
-
     st.subheader("Axes configuration using `panel.pane.vtk`", anchor=False)
 
     with st.expander("🪓 **Documentation**"):
@@ -410,6 +402,7 @@ def option_axes():
     plotter = stpv.axis()
 
     with st.echo("below"):
+        
         # Define axes to put in the rendered view
         axes = dict(
             ## tickers are required, it needs one for each axis
@@ -422,6 +415,7 @@ def option_axes():
                 labels=[*" αβγδ"],  ## labels are optional
             ),
             zticker=dict(ticks=np.arange(0, 5, 1).tolist()),
+            
             ## Optional parameters
             origin=[0, 0, 0],
             fontsize=22,
@@ -436,6 +430,10 @@ def option_axes():
             plotter,
             panel_kwargs=dict(axes=axes, orientation_widget=True),
         )
+
+    st.info(
+        "Check [`panel.pane.vtk`](https://panel.holoviz.org/api/panel.pane.vtk.html) for more options."
+    )
 
 
 @st.experimental_fragment
@@ -478,9 +476,8 @@ def option_geovista():
 
     st.info(
         "Explore the [`geovista`](https://github.com/bjlittle/geovista) project.",
-        icon='🌎',
+        icon="🌎",
     )
-
 
 
 @st.experimental_fragment
