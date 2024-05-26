@@ -287,14 +287,13 @@ def option_xyz():
             ),
         )
 
-    with st.sidebar:
-        "****"
-        st.info(
-            """Check the 
-            [`panel`](https://panel.holoviz.org/reference/panes/VTK.html) 
-            documentation for other `panel_kwargs` that could be 
-            passed to `stpyvista`. """
-        )
+    "****"
+    st.info(
+        """Check the 
+        [`panel`](https://panel.holoviz.org/reference/panes/VTK.html) 
+        documentation for other `panel_kwargs` that could be 
+        passed to `stpyvista`. """
+    )
 
 
 @st.experimental_fragment
