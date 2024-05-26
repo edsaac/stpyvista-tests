@@ -532,7 +532,7 @@ gallery = {
     "opacity": option_opacity,
     "axes": option_axes,
     "solids": option_solids,
-    "geovista": option_geovista,
+    # "geovista": option_geovista,
     # "control": option_control,
 }
 
