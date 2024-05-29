@@ -251,7 +251,6 @@ def option_texture():
     st.info(
         "🏞️ Explore the full version of this example at "
         "[![Explore the app!](https://img.shields.io/badge/%20-Community%20Cloud-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista-dog-dem.streamlit.app)",
-        anchor=False,
     )
 
 
