@@ -1,5 +1,4 @@
 import streamlit as st
-from datetime import datetime
 
 from stpyvista import stpyvista
 from stpyvista.utils import is_the_app_embedded, start_xvfb
@@ -12,10 +11,6 @@ start_xvfb()
 st.session_state.is_app_embedded = st.session_state.get(
     "is_app_embedded", is_the_app_embedded()
 )
-
-if "FIRST_ACCESS" not in st.session_state:
-    print(datetime.utcnow(), " Connected from <-- ??")
-    st.session_state.FIRST_ACCESS = True
 
 
 def main():
