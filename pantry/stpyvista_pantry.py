@@ -231,20 +231,33 @@ def axis(dummy: str = "axis"):
 
 # Set up plotter
 @st.cache_resource
-def structuredgrid(dummy: str = "grid"):
+def structuredgrid(option: Literal["grid", "dataview"] = "grid"):
     # Create coordinate data
     x = np.arange(-10, 10, 0.5)
     y = np.arange(-10, 10, 0.5)
     x, y = np.meshgrid(x, y)
     z = np.sin(np.sqrt(x**2 + y**2))
-
-    plotter = pv.Plotter()
     surface = pv.StructuredGrid(x, y, z)
-    plotter.add_mesh(surface, color="pink", show_edges=True, edge_color="k")
+    
+    plotter = pv.Plotter()
     plotter.background_color = "white"
-    plotter.view_isometric()
     plotter.window_size = [600, 400]
-    return plotter
+
+    if option == "grid":
+        plotter.add_mesh(surface, color="pink", show_edges=True, edge_color="k")
+        plotter.view_isometric() 
+        return plotter
+
+    elif option == "dataview":
+        x, y, z = surface.cell_centers().points.T
+        surface["X Coordinate"] = x
+        surface["Y Coordinate"] = y
+        surface["z Elevation"] = z
+        surface["Distance to center"] = np.sqrt(x**2 + y**2 + z**2)
+        surface.set_active_scalars("Distance to center")
+        plotter.add_mesh(surface, show_edges=True, edge_color='k', name="surface")
+        plotter.view_isometric() 
+        return surface, plotter
 
 
 ## Ripple

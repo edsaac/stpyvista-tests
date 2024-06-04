@@ -1,7 +1,7 @@
 import streamlit as st
 import pyvista as pv
 import numpy as np
-from stpyvista import stpyvista
+from stpyvista import stpyvista, dataview
 import pantry.stpyvista_pantry as stpv
 
 import tempfile
@@ -479,6 +479,26 @@ def option_geovista():
 
 
 @st.experimental_fragment
+def option_dataview():
+    """🧾 Dataview"""
+    st.header(
+        "🧾 Display `pyvista` data structures",
+        divider="rainbow",
+        anchor=False,
+    )
+    "&nbsp;"
+
+    mesh, plotter = stpv.structuredgrid("dataview")
+
+    st.subheader("Display the HTML representation of the mesh data")
+    with st.echo():
+        dataview(mesh)
+    
+    st.subheader("Render the 3D view") 
+    with st.echo():
+        stpyvista(plotter)
+
+@st.experimental_fragment
 def option_control():
     """🎛️ Control panel"""
 
@@ -520,6 +540,7 @@ def option_control():
 
 gallery = {
     "key": option_key,
+    "dataview": option_dataview,
     "sphere": option_sphere,
     "stl": option_stl,
     "align": option_align,
