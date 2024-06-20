@@ -266,7 +266,7 @@ def ripple(dummy: str = "ripple"):
     # Create coordinate data
     x, y = np.arange(-10, 10, 0.25), np.arange(-10, 10, 0.25)
     x, y = np.meshgrid(x, y)
-    z = 4 * np.sin(np.sqrt(x**2 + y**2))
+    z = 2 * np.sin(np.sqrt(x**2 + y**2))
 
     # Initialize plotter
     plotter = pv.Plotter()
@@ -274,7 +274,7 @@ def ripple(dummy: str = "ripple"):
     plane.point_data.clear()
 
     plotter.add_mesh(
-        plane, color="#00FF7F", show_edges=True, edge_color="purple", name="plane"
+        plane, color="snow", show_edges=True, edge_color="purple", name="plane"
     )
 
     # Add the surface
@@ -283,7 +283,7 @@ def ripple(dummy: str = "ripple"):
     surface["opacity"] = np.interp(zp, [zp.min(), zp.max()], [0.2, 1])
     plotter.add_mesh(
         surface,
-        color="#ff0000",
+        color="#800080",
         opacity=surface["opacity"],
         show_scalar_bar=False,
         name="ripple",

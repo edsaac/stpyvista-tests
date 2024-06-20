@@ -327,32 +327,23 @@ def option_opacity():
         tower = stpv.tower(N_BOXES)
         stpyvista(tower, panel_kwargs=dict(orientation_widget=True))
 
-    "**********"
+    st.divider()
     st.subheader("🔅 Opacity from a field", anchor=False)
 
-    COLOR_PICK = st.color_picker(
-        "`COLOR_PICK`",
-        value="#800080",
-        help="Pick a color for the plane",
-    )
     render_placeholder = st.empty()
     code_placeholder = st.empty()
-    "&nbsp;"
 
     with code_placeholder:
         code, line_no = inspect.getsourcelines(stpv.ripple)
         st.code(
             "import numpy as np\n" + stpv.basic_import_text + "".join(code) + "\n"
-            'COLOR_PICK = st.color_picker("`COLOR_PICK`", value="#800080", help="Pick a color for the plane")\n'
             "ripple = stpv_ripple()\n"
-            "ripple.actors['plane'].prop.color = COLOR_PICK\n"
             "stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))",
             line_numbers=True,
         )
 
     with render_placeholder:
         ripple = stpv.ripple()
-        ripple.actors["plane"].prop.color = COLOR_PICK
         stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))
 
 
