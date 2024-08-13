@@ -9,7 +9,7 @@ import inspect
 from os import system
 
 
-@st.experimental_fragment
+@st.fragment
 def fill_up_main_window():
     with st.expander("🛠️ Installation", expanded=True):
         """
@@ -59,7 +59,7 @@ def fill_up_main_window():
         """
 
 
-@st.experimental_fragment
+@st.fragment
 def option_key():
     """🔑 Pass a key"""
 
@@ -87,7 +87,7 @@ def option_key():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_sphere():
     """✨ Textures and spheres"""
 
@@ -108,7 +108,7 @@ def option_sphere():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_stl():
     """📤 Upload a STL file"""
 
@@ -171,7 +171,7 @@ def option_stl():
             stpyvista(plotter)
 
 
-@st.experimental_fragment
+@st.fragment
 def option_align():
     """📐 Horizontal alignment"""
 
@@ -192,7 +192,7 @@ def option_align():
         )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_grid():
     """🧱 Structured grid"""
 
@@ -210,7 +210,7 @@ def option_grid():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_slider():
     """🔮 Sphere slider"""
 
@@ -236,7 +236,7 @@ def option_slider():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_texture():
     """🐕 Image as texture"""
     st.header("🐕   Dog Elevation Model", divider="rainbow")
@@ -254,7 +254,7 @@ def option_texture():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_xyz():
     """🌈 Colorbar and xyz"""
     st.header("🌈   Colorbar and orientation widget", divider="rainbow", anchor=False)
@@ -295,7 +295,7 @@ def option_xyz():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_opacity():
     """🗼 Opacity"""
 
@@ -347,7 +347,7 @@ def option_opacity():
         stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))
 
 
-@st.experimental_fragment
+@st.fragment
 def option_axes():
     """🪓 Axes and tickers"""
 
@@ -391,7 +391,6 @@ def option_axes():
     plotter = stpv.axis()
 
     with st.echo("below"):
-        
         # Define axes to put in the rendered view
         axes = dict(
             ## tickers are required, it needs one for each axis
@@ -404,7 +403,6 @@ def option_axes():
                 labels=[*" αβγδ"],  ## labels are optional
             ),
             zticker=dict(ticks=np.arange(0, 5, 1).tolist()),
-            
             ## Optional parameters
             origin=[0, 0, 0],
             fontsize=22,
@@ -425,7 +423,7 @@ def option_axes():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_solids():
     """🩴 Platonic solids"""
     st.header("🩴   Platonic solids", divider="rainbow", anchor=False)
@@ -446,7 +444,7 @@ def option_solids():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_geovista():
     """🌎 Cartographic rendering"""
     st.header(
@@ -469,7 +467,7 @@ def option_geovista():
     )
 
 
-@st.experimental_fragment
+@st.fragment
 def option_dataview():
     """🧾 Dataview"""
     st.header(
@@ -484,12 +482,13 @@ def option_dataview():
     st.subheader("Display the HTML representation of the mesh data")
     with st.echo():
         dataview(mesh)
-    
-    st.subheader("Render the 3D view") 
+
+    st.subheader("Render the 3D view")
     with st.echo():
         stpyvista(plotter)
 
-@st.experimental_fragment
+
+@st.fragment
 def option_control():
     """🎛️ Control panel"""
 
