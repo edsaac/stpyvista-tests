@@ -109,39 +109,49 @@ def option_sphere():
 
 
 @st.fragment
+def option_glb():
+    """🐎 Rendering GLB data"""
+    st.header("🐎   Rendering GLB data", anchor=False, divider="rainbow")
+
+    plotter = pv.Plotter(border=False, window_size=[500, 400], off_screen=True)
+    plotter.background_color = "#f0f8ff"
+    blocks = pv.read("assets/stl/horse.glb")
+    mesh = blocks[0][0][0]
+    plotter.add_mesh(
+        mesh,
+        scalars="COLOR_0",
+        rgb=True,
+        specular=0.2,
+    )
+    plotter.view_zy()
+    stpyvista(plotter)
+
+    with st.expander("GLB file details"):
+        st.write("Mesh")
+        dataview(mesh)
+
+
+@st.fragment
 def option_stl():
-    """📤 Upload a STL file"""
+    """🐇 Rendering STL data"""
 
-    def delmodel():
-        del st.session_state.fileuploader
+    st.header("🐇   Rendering STL data", anchor=False, divider="rainbow")
 
-    st.header("📤   Upload a STL file", anchor=False, divider="rainbow")
-
+    cols = st.columns(3)
     placeholder = st.empty()
     "&nbsp;"
 
-    with st.expander("I don't have an STL file"):
-        small_columns = st.columns(2)
+    bunny_button = cols[0].button("🐇\n\nShow a bunny", use_container_width=True)
+    tower_button = cols[1].button("🗼\n\nShow a tower", use_container_width=True)
+    upload_button = cols[2].button("📤\n\nUpload my own STL", use_container_width=True)
 
-        with small_columns[1]:
-            st.download_button(
-                "🐇 [5.4M]",
-                stpv.stl_get("bunny"),
-                "bunny.stl",
-                help="Download an STL model of the Stanford bunny",
-                use_container_width=True,
-            )
+    if bunny_button:
+        stl_data = stpv.stl_get("bunny")
 
-        with small_columns[0]:
-            st.download_button(
-                "🗼 [34M]",
-                stpv.stl_get("tower"),
-                "tower.stl",
-                help="Download an STL model of the Eiffel Tower",
-                use_container_width=True,
-            )
+    elif tower_button:
+        stl_data = stpv.stl_get("tower")
 
-    with placeholder:
+    elif upload_button:
         uploadedFile = st.file_uploader(
             "Upload a STL file:",
             ["stl"],
@@ -149,7 +159,15 @@ def option_stl():
             key="fileuploader",
         )
 
-    if uploadedFile:
+        if uploadedFile:
+            stl_data = uploadedFile.getbuffer()
+        else:
+            st.stop()
+
+    else:
+        stl_data = stpv.stl_get("bunny")
+
+    with placeholder.container():
         ## Initialize pyvista reader and plotter
         plotter = pv.Plotter(border=False, window_size=[500, 400])
         plotter.background_color = "#f0f8ff"
@@ -157,18 +175,14 @@ def option_stl():
         ## Create a tempfile to keep the uploaded file as pyvista's API
         ## only supports file paths but not buffers
         with tempfile.NamedTemporaryFile(suffix="_streamlit") as f:
-            f.write(uploadedFile.getbuffer())
+            f.write(stl_data)
             reader = pv.STLReader(f.name)
 
             ## Read data and send to plotter
             mesh = reader.read()
             plotter.add_mesh(mesh, color="orange", specular=0.5)
-            plotter.view_xz()
-
-        ## Show in webpage
-        with placeholder.container():
-            st.button("🔙 Restart", "btn_rerender", on_click=delmodel)
-            stpyvista(plotter)
+        plotter.view_xz()
+        stpyvista(plotter)
 
 
 @st.fragment
@@ -541,6 +555,7 @@ gallery = {
     "opacity": option_opacity,
     "axes": option_axes,
     "solids": option_solids,
+    "glb": option_glb,
     # "geovista": option_geovista,
     # "control": option_control,
 }

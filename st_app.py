@@ -18,7 +18,7 @@ def main():
         page_title="stpyvista",
         page_icon="🧊",
         layout="centered",
-        initial_sidebar_state="collapsed",
+        initial_sidebar_state="expanded",
     )
 
     # Add styling with CSS selectors
@@ -33,7 +33,6 @@ def main():
     # Full version
     # --------------------------------------------
     if not st.session_state.is_app_embedded:
-        
         # General layout
         with st.sidebar:
             side_title_container = st.empty()
@@ -67,7 +66,6 @@ def main():
             selection = selection_from_query or selection
 
         with side_other_container.container():
-            
             # Add badges to sidebar
             with st.popover("📎"):
                 with open("assets/badges.md") as f:
