@@ -152,20 +152,20 @@ def option_stl():
         stl_data = stpv.stl_get("tower")
 
     elif upload_button:
-        uploadedFile = st.file_uploader(
+        st.file_uploader(
             "Upload a STL file:",
             ["stl"],
             accept_multiple_files=False,
             key="fileuploader",
         )
 
-        if uploadedFile:
-            stl_data = uploadedFile.getbuffer()
-        else:
-            st.stop()
+        st.stop()
 
     else:
         stl_data = stpv.stl_get("bunny")
+
+    if file_data := st.session_state.get("fileuploader", False):
+        stl_data = file_data.getbuffer()
 
     with placeholder.container():
         ## Initialize pyvista reader and plotter
