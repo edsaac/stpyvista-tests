@@ -239,7 +239,7 @@ def option_slider():
         'plotter.add_mesh(sphere, name="sphere", show_edges=True)\n'
         "plotter.view_isometric()\n\n"
         "# Pass the plotter (not the mesh) to stpyvista\n"
-        "stpyvista(plotter)"
+        """stpyvista(plotter, key=f"sphere_{res}")"""
     )
 
     exec(code)
