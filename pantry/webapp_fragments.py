@@ -365,39 +365,22 @@ def option_opacity():
 def option_axes():
     """🪓 Axes and tickers"""
 
+    from textwrap import dedent
+    from stpyvista.panel_backend import PanelVTKKwargs, PanelAxesConfig, PanelTicker
+
+    def prettyfy_docstring(docstring):
+        return dedent(docstring).replace("-", "\n-").replace("    ", "\n    ")
+
     st.header("🪓   Axes", divider="rainbow", anchor=False)
     st.subheader("Axes configuration using `panel.pane.vtk`", anchor=False)
 
     with st.expander("🪓 **Documentation**"):
-        st.write(
-            """
-            `axes` is a dictionary containing the parameters of the axes to
-            construct in the 3d view. It **must contain** at least `xticker`,
-            `yticker` and `zticker`.
+        st.markdown(prettyfy_docstring(PanelVTKKwargs.__doc__))
+        st.divider()
+        st.markdown(prettyfy_docstring(PanelAxesConfig.__doc__))
+        st.divider()
+        st.markdown(prettyfy_docstring(PanelTicker.__doc__))
 
-            A *ticker* is a dictionary which contains:
-            - `ticks : List[float] - required`.
-                > Positions in the scene coordinates of the corresponding
-                > axis' ticks.
-            - `labels : List[str] - optional`.
-                > Label displayed respectively to the `ticks` positions.
-                > If `labels` are not defined, they are inferred from the
-                > `ticks` array.
-
-            Other optional parameters for `axes` are:
-            - `digits : int`
-                > number of decimal digits when `ticks` are converted to `labels`.
-            - `fontsize : int`
-                > size in pts of the ticks labels.
-            - `show_grid : bool = True`
-                > If true the axes grid is visible.
-            - `grid_opacity : float` between 0-1.
-                > Defines the grid opacity.
-            - `axes_opacity : float` between 0-1.
-                > Defines the axes lines opacity.
-
-            """
-        )
         st.caption(
             "Source: [panel.holoviz.org](https://panel.holoviz.org/api/panel.pane.vtk.html#panel.pane.vtk.vtk.AbstractVTK)"
         )
