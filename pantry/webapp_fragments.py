@@ -50,7 +50,7 @@ def fill_up_main_window():
         st.dataframe(controls_table, use_container_width=True, hide_index=True)
 
     with st.expander("✨ Code example", expanded=True):
-        stpyvista(stpv.basic_example(), bokeh_resources="CDN")
+        stpyvista(stpv.basic_example())
 
         code, line_no = inspect.getsourcelines(stpv.basic_example)
 
