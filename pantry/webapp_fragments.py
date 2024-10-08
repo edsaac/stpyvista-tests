@@ -1,16 +1,22 @@
+import tempfile
+import inspect
+
+from os import system
+
 import streamlit as st
 import pyvista as pv
 import numpy as np
-from stpyvista import stpyvista, dataview
-import pantry.stpyvista_pantry as stpv
 
-import tempfile
-import inspect
-from os import system
+from stpyvista import dataview
+from stpyvista.panel_backend import stpyvista as stpv_panel
+from stpyvista.trame_backend import stpyvista as stpv_trame
+import pantry.stpyvista_pantry as stpv
 
 
 @st.fragment
 def fill_up_main_window():
+    stpyvista = stpv_trame
+
     with st.expander("🛠️ Installation", expanded=True):
         """
         ```sh
@@ -25,15 +31,23 @@ def fill_up_main_window():
                 "Ctrl + LMB + Drag",
                 "Shift + Drag",
                 "Scroll",
+                "Key-W",
+                "Key-S",
+                "Key-V",
+                "Key-R",
             ],
             "Description": [
                 "Free rotate",
                 "Rotate around center",
                 "Pan",
                 "Zoom",
+                "Show wireframe",
+                "Show surface",
+                "Show vertices",
+                "Reset view",
             ],
         }
-        st.dataframe(controls_table, use_container_width=True)
+        st.dataframe(controls_table, use_container_width=True, hide_index=True)
 
     with st.expander("✨ Code example", expanded=True):
         stpyvista(stpv.basic_example(), bokeh_resources="CDN")
@@ -62,6 +76,7 @@ def fill_up_main_window():
 @st.fragment
 def option_key():
     """🔑 Pass a key"""
+    stpyvista = stpv_panel
 
     st.header("🔑   Pass a key", divider="rainbow")
 
@@ -91,14 +106,23 @@ def option_key():
 def option_sphere():
     """✨ Textures and spheres"""
 
-    headers_kwargs = dict(anchor=False)
-    st.header("✨   Textures and spheres", **headers_kwargs)
-    st.subheader("Specular and specular power", **headers_kwargs)
+    st.header("✨   Textures and spheres", anchor=False)
+
+    cols = st.columns([3, 1])
+    with cols[0]:
+        st.subheader("Specular and specular power", anchor=False)
+
+    with cols[1].popover("Change backend", use_container_width=True):
+        backend = st.radio("Backend", ["panel", "trame"])
+        if backend == "panel":
+            stpyvista = stpv_panel
+        elif backend == "trame":
+            stpyvista = stpv_trame
 
     stpyvista(stpv.spheres())
 
     "****"
-    st.subheader("Physically based rendering (PBR)", **headers_kwargs)
+    st.subheader("Physically based rendering (PBR)", anchor=False)
 
     stpyvista(stpv.pbr_test())
 
@@ -111,8 +135,9 @@ def option_sphere():
 @st.fragment
 def option_glb():
     """🐎 Rendering GLB data"""
-    st.header("🐎   Rendering GLB data", anchor=False, divider="rainbow")
+    stpyvista = stpv_panel
 
+    st.header("🐎   Rendering GLB data", anchor=False, divider="rainbow")
     plotter = pv.Plotter(border=False, window_size=[500, 400], off_screen=True)
     plotter.background_color = "#f0f8ff"
     blocks = pv.read("assets/stl/horse.glb")
@@ -134,6 +159,7 @@ def option_glb():
 @st.fragment
 def option_stl():
     """🐇 Rendering STL data"""
+    stpyvista = stpv_trame
 
     st.header("🐇   Rendering STL data", anchor=False, divider="rainbow")
 
@@ -188,7 +214,7 @@ def option_stl():
 @st.fragment
 def option_align():
     """📐 Horizontal alignment"""
-
+    stpyvista = stpv_panel
     st.header("📐   Horizontal alignment", anchor=False)
 
     alignment = st.select_slider(
@@ -209,6 +235,7 @@ def option_align():
 @st.fragment
 def option_grid():
     """🧱 Structured grid"""
+    stpyvista = stpv_trame
 
     st.header("🧱 Structured grid", anchor=False, divider="rainbow")
     code, line_no = inspect.getsourcelines(stpv.structuredgrid)
@@ -227,6 +254,7 @@ def option_grid():
 @st.fragment
 def option_slider():
     """🔮 Sphere slider"""
+    stpyvista = stpv_trame
 
     st.header("# 🔮   Sphere", divider="rainbow", anchor=False)
 
@@ -271,6 +299,7 @@ def option_texture():
 @st.fragment
 def option_xyz():
     """🌈 Colorbar and xyz"""
+    stpyvista = stpv_panel
     st.header("🌈   Colorbar and orientation widget", divider="rainbow", anchor=False)
 
     st.toast(
@@ -312,11 +341,12 @@ def option_xyz():
 @st.fragment
 def option_opacity():
     """🗼 Opacity"""
+    stpyvista = stpv_trame
 
     st.header("🏯   Opacity", divider="rainbow", anchor=False)
     st.subheader("🔅 Single opacity value per mesh", anchor=False)
 
-    cols = st.columns([2, 1])
+    cols = st.columns([2, 1], vertical_alignment="center")
 
     with cols[0]:
         code_placeholder = st.empty()
@@ -367,6 +397,8 @@ def option_axes():
 
     from textwrap import dedent
     from stpyvista.panel_backend import PanelVTKKwargs, PanelAxesConfig, PanelTicker
+
+    stpyvista = stpv_panel
 
     def prettyfy_docstring(docstring):
         return dedent(docstring).replace("-", "\n-").replace("    ", "\n    ")
@@ -423,6 +455,7 @@ def option_axes():
 @st.fragment
 def option_solids():
     """🩴 Platonic solids"""
+    stpyvista = stpv_trame
     st.header("🩴   Platonic solids", divider="rainbow", anchor=False)
 
     "&nbsp;"
@@ -444,6 +477,8 @@ def option_solids():
 @st.fragment
 def option_geovista():
     """🌎 Cartographic rendering"""
+    stpyvista = stpv_panel
+
     st.header(
         "🌎 Running `geovista` for cartographic rendering",
         divider="rainbow",
@@ -473,6 +508,7 @@ def option_dataview():
         anchor=False,
     )
     "&nbsp;"
+    stpyvista = stpv_panel
 
     mesh, plotter = stpv.structuredgrid("dataview")
 

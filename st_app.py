@@ -15,7 +15,7 @@ st.session_state.is_app_embedded = st.session_state.get(
 
 def main():
     st.set_page_config(
-        page_title="stpyvista",
+        page_title="stpyvista: Show 3D visualizations from PyVista in Streamlit",
         page_icon="🧊",
         layout="centered",
         initial_sidebar_state="expanded",
@@ -67,9 +67,9 @@ def main():
 
         with side_other_container.container():
             # Add badges to sidebar
-            with st.popover("📎"):
-                with open("assets/badges.md") as f:
-                    st.markdown(f"""{f.read()}""", unsafe_allow_html=True)
+            with open("assets/badges.html") as f:
+                st.subheader("Useful links", anchor=False)
+                st.html(f"""{f.read()}""")
 
         if not selection:
             with side_title_container.container():
@@ -78,7 +78,8 @@ def main():
                     """
                     [`stpyvista`](https://github.com/edsaac/stpyvista) displays PyVista 
                     plotter objects in streamlit web apps using 
-                    [`panel`](https://panel.holoviz.org/reference/panes/VTK.html)
+                    [`panel`](https://panel.holoviz.org/reference/panes/VTK.html) and
+                    [`trame`](https://github.com/Kitware/trame)
                     """
                 )
 
@@ -95,6 +96,7 @@ def main():
                     panel_kwargs=dict(
                         orientation_widget=True, interactive_orientation_widget=True
                     ),
+                    bokeh_resources="CDN",
                 )
 
                 st.info("Check the examples gallery in the sidebar!", icon="👈")
@@ -105,7 +107,10 @@ def main():
 
         else:
             with side_title_container.container():
-                st.header("🧊 `stpyvista`", anchor=False)
+                st.header(
+                    """🧊 `stpyvista`""",
+                    anchor=False,
+                )
 
             main_container.empty()
             st.query_params["gallery"] = selection
