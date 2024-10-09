@@ -15,7 +15,7 @@ st.session_state.is_app_embedded = st.session_state.get(
 
 def main():
     st.set_page_config(
-        page_title="stpyvista: Show 3D visualizations from PyVista in Streamlit",
+        page_title="stpyvista · Show 3D visualizations from PyVista in Streamlit",
         page_icon="🧊",
         layout="centered",
         initial_sidebar_state="expanded",
