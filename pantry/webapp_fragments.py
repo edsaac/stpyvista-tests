@@ -76,9 +76,19 @@ def fill_up_main_window():
 @st.fragment
 def option_key():
     """🔑 Pass a key"""
-    stpyvista = stpv_panel
 
     st.header("🔑   Pass a key", divider="rainbow")
+
+    backend = st.radio(
+        "Pick a rendering backend",
+        ["panel", "trame"],
+        horizontal=True,
+        format_func=str.title,
+    )
+    if backend == "panel":
+        stpyvista = stpv_panel
+    elif backend == "trame":
+        stpyvista = stpv_trame
 
     plotter = stpv.key()
 
@@ -112,7 +122,7 @@ def option_sphere():
     with cols[0]:
         st.subheader("Specular and specular power", anchor=False)
 
-    with cols[1].popover("Change backend", use_container_width=True):
+    with cols[1].popover("Change backend"):
         backend = st.radio("Backend", ["panel", "trame"])
         if backend == "panel":
             stpyvista = stpv_panel
