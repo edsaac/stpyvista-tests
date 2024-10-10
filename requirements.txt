@@ -6,7 +6,7 @@ panel>=1.4.1
 bokeh
 param
 pyvista
-stpyvista>=0.1.2
+stpyvista>=0.1.4
 geovista
 colorcet
 requests
