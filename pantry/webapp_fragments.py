@@ -107,7 +107,7 @@ def option_key():
             stpyvista(plotter)
 
     st.button(
-        "🤔 Will this button make `stpyvista` to lose its state?",
+        "🤔 Will this button make `stpyvista` lose its state?",
         use_container_width=True,
     )
 
