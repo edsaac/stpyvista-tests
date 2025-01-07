@@ -1,3 +1,4 @@
+import logging
 import streamlit as st
 
 from stpyvista import stpyvista
@@ -5,6 +6,8 @@ from stpyvista.utils import is_the_app_embedded, start_xvfb
 import pantry.stpyvista_pantry as stpv
 from pantry.webapp_fragments import gallery, fill_up_main_window
 
+# Hide param warnings
+logging.getLogger("param.main").setLevel(logging.CRITICAL)
 
 # Initial configuration
 start_xvfb()
@@ -27,7 +30,9 @@ def main():
 
     if st.session_state.is_app_embedded:
         with open("assets/style_embed.css") as f:
-            st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
+            st.markdown(
+                f"""<style>{f.read()}</style>""", unsafe_allow_html=True
+            )
 
     # --------------------------------------------
     # Full version
@@ -94,12 +99,15 @@ def main():
                 stpyvista(
                     plotter,
                     panel_kwargs=dict(
-                        orientation_widget=True, interactive_orientation_widget=True
+                        orientation_widget=True,
+                        interactive_orientation_widget=True,
                     ),
                     bokeh_resources="CDN",
                 )
 
-                st.info("Check the examples gallery in the sidebar!", icon="👈")
+                st.info(
+                    "Check the examples gallery in the sidebar!", icon="👈"
+                )
 
                 fill_up_main_window()
 
@@ -132,11 +140,14 @@ def main():
             stpyvista(
                 plotter,
                 panel_kwargs=dict(
-                    orientation_widget=True, interactive_orientation_widget=True
+                    orientation_widget=True,
+                    interactive_orientation_widget=True,
                 ),
             )
 
-            st.subheader("Show PyVista 3D visualizations in Streamlit", anchor=False)
+            st.subheader(
+                "Show PyVista 3D visualizations in Streamlit", anchor=False
+            )
             st.subheader(
                 "[![Explore the gallery!](https://img.shields.io/badge/Community%20Cloud-Explore%20the%20gallery!-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista.streamlit.app)",
                 anchor="Launch",
