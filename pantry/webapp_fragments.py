@@ -290,7 +290,7 @@ def option_slider():
     """🔮 Sphere slider"""
     stpyvista = stpv_trame
 
-    st.header("# 🔮   Sphere", divider="rainbow", anchor=False)
+    st.header("🔮   Sphere", divider="rainbow", anchor=False)
 
     code = (
         'res = st.slider("Resolution", 5, 100, 20, 5)\n\n'
