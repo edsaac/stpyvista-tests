@@ -13,16 +13,18 @@ from stpyvista.trame_backend import stpyvista as stpv_trame
 import pantry.stpyvista_pantry as stpv
 
 
+def fill_install_instructions():
+    with st.container(border=True):
+        lc, rc = st.columns([1, 3], vertical_alignment="center")
+        with lc:
+            st.write("📦 &nbsp; :green-background[**Install:**]")
+        with rc:
+            st.code("pip install stpyvista", language="sh")
+
+
 @st.fragment
 def fill_up_main_window():
     stpyvista = stpv_trame
-
-    with st.expander("🛠️ Installation", expanded=True):
-        """
-        ```sh
-        pip install stpyvista
-        ```
-        """
 
     with st.expander("🎮 Controls", expanded=True):
         controls_table = {
@@ -63,14 +65,30 @@ def fill_up_main_window():
             line_numbers=True,
         )
 
-    with st.expander("🔡 Also check:"):
-        """
+    with st.expander("🚩 &nbsp; Known issues", expanded=True):
+        st.write("""
+            • :rainbow-background[**Conflicts with cadquery**]
+                 
+            > `cadquery` bundles an outdated version of `vtk` that 
+            conflicts with the version that `pyvista` requires. 
+            To fix, install `stpyvista` **before** `cadquery` in a virtual environment. 
+            Check [this post on discuss](https://discuss.streamlit.io/t/solved-importerror-vtk-version-conflict-with-cadquery-stpyvista-on-streamlit-cloud/91840)
+            with detailed instructions. Find additional info in the [GitHub issue](https://github.com/edsaac/stpyvista/issues/25).
+            
+            • :red-background[**`NSInternalInconsistencyException`**]
+            
+            > This exception is thrown when running on certain macOS instances.
+            The recommended workaround is to build and deploy your web app 
+            using a Linux VM. Find more info in the [GitHub issue](https://github.com/edsaac/stpyvista/issues/14)
+            """)
+
+    with st.expander("🔡 &nbsp; Also check:"):
+        st.write("""
         * The PyVista project at [https://www.pyvista.org/](https://www.pyvista.org/)
         * Holoviz Panel VTK at [https://panel.holoviz.org/](https://panel.holoviz.org/reference/panes/VTK.html)
         * @blackary['s blog post](https://blog.streamlit.io/how-to-build-your-own-streamlit-component/) on how to build a custom component
         * [Post](https://discuss.streamlit.io/t/stpyvista-show-pyvista-3d-visualizations-in-streamlit/31802) on streamlit discuss forum.
-
-        """
+        """)
 
 
 @st.fragment
@@ -177,9 +195,15 @@ def option_stl():
     placeholder = st.empty()
     "&nbsp;"
 
-    bunny_button = cols[0].button("🐇\n\nShow a bunny", use_container_width=True)
-    tower_button = cols[1].button("🗼\n\nShow a tower", use_container_width=True)
-    upload_button = cols[2].button("📤\n\nUpload my own STL", use_container_width=True)
+    bunny_button = cols[0].button(
+        "🐇\n\nShow a bunny", use_container_width=True
+    )
+    tower_button = cols[1].button(
+        "🗼\n\nShow a tower", use_container_width=True
+    )
+    upload_button = cols[2].button(
+        "📤\n\nUpload my own STL", use_container_width=True
+    )
 
     if bunny_button:
         stl_data = stpv.stl_get("bunny")
@@ -310,7 +334,9 @@ def option_texture():
 def option_xyz():
     """🌈 Colorbar and xyz"""
     stpyvista = stpv_panel
-    st.header("🌈   Colorbar and orientation widget", divider="rainbow", anchor=False)
+    st.header(
+        "🌈   Colorbar and orientation widget", divider="rainbow", anchor=False
+    )
 
     st.toast(
         "Colorbar bug was fixed in [panel>=1.3.2](https://github.com/holoviz/panel/releases/tag/v1.3.2).",
@@ -370,7 +396,10 @@ def option_opacity():
         code, line_no = inspect.getsourcelines(stpv.tower)
         st.code(
             "import numpy as np\n"
-            "import matplotlib as mpl\n" + stpv.basic_import_text + "".join(code) + "\n"
+            "import matplotlib as mpl\n"
+            + stpv.basic_import_text
+            + "".join(code)
+            + "\n"
             'N_BOXES = st.number_input("`N_BOXES`", 0, 12, 8, 1)'
             "tower = stpv_tower(N_BOXES)\n"
             + "stpyvista(tower, panel_kwargs=dict(orientation_widget=True))",
@@ -390,7 +419,10 @@ def option_opacity():
     with code_placeholder:
         code, line_no = inspect.getsourcelines(stpv.ripple)
         st.code(
-            "import numpy as np\n" + stpv.basic_import_text + "".join(code) + "\n"
+            "import numpy as np\n"
+            + stpv.basic_import_text
+            + "".join(code)
+            + "\n"
             "ripple = stpv_ripple()\n"
             "stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))",
             line_numbers=True,
@@ -406,7 +438,11 @@ def option_axes():
     """🪓 Axes and tickers"""
 
     from textwrap import dedent
-    from stpyvista.panel_backend import PanelVTKKwargs, PanelAxesConfig, PanelTicker
+    from stpyvista.panel_backend import (
+        PanelVTKKwargs,
+        PanelAxesConfig,
+        PanelTicker,
+    )
 
     stpyvista = stpv_panel
 
@@ -473,7 +509,9 @@ def option_solids():
     labels = ["▲", "■", "◭", "⬟", "◑"]
     cols = st.columns(5)
 
-    for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
+    for col, name, solid, label in zip(
+        cols, stpv.SOLIDS, stpv.solids(), labels
+    ):
         with col:
             with st.popover(label, use_container_width=True):
                 f"### **{name.title()}**"
@@ -500,7 +538,9 @@ def option_geovista():
 
     stpyvista(
         planet,
-        panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True),
+        panel_kwargs=dict(
+            orientation_widget=True, interactive_orientation_widget=True
+        ),
     )
 
     st.info(
@@ -522,7 +562,7 @@ def option_dataview():
 
     mesh, plotter = stpv.structuredgrid("dataview")
 
-    st.subheader("Display the HTML representation of the mesh data")
+    st.subheader("Show mesh data in tables")
     with st.echo():
         dataview(mesh)
 
@@ -558,9 +598,7 @@ def option_control():
             "Output"
             if engine == "subprocess":
                 try:
-                    bash_code = (
-                        f"output = subprocess.run({code.split()}, capture_output=True)"
-                    )
+                    bash_code = f"output = subprocess.run({code.split()}, capture_output=True)"
                     exec(bash_code)
                     st.code(output.stdout.decode("utf-8"), language=None)
                     st.code(output.stderr.decode("utf-8"), language=None)

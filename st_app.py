@@ -4,7 +4,11 @@ import streamlit as st
 from stpyvista import stpyvista
 from stpyvista.utils import is_the_app_embedded, start_xvfb
 import pantry.stpyvista_pantry as stpv
-from pantry.webapp_fragments import gallery, fill_up_main_window
+from pantry.webapp_fragments import (
+    gallery,
+    fill_up_main_window,
+    fill_install_instructions,
+)
 
 # Hide param warnings
 logging.getLogger("param.main").setLevel(logging.CRITICAL)
@@ -109,6 +113,7 @@ def main():
                     "Check the examples gallery in the sidebar!", icon="👈"
                 )
 
+                fill_install_instructions()
                 fill_up_main_window()
 
         # *************************************
@@ -153,6 +158,7 @@ def main():
                 anchor="Launch",
             )
 
+            fill_install_instructions()
             fill_up_main_window()
 
 
