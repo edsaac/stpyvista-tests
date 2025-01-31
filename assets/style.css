@@ -73,18 +73,18 @@ div[data-testid="stPopoverBody"] {
     min-width: 40%;
 }
 
-section.main div[data-testid="stPopover"] div button {
+section.stMain div[data-testid="stPopover"] div button {
     font-size: 2rem;
 }
 
-section.main div[data-testid="stPopover"] div button p {
+section.stMain div[data-testid="stPopover"] div button p {
     font-size: 2rem;
     animation: 5s infinite normal;
     animation-name: spinny;
     animation-timing-function: linear;
 }
 
-section.main div[data-testid="stPopover"] div button:hover {
+section.stMain div[data-testid="stPopover"] div button:hover {
     background-color: rgb(220, 20, 60, 0.2);
 }
 
@@ -108,8 +108,8 @@ section[data-testid="stSidebar"] div[data-testid="stPopover"] div button p {
     font-size: 1.50rem;
 }
 
-div[data-testid="stAppViewBlockContainer"] {
-    padding-top: 1rem;
+section.stMain div[data-testid="stMainBlockContainer"] {
+    padding-top: 1.5rem;
 }
 
 iframe[data-testid="stIFrame"] {

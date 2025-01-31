@@ -30,13 +30,11 @@ def main():
 
     # Add styling with CSS selectors
     with open("assets/style.css") as f:
-        st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
+        st.html(f"""<style>{f.read()}</style>""")
 
     if st.session_state.is_app_embedded:
         with open("assets/style_embed.css") as f:
-            st.markdown(
-                f"""<style>{f.read()}</style>""", unsafe_allow_html=True
-            )
+            st.html(f"""<style>{f.read()}</style>""")
 
     # --------------------------------------------
     # Full version
