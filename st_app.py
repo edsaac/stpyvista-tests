@@ -136,10 +136,7 @@ def main():
         main_container = st.empty()
 
         with main_container.container():
-            st.header("🧊 `stpyvista`")
-
             plotter = stpv.intro()
-
             stpyvista(
                 plotter,
                 panel_kwargs=dict(
@@ -149,8 +146,15 @@ def main():
             )
 
             st.subheader(
-                "Show PyVista 3D visualizations in Streamlit", anchor=False
+                "🧊 `stpyvista`",
+                anchor=False,
             )
+
+            st.subheader(
+                ":green[Show PyVista 3D visualizations in Streamlit]",
+                anchor=False,
+            )
+
             st.subheader(
                 "[![Explore the gallery!](https://img.shields.io/badge/Community%20Cloud-Explore%20the%20gallery!-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista.streamlit.app)",
                 anchor="Launch",
