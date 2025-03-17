@@ -1,5 +1,6 @@
 import logging
 import streamlit as st
+from textwrap import wrap
 
 from stpyvista import stpyvista
 from stpyvista.utils import is_the_app_embedded, start_xvfb
@@ -15,9 +16,7 @@ logging.getLogger("param.main").setLevel(logging.CRITICAL)
 
 # Initial configuration
 start_xvfb()
-st.session_state.is_app_embedded = st.session_state.get(
-    "is_app_embedded", is_the_app_embedded()
-)
+st.session_state.is_app_embedded = st.session_state.get("is_app_embedded", is_the_app_embedded())
 
 
 def main():
@@ -59,13 +58,13 @@ def main():
         with side_gallery_container:
             st.subheader("Gallery", anchor=False)
 
-            selection = st.selectbox(
+            selection = st.pills(
                 "Gallery selection",
                 gallery.keys(),
-                index=None,
+                selection_mode="single",
+                default=None,
+                format_func=lambda x: "\n\n".join(wrap(gallery[x].__doc__, 12)),
                 label_visibility="collapsed",
-                format_func=lambda x: gallery[x].__doc__,
-                placeholder="Select an option...",
                 on_change=st.query_params.clear,
                 key="gallery_select",
             )
@@ -92,9 +91,7 @@ def main():
 
             with main_container.container():
                 st.header("`stpyvista`", anchor="stpyvista")
-                st.subheader(
-                    "Show PyVista 3D visualizations in Streamlit", anchor=False
-                )
+                st.subheader("Show PyVista 3D visualizations in Streamlit", anchor=False)
 
                 ## Send plotter to streamlit
                 plotter = stpv.intro()
@@ -107,9 +104,7 @@ def main():
                     bokeh_resources="CDN",
                 )
 
-                st.info(
-                    "Check the examples gallery in the sidebar!", icon="👈"
-                )
+                st.info("Check the examples gallery in the sidebar!", icon="👈")
 
                 fill_install_instructions()
                 fill_up_main_window()

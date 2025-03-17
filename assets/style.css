@@ -41,10 +41,6 @@ h4 {
     margin-right: 0%;
 }
 
-[data-testid='stSidebarNav']>ul {
-    min-height: 66vh;
-}
-
 iframe[title='stpyvista.stpyvista'] {
     border-radius: 10px;
 }
@@ -69,6 +65,19 @@ div[data-testid="stSidebarUserContent"] {
     padding-top: 2rem;
 }
 
+/* Adjust pills for gallery menu */
+
+div[data-testid="stSidebarContent"] div.stButtonGroup div[data-baseweb="button-group"] {
+    justify-content: space-evenly;
+}
+
+div[data-testid="stSidebarContent"] div.stButtonGroup button[data-testid^="stBaseButton-pills"] {
+    line-height: 1.1em;
+    min-height: 3rem;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 div[data-testid="stPopoverBody"] {
     min-width: 40%;
 }
@@ -77,12 +86,12 @@ section.stMain div[data-testid="stPopover"] div button {
     font-size: 2rem;
 }
 
-section.stMain div[data-testid="stPopover"] div button p {
+/* section.stMain div[data-testid="stPopover"] div button p {
     font-size: 2rem;
     animation: 5s infinite normal;
     animation-name: spinny;
     animation-timing-function: linear;
-}
+} */
 
 section.stMain div[data-testid="stPopover"] div button:hover {
     background-color: rgb(220, 20, 60, 0.2);

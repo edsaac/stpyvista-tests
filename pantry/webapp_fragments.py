@@ -132,7 +132,7 @@ def option_key():
 
 @st.fragment
 def option_sphere():
-    """✨ Textures and spheres"""
+    """✨ Textures"""
 
     st.header("✨   Textures and spheres", anchor=False)
 
@@ -162,7 +162,7 @@ def option_sphere():
 
 @st.fragment
 def option_glb():
-    """🐎 Rendering GLB data"""
+    """🐎 Render GLB"""
     stpyvista = stpv_panel
 
     st.header("🐎   Rendering GLB data", anchor=False, divider="rainbow")
@@ -186,7 +186,7 @@ def option_glb():
 
 @st.fragment
 def option_stl():
-    """🐇 Rendering STL data"""
+    """🐇 Render STL"""
     stpyvista = stpv_trame
 
     st.header("🐇   Rendering STL data", anchor=False, divider="rainbow")
@@ -195,15 +195,9 @@ def option_stl():
     placeholder = st.empty()
     "&nbsp;"
 
-    bunny_button = cols[0].button(
-        "🐇\n\nShow a bunny", use_container_width=True
-    )
-    tower_button = cols[1].button(
-        "🗼\n\nShow a tower", use_container_width=True
-    )
-    upload_button = cols[2].button(
-        "📤\n\nUpload my own STL", use_container_width=True
-    )
+    bunny_button = cols[0].button("🐇\n\nShow a bunny", use_container_width=True)
+    tower_button = cols[1].button("🗼\n\nShow a tower", use_container_width=True)
+    upload_button = cols[2].button("📤\n\nUpload my own STL", use_container_width=True)
 
     if bunny_button:
         stl_data = stpv.stl_get("bunny")
@@ -247,7 +241,7 @@ def option_stl():
 
 @st.fragment
 def option_align():
-    """📐 Horizontal alignment"""
+    """📐 Horizontal align"""
     stpyvista = stpv_panel
     st.header("📐   Horizontal alignment", anchor=False)
 
@@ -332,11 +326,9 @@ def option_texture():
 
 @st.fragment
 def option_xyz():
-    """🌈 Colorbar and xyz"""
+    """🌈 Colorbar & xyz"""
     stpyvista = stpv_panel
-    st.header(
-        "🌈   Colorbar and orientation widget", divider="rainbow", anchor=False
-    )
+    st.header("🌈   Colorbar and orientation widget", divider="rainbow", anchor=False)
 
     st.toast(
         "Colorbar bug was fixed in [panel>=1.3.2](https://github.com/holoviz/panel/releases/tag/v1.3.2).",
@@ -396,10 +388,7 @@ def option_opacity():
         code, line_no = inspect.getsourcelines(stpv.tower)
         st.code(
             "import numpy as np\n"
-            "import matplotlib as mpl\n"
-            + stpv.basic_import_text
-            + "".join(code)
-            + "\n"
+            "import matplotlib as mpl\n" + stpv.basic_import_text + "".join(code) + "\n"
             'N_BOXES = st.number_input("`N_BOXES`", 0, 12, 8, 1)'
             "tower = stpv_tower(N_BOXES)\n"
             + "stpyvista(tower, panel_kwargs=dict(orientation_widget=True))",
@@ -419,10 +408,7 @@ def option_opacity():
     with code_placeholder:
         code, line_no = inspect.getsourcelines(stpv.ripple)
         st.code(
-            "import numpy as np\n"
-            + stpv.basic_import_text
-            + "".join(code)
-            + "\n"
+            "import numpy as np\n" + stpv.basic_import_text + "".join(code) + "\n"
             "ripple = stpv_ripple()\n"
             "stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))",
             line_numbers=True,
@@ -435,7 +421,7 @@ def option_opacity():
 
 @st.fragment
 def option_axes():
-    """🪓 Axes and tickers"""
+    """🪓 Axes & tickers"""
 
     from textwrap import dedent
     from stpyvista.panel_backend import (
@@ -509,9 +495,7 @@ def option_solids():
     labels = ["▲", "■", "◭", "⬟", "◑"]
     cols = st.columns(5)
 
-    for col, name, solid, label in zip(
-        cols, stpv.SOLIDS, stpv.solids(), labels
-    ):
+    for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
         with col:
             with st.popover(label, use_container_width=True):
                 f"### **{name.title()}**"
@@ -538,9 +522,7 @@ def option_geovista():
 
     stpyvista(
         planet,
-        panel_kwargs=dict(
-            orientation_widget=True, interactive_orientation_widget=True
-        ),
+        panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True),
     )
 
     st.info(
