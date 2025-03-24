@@ -24,7 +24,7 @@ def main():
         page_title="stpyvista · Show 3D visualizations from PyVista in Streamlit",
         page_icon="🧊",
         layout="centered",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="auto",
     )
 
     # Add styling with CSS selectors
