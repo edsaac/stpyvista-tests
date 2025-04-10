@@ -390,14 +390,13 @@ def option_opacity():
             "import numpy as np\n"
             "import matplotlib as mpl\n" + stpv.basic_import_text + "".join(code) + "\n"
             'N_BOXES = st.number_input("`N_BOXES`", 0, 12, 8, 1)'
-            "tower = stpv_tower(N_BOXES)\n"
-            + "stpyvista(tower, panel_kwargs=dict(orientation_widget=True))",
+            "tower = stpv_tower(N_BOXES)\n" + "stpyvista(tower)",
             line_numbers=True,
         )
 
     with render_placeholder:
         tower = stpv.tower(N_BOXES)
-        stpyvista(tower, panel_kwargs=dict(orientation_widget=True))
+        stpyvista(tower)
 
     st.divider()
     st.subheader("🔅 Opacity from a field", anchor=False)
@@ -410,13 +409,13 @@ def option_opacity():
         st.code(
             "import numpy as np\n" + stpv.basic_import_text + "".join(code) + "\n"
             "ripple = stpv_ripple()\n"
-            "stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))",
+            "stpyvista(ripple)",
             line_numbers=True,
         )
 
     with render_placeholder:
         ripple = stpv.ripple()
-        stpyvista(ripple, panel_kwargs=dict(orientation_widget=True))
+        stpyvista(ripple)
 
 
 @st.fragment
