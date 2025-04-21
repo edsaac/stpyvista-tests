@@ -25,6 +25,17 @@ div.stHeading h2 code {
     background: none;
 }
 
+div.stHeading h1 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+div.stHeading h2 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
 h3 {
     font-size: 1.2rem;
     text-align: center;

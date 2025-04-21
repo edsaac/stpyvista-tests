@@ -79,7 +79,7 @@ def main():
 
         if not selection:
             with side_title_container.container():
-                st.title("🧊", anchor=False)
+                st.title("[🧊](https://github.com/edsaac/stpyvista)", anchor=False)
                 st.caption(
                     """
                     [`stpyvista`](https://github.com/edsaac/stpyvista) displays PyVista 
@@ -114,7 +114,7 @@ def main():
         else:
             with side_title_container.container():
                 st.header(
-                    """🧊 `stpyvista`""",
+                    """[🧊 `stpyvista`](https://stpyvista.streamlit.app)""",
                     anchor=False,
                 )
 
@@ -141,7 +141,7 @@ def main():
             )
 
             st.subheader(
-                "🧊 `stpyvista`",
+                "[🧊 `stpyvista`](https://stpyvista.streamlit.app)",
                 anchor=False,
             )
 
