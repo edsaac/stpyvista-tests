@@ -270,10 +270,7 @@ def option_grid():
     stpyvista(stpv.structuredgrid())
 
     st.code(
-        "import numpy as np\n"
-        + stpv.basic_import_text
-        + "".join(code)
-        + """\nstpyvista(stpv_structuredgrid())""",
+        "import numpy as np\n" + stpv.basic_import_text + "".join(code) + """\nstpyvista(stpv_structuredgrid())""",
         language="python",
         line_numbers=True,
     )
@@ -311,16 +308,18 @@ def option_texture():
     """🐕 Image as texture"""
     st.header("🐕   Dog Elevation Model", divider="rainbow")
 
-    st.components.v1.iframe(
-        # "http://localhost:8502/?embed=True",
-        "https://stpyvista-dog-dem.streamlit.app/?embed=True",
-        scrolling=True,
-        height=390,
+    st.video(
+        "https://edsaac.me/assets/video/screencast/stpyvista_dog.webm",
+        format="video/webm",
+        autoplay=True,
+        muted=True,
+        loop=True,
     )
 
     st.info(
-        "🏞️ Explore the full version of this example at "
+        "Explore the full version of this example at "
         "[![Explore the app!](https://img.shields.io/badge/%20-Community%20Cloud-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista-dog-dem.streamlit.app)",
+        icon="🏞️",
     )
 
 
@@ -478,9 +477,7 @@ def option_axes():
             panel_kwargs=dict(axes=axes, orientation_widget=True),
         )
 
-    st.info(
-        "Check [`panel.pane.vtk`](https://panel.holoviz.org/api/panel.pane.vtk.html) for more options."
-    )
+    st.info("Check [`panel.pane.vtk`](https://panel.holoviz.org/api/panel.pane.vtk.html) for more options.")
 
 
 @st.fragment
@@ -500,9 +497,7 @@ def option_solids():
                 f"### **{name.title()}**"
                 stpyvista(solid)
 
-    st.caption(
-        "Solids from [PyVista](https://docs.pyvista.org/version/stable/api/utilities/geometric.html)"
-    )
+    st.caption("Solids from [PyVista](https://docs.pyvista.org/version/stable/api/utilities/geometric.html)")
 
 
 @st.fragment
