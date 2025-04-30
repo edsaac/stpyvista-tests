@@ -5,7 +5,7 @@ matplotlib
 panel
 bokeh
 param
-pyvista
+pyvista<0.45.0
 stpyvista
 geovista
 colorcet
