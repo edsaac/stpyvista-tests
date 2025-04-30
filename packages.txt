@@ -1,4 +1,5 @@
 procps
+libosmesa6
 libgl1-mesa-glx
 xvfb
 libxrender-dev
