@@ -6,7 +6,7 @@ panel
 bokeh
 param
 pyvista
-stpyvista
+stpyvista>=1.45.0
 geovista
 colorcet
 requests

@@ -3,7 +3,7 @@ import streamlit as st
 from textwrap import wrap
 
 from stpyvista import stpyvista
-from stpyvista.utils import is_the_app_embedded, start_xvfb
+from stpyvista.utils import start_xvfb
 import pantry.stpyvista_pantry as stpv
 from pantry.webapp_fragments import (
     gallery,
@@ -16,7 +16,7 @@ logging.getLogger("param.main").setLevel(logging.CRITICAL)
 
 # Initial configuration
 start_xvfb()
-st.session_state.is_app_embedded = st.session_state.get("is_app_embedded", is_the_app_embedded())
+print(f"--> IP: {st.context.ip_address or 'Not-found'}")
 
 
 def main():
@@ -31,14 +31,14 @@ def main():
     with open("assets/style.css") as f:
         st.html(f"""<style>{f.read()}</style>""")
 
-    if st.session_state.is_app_embedded:
+    if st.context.is_embedded:
         with open("assets/style_embed.css") as f:
             st.html(f"""<style>{f.read()}</style>""")
 
     # --------------------------------------------
     # Full version
     # --------------------------------------------
-    if not st.session_state.is_app_embedded:
+    if not st.context.is_embedded:
         # General layout
         with st.sidebar:
             side_title_container = st.empty()
