@@ -15,7 +15,7 @@ from pantry.webapp_fragments import (
 logging.getLogger("param.main").setLevel(logging.CRITICAL)
 
 # Initial configuration
-start_xvfb()
+# start_xvfb()
 print(f"--> IP: {st.context.ip_address or 'Not-found'}")
 
 
