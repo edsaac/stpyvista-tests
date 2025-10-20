@@ -1,11 +1,11 @@
 pip
-streamlit>=1.45.0
+streamlit
 numpy
 matplotlib
 panel
 bokeh
 param
-pyvista<0.45.0
+pyvista
 stpyvista
 geovista
 colorcet
@@ -18,3 +18,5 @@ trame-components
 trame-server
 trame-vtk
 trame-vuetify
+--extra-index-url https://wheels.vtk.org
+vtk-osmesa

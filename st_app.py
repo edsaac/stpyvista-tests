@@ -25,6 +25,7 @@ def main():
         page_icon="🧊",
         layout="centered",
         initial_sidebar_state="auto",
+        menu_items={"About": "Last updated Oct/20/25"},
     )
 
     # Add styling with CSS selectors
