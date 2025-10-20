@@ -16,9 +16,7 @@ import pantry.stpyvista_pantry as stpv
 
 # Initial configuration
 start_xvfb()
-st.session_state.is_app_embedded = st.session_state.get(
-    "is_app_embedded", is_the_app_embedded()
-)
+st.session_state.is_app_embedded = st.session_state.get("is_app_embedded", is_the_app_embedded())
 
 if "FIRST_ACCESS" not in st.session_state:
     print(datetime.utcnow(), " Connected from <-- ??")
@@ -161,17 +159,13 @@ def main():
 
             with main_container.container():
                 st.header("`stpyvista`", anchor="stpyvista")
-                st.subheader(
-                    "Show PyVista 3D visualizations in Streamlit", anchor=False
-                )
+                st.subheader("Show PyVista 3D visualizations in Streamlit", anchor=False)
 
                 ## Send plotter to streamlit
                 plotter = stpv.intro()
                 stpyvista(
                     plotter,
-                    panel_kwargs=dict(
-                        orientation_widget=True, interactive_orientation_widget=True
-                    ),
+                    panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True),
                 )
 
                 st.info("Check the examples gallery in the sidebar!", icon="👈")
@@ -220,13 +214,13 @@ def main():
                     "## ✨   Textures and spheres"
                     "### Specular and specular power"
                     stpyvista(stpv.spheres())
-                    
+
                     "****"
                     "### Physically based rendering (PBR)"
                     stpyvista(stpv.pbr_test())
 
                     st.sidebar.caption("Check the [PyVista docs!](https://docs.pyvista.org/examples/02-plot/pbr.html)")
-            
+
             elif selection == "stl":
                 main_container.empty()
                 st.query_params["gallery"] = selection
@@ -422,10 +416,7 @@ def main():
                         code, line_no = inspect.getsourcelines(stpv.tower)
                         st.code(
                             "import numpy as np\n"
-                            "import matplotlib as mpl\n"
-                            + stpv.basic_import_text
-                            + "".join(code)
-                            + "\n"
+                            "import matplotlib as mpl\n" + stpv.basic_import_text + "".join(code) + "\n"
                             'N_BOXES = st.number_input("`N_BOXES`", 0, 12, 8, 1)'
                             "tower = stpv_tower(N_BOXES)\n"
                             + "stpyvista(tower, panel_kwargs=dict(orientation_widget=True))",
@@ -452,10 +443,7 @@ def main():
                     with code_placeholder:
                         code, line_no = inspect.getsourcelines(stpv.ripple)
                         st.code(
-                            "import numpy as np\n"
-                            + stpv.basic_import_text
-                            + "".join(code)
-                            + "\n"
+                            "import numpy as np\n" + stpv.basic_import_text + "".join(code) + "\n"
                             'COLOR_PICK = st.color_picker("`COLOR_PICK`", value="#800080", help="Pick a color for the plane")\n'
                             "ripple = stpv_ripple()\n"
                             "ripple.actors['plane'].prop.color = COLOR_PICK\n"
@@ -561,9 +549,7 @@ def main():
 
                     stpyvista(
                         planet,
-                        panel_kwargs=dict(
-                            orientation_widget=True, interactive_orientation_widget=True
-                        ),
+                        panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True),
                     )
 
             elif selection == "texture":
@@ -572,19 +558,19 @@ def main():
 
                 with main_container.container():
                     st.header("🐕   Dog Elevation Model", divider="rainbow")
-            
+
                     st.components.v1.iframe(
                         # "http://localhost:8502/?embed=True",
                         "https://stpyvista-dog-dem.streamlit.app/?embed=True",
                         scrolling=True,
                         height=390,
                     )
-                
+
                 with side_other_container:
                     st.subheader(
                         "🏞️ Explore the full version of this example at "
                         "[![Explore the app!](https://img.shields.io/badge/%20-Community%20Cloud-informational?style=flat&logo=streamlit&logoColor=red&color=pink)](https://stpyvista-dog-dem.streamlit.app)",
-                        anchor=False
+                        anchor=False,
                     )
 
             elif selection == "control":
@@ -617,12 +603,8 @@ def main():
                                 try:
                                     bash_code = f"output = subprocess.run({code.split()}, capture_output=True)"
                                     exec(bash_code)
-                                    st.code(
-                                        output.stdout.decode("utf-8"), language=None
-                                    )
-                                    st.code(
-                                        output.stderr.decode("utf-8"), language=None
-                                    )
+                                    st.code(output.stdout.decode("utf-8"), language=None)
+                                    st.code(output.stderr.decode("utf-8"), language=None)
                                 except NameError:
                                     pass
                             elif engine == "os":
@@ -639,9 +621,7 @@ def main():
                     labels = ["▲", "■", "◭", "⬟", "◑"]
                     cols = st.columns(5)
 
-                    for col, name, solid, label in zip(
-                        cols, stpv.SOLIDS, stpv.solids(), labels
-                    ):
+                    for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
                         with col:
                             with st.popover(label, use_container_width=True):
                                 f"### **{name.title()}**"
@@ -664,9 +644,7 @@ def main():
 
             stpyvista(
                 plotter,
-                panel_kwargs=dict(
-                    orientation_widget=True, interactive_orientation_widget=True
-                ),
+                panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True),
             )
 
             st.subheader("Show PyVista 3D visualizations in Streamlit", anchor=False)

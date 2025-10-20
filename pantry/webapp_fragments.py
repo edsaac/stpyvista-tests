@@ -49,7 +49,7 @@ def fill_up_main_window():
                 "Reset view",
             ],
         }
-        st.dataframe(controls_table, use_container_width=True, hide_index=True)
+        st.dataframe(controls_table, width="stretch", hide_index=True)
 
     with st.expander("✨ Code example", expanded=True):
         stpyvista(stpv.basic_example())
@@ -126,7 +126,7 @@ def option_key():
 
     st.button(
         "🤔 Will this button make `stpyvista` lose its state?",
-        use_container_width=True,
+        width="stretch",
     )
 
 
@@ -195,9 +195,9 @@ def option_stl():
     placeholder = st.empty()
     "&nbsp;"
 
-    bunny_button = cols[0].button("🐇\n\nShow a bunny", use_container_width=True)
-    tower_button = cols[1].button("🗼\n\nShow a tower", use_container_width=True)
-    upload_button = cols[2].button("📤\n\nUpload my own STL", use_container_width=True)
+    bunny_button = cols[0].button("🐇\n\nShow a bunny", width="stretch")
+    tower_button = cols[1].button("🗼\n\nShow a tower", width="stretch")
+    upload_button = cols[2].button("📤\n\nUpload my own STL", width="stretch")
 
     if bunny_button:
         stl_data = stpv.stl_get("bunny")
@@ -493,7 +493,7 @@ def option_solids():
 
     for col, name, solid, label in zip(cols, stpv.SOLIDS, stpv.solids(), labels):
         with col:
-            with st.popover(label, use_container_width=True):
+            with st.popover(label, width="stretch"):
                 f"### **{name.title()}**"
                 stpyvista(solid)
 
