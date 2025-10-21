@@ -18,5 +18,3 @@ trame-components
 trame-server
 trame-vtk
 trame-vuetify
---extra-index-url https://wheels.vtk.org
-vtk-osmesa
