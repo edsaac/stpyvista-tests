@@ -1,14 +1,15 @@
+from collections import namedtuple
+from io import BytesIO
+from itertools import product
+from pathlib import Path
+from random import random
+from typing import Literal
+
 import numpy as np
 import pyvista as pv
-from itertools import product
-from random import random
 import streamlit as st
 import matplotlib as mpl
 import geovista as gv
-from collections import namedtuple
-from io import BytesIO
-from typing import Literal
-from pathlib import Path
 
 basic_import_text = (
     "import streamlit as st\n"
