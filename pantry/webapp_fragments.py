@@ -1,5 +1,7 @@
 import tempfile
 import inspect
+from functools import partial
+from typing import Callable
 
 from os import system
 
@@ -8,18 +10,11 @@ import pyvista as pv
 import numpy as np
 
 from stpyvista import dataview
-from stpyvista.panel_backend import stpyvista as stpv_panel
-from stpyvista.trame_backend import stpyvista as stpv_trame
+from stpyvista import stpyvista
 import pantry.stpyvista_pantry as stpv
 
-
-def fill_install_instructions():
-    with st.container(border=True):
-        lc, rc = st.columns([1, 3], vertical_alignment="center")
-        with lc:
-            st.write("📦 &nbsp; :green-background[**Install:**]")
-        with rc:
-            st.code("pip install stpyvista", language="sh")
+stpv_panel = partial(stpyvista, backend="panel")
+stpv_trame = partial(stpyvista, backend="trame")
 
 
 @st.fragment
@@ -52,7 +47,9 @@ def fill_up_main_window():
         st.dataframe(controls_table, width="stretch", hide_index=True)
 
     with st.expander("✨ Code example", expanded=True):
-        stpyvista(stpv.basic_example())
+        
+        with st.container(horizontal_alignment="center"):
+            stpyvista(stpv.basic_example())
 
         code, line_no = inspect.getsourcelines(stpv.basic_example)
 
@@ -239,25 +236,25 @@ def option_stl():
         stpyvista(plotter)
 
 
-@st.fragment
-def option_align():
-    """📐 Horizontal align"""
-    stpyvista = stpv_panel
-    st.header("📐   Horizontal alignment", anchor=False)
+# @st.fragment
+# def option_align():
+#     """📐 Horizontal align"""
+#     stpyvista = stpv_panel
+#     st.header("📐   Horizontal alignment", anchor=False)
 
-    alignment = st.select_slider(
-        "Align",
-        ["left", "center", "right"],
-        label_visibility="collapsed",
-    )
-    sphere = stpv.sphere()
+#     alignment = st.select_slider(
+#         "Align",
+#         ["left", "center", "right"],
+#         label_visibility="collapsed",
+#     )
+#     sphere = stpv.sphere()
 
-    with st.echo(code_location="below"):
-        stpyvista(
-            sphere,
-            horizontal_align=alignment,
-            use_container_width=False,
-        )
+#     with st.echo(code_location="below"):
+#         stpyvista(
+#             sphere,
+#             horizontal_align=alignment,
+#             use_container_width=False,
+#         )
 
 
 @st.fragment
@@ -326,14 +323,9 @@ def option_texture():
 @st.fragment
 def option_xyz():
     """🌈 Colorbar & xyz"""
-    stpyvista = stpv_panel
     st.header("🌈   Colorbar and orientation widget", divider="rainbow", anchor=False)
-
-    st.toast(
-        "Colorbar bug was fixed in [panel>=1.3.2](https://github.com/holoviz/panel/releases/tag/v1.3.2).",
-        icon="🎇",
-    )
-
+    st.info("These options apply to the `panel` backend only.", icon="⚠️")
+    
     cube = stpv.cube()
 
     "### 🌈 The three dots expand the colorbar legend"
@@ -343,14 +335,15 @@ def option_xyz():
     "****"
     "### 🧭 Orientation widget: xyz directions"
     with st.echo():
-        stpyvista(cube, panel_kwargs=dict(orientation_widget=True))
+        stpyvista(cube, backend="panel", backend_kwargs=dict(orientation_widget=True))
 
     "****"
     "### 🖱️ Make the orientation widget interactive "
     with st.echo():
         stpyvista(
             cube,
-            panel_kwargs=dict(
+            backend="panel",
+            backend_kwargs=dict(
                 orientation_widget=True,
                 interactive_orientation_widget=True,
             ),
@@ -360,8 +353,8 @@ def option_xyz():
     st.info(
         """Check the 
         [`panel`](https://panel.holoviz.org/reference/panes/VTK.html) 
-        documentation for other `panel_kwargs` that could be 
-        passed to `stpyvista`. """
+        documentation for other `backend_kwargs` that could be 
+        passed to `stpyvista` when using the `panel` backend."""
     )
 
 
@@ -474,7 +467,7 @@ def option_axes():
         # Pass those axes to panel_kwargs of stpyvista
         stpyvista(
             plotter,
-            panel_kwargs=dict(axes=axes, orientation_widget=True),
+            backend_kwargs=dict(axes=axes, orientation_widget=True),
         )
 
     st.info("Check [`panel.pane.vtk`](https://panel.holoviz.org/api/panel.pane.vtk.html) for more options.")
@@ -516,7 +509,7 @@ def option_geovista():
 
     stpyvista(
         planet,
-        panel_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True),
+        backend_kwargs=dict(orientation_widget=True, interactive_orientation_widget=True),
     )
 
     st.info(
@@ -585,12 +578,12 @@ def option_control():
                 system(code)
 
 
-gallery = {
+gallery : dict[str, Callable] = {
     "key": option_key,
     "dataview": option_dataview,
     "sphere": option_sphere,
     "stl": option_stl,
-    "align": option_align,
+    # "align": option_align,
     "grid": option_grid,
     "slider": option_slider,
     "texture": option_texture,
