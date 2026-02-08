@@ -4,6 +4,7 @@ from textwrap import wrap
 from typing import Callable
 
 from stpyvista import stpyvista
+from pyvista import start_xvfb
 import pantry.stpyvista_pantry as stpv
 from pantry.webapp_fragments import (
     gallery,
@@ -16,7 +17,9 @@ gallery: dict[str, Callable]
 logging.getLogger("param.main").setLevel(logging.CRITICAL)
 
 # Initial configuration
-# start_xvfb()
+if "xvfb" not in st.session_state:
+    st.session_state["xvfb"] = start_xvfb()
+
 # print(f"--> IP: {st.context.ip_address or 'Not-found'}")
 
 
