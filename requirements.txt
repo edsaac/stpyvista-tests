@@ -11,7 +11,7 @@ geovista
 colorcet
 requests
 cmocean
-nest_asyncio
+nest_asyncio2
 trame
 trame-client
 trame-components

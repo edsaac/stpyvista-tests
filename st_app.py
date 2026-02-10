@@ -31,10 +31,9 @@ def main():
         initial_sidebar_state="auto",
         menu_items={"About": "Last updated Oct/20/25"},
     )
-
+    
     # Add styling with CSS selectors
-    st.html("assets/style.css")
-
+    # st.html("assets/style.css")
 
     # --------------------------------------------
     # Full version
