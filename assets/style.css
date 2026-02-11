@@ -52,13 +52,13 @@ h4 {
     margin-right: 0%;
 }
 
-iframe[title='stpyvista.stpyvista'] {
+/* iframe[title='stpyvista.stpyvista'] {
     border-radius: 10px;
 }
 
 iframe[title='stpyvista.rendered'] {
     border-radius: 10px;
-}
+} */
 
 section[data-testid="stSidebar"] h1 {
     font-size: 6rem;
@@ -89,13 +89,13 @@ div[data-testid="stSidebarContent"] div.stButtonGroup button[data-testid^="stBas
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-div[data-testid="stPopoverBody"] {
+/* div[data-testid="stPopoverBody"] {
     min-width: 40%;
-}
+} */
 
-section.stMain div[data-testid="stPopover"] div button {
+/* section.stMain div[data-testid="stPopover"] div button {
     font-size: 2rem;
-}
+} */
 
 /* section.stMain div[data-testid="stPopover"] div button p {
     font-size: 2rem;
@@ -104,9 +104,9 @@ section.stMain div[data-testid="stPopover"] div button {
     animation-timing-function: linear;
 } */
 
-section.stMain div[data-testid="stPopover"] div button:hover {
+/* section.stMain div[data-testid="stPopover"] div button:hover {
     background-color: rgb(220, 20, 60, 0.2);
-}
+} */
 
 @keyframes spinny {
     from {
@@ -118,7 +118,7 @@ section.stMain div[data-testid="stPopover"] div button:hover {
     }
 }
 
-section[data-testid="stSidebar"] div[data-testid="stPopover"] {
+/* section[data-testid="stSidebar"] div[data-testid="stPopover"] {
     position: fixed;
     bottom: 1%;
     left: 1%;
@@ -126,15 +126,15 @@ section[data-testid="stSidebar"] div[data-testid="stPopover"] {
 
 section[data-testid="stSidebar"] div[data-testid="stPopover"] div button p {
     font-size: 1.50rem;
-}
+} */
 
 section.stMain div[data-testid="stMainBlockContainer"] {
     padding-top: 1.5rem;
 }
 
-iframe[data-testid="stIFrame"] {
+/* iframe[data-testid="stIFrame"] {
     border-radius: 4%;
-}
+} */
 
 header[data-testid="stHeader"] {
     display: none;

@@ -4,7 +4,7 @@ from textwrap import wrap
 from typing import Callable
 
 from stpyvista import stpyvista
-from pyvista import start_xvfb
+from pantry.utils import start_xvfb
 import pantry.stpyvista_pantry as stpv
 from pantry.webapp_fragments import (
     gallery,
@@ -33,7 +33,7 @@ def main():
     )
     
     # Add styling with CSS selectors
-    # st.html("assets/style.css")
+    st.html("assets/style.css")
 
     # --------------------------------------------
     # Full version
