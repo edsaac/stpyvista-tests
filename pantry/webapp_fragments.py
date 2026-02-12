@@ -19,7 +19,7 @@ stpv_trame = partial(stpyvista, backend="trame")
 
 @st.fragment
 def fill_up_main_window():
-    stpyvista = stpv_trame
+    stpyvista = stpv_panel
 
     with st.expander("🎮 Controls", expanded=True):
         controls_table = {
@@ -184,7 +184,7 @@ def option_glb():
 @st.fragment
 def option_stl():
     """🐇 Render STL"""
-    stpyvista = stpv_trame
+    stpyvista = stpv_panel
 
     st.header("🐇   Rendering STL data", anchor=False, divider="rainbow")
 
@@ -260,7 +260,7 @@ def option_stl():
 @st.fragment
 def option_grid():
     """🧱 Structured grid"""
-    stpyvista = stpv_trame
+    stpyvista = stpv_panel
 
     st.header("🧱 Structured grid", anchor=False, divider="rainbow")
     code, line_no = inspect.getsourcelines(stpv.structuredgrid)
@@ -276,7 +276,7 @@ def option_grid():
 @st.fragment
 def option_slider():
     """🔮 Sphere slider"""
-    stpyvista = stpv_trame
+    stpyvista = stpv_panel
 
     st.header("🔮   Sphere", divider="rainbow", anchor=False)
 
@@ -361,7 +361,7 @@ def option_xyz():
 @st.fragment
 def option_opacity():
     """🗼 Opacity"""
-    stpyvista = stpv_trame
+    stpyvista = stpv_panel
 
     st.header("🏯   Opacity", divider="rainbow", anchor=False)
     st.subheader("🔅 Single opacity value per mesh", anchor=False)
@@ -476,7 +476,7 @@ def option_axes():
 @st.fragment
 def option_solids():
     """🩴 Platonic solids"""
-    stpyvista = stpv_trame
+    stpyvista = stpv_panel
     st.header("🩴   Platonic solids", divider="rainbow", anchor=False)
 
     "&nbsp;"
@@ -579,7 +579,7 @@ def option_control():
 
 
 gallery : dict[str, Callable] = {
-    "key": option_key,
+    # "key": option_key,
     "dataview": option_dataview,
     "sphere": option_sphere,
     "stl": option_stl,
