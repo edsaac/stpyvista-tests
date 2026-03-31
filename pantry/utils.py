@@ -43,6 +43,9 @@ def start_xvfb():
         print("--> Initialize")
         pv_start_xvfb()
 
+        import vtk
+        print(vtk.__version__)
+
     elif is_xvfb_running.returncode == 0:
         print(f"--> PID: {is_xvfb_running.stdout.strip()}")
 
