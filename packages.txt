@@ -1,4 +1,5 @@
 procps
 libosmesa6-dev
+libxcursor-dev
 libgl1
 xvfb
