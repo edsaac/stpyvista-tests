@@ -1,5 +1,6 @@
 procps
-mesa-libOSMesa-devel
+epel-release
+mesa-libOSMesa.x86_64
 libosmesa6-dev
 libxcursor-dev
 libgl1
