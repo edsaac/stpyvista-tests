@@ -1,5 +1,12 @@
-import logging
 import streamlit as st
+import os
+
+# Initial configuration
+if "xvfb" not in st.session_state:
+    os.environ["VTK_USE_X"] = "OFF"
+    os.environ["VTK_DEFAULT_OPENGL_WINDOW"] = "vtkOSOpenGLRenderWindow"
+
+import logging
 from textwrap import wrap
 from typing import Callable
 
@@ -16,9 +23,6 @@ gallery: dict[str, Callable]
 # Hide param warnings
 logging.getLogger("param.main").setLevel(logging.CRITICAL)
 
-# Initial configuration
-if "xvfb" not in st.session_state:
-    ...
     # st.session_state["xvfb"] = start_xvfb()
 
 # print(f"--> IP: {st.context.ip_address or 'Not-found'}")
