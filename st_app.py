@@ -2,16 +2,16 @@ import streamlit as st
 import os
 
 # Initial configuration
-if "xvfb" not in st.session_state:
+if "vtk_environment" not in st.session_state:
     os.environ["VTK_USE_X"] = "OFF"
     os.environ["VTK_DEFAULT_OPENGL_WINDOW"] = "vtkOSOpenGLRenderWindow"
+    st.session_state["vtk_environment"] = True
 
 import logging
 from textwrap import wrap
 from typing import Callable
 
 from stpyvista import stpyvista
-from pantry.utils import start_xvfb
 import pantry.stpyvista_pantry as stpv
 from pantry.webapp_fragments import (
     gallery,
