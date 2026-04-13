@@ -18,7 +18,8 @@ logging.getLogger("param.main").setLevel(logging.CRITICAL)
 
 # Initial configuration
 if "xvfb" not in st.session_state:
-    st.session_state["xvfb"] = start_xvfb()
+    ...
+    # st.session_state["xvfb"] = start_xvfb()
 
 # print(f"--> IP: {st.context.ip_address or 'Not-found'}")
 

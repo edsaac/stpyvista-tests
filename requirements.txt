@@ -1,4 +1,10 @@
-pip
+vtk
+trame
+trame-client
+trame-components
+trame-server
+trame-vtk
+trame-vuetify
 streamlit
 numpy
 matplotlib
@@ -12,9 +18,3 @@ colorcet
 requests
 cmocean
 nest_asyncio2
-trame
-trame-client
-trame-components
-trame-server
-trame-vtk
-trame-vuetify
