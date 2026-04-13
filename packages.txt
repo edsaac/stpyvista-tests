@@ -1,5 +1,5 @@
 procps
-mesa-libOSMesa
+mesa-libOSMesa-devel
 libosmesa6-dev
 libxcursor-dev
 libgl1
